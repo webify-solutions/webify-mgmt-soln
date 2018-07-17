@@ -63,7 +63,8 @@ class UserController extends AppController
         }
         $organization = $this->User->Organization->find('list', ['limit' => 200]);
         $group = $this->User->Group->find('list', ['limit' => 200]);
-        $this->set(compact('user', 'organization', 'group'));
+        $userRoles = ['Admin'=> 'Admin', 'Collector' => 'Collector', 'Technician' => 'Technician'];
+        $this->set(compact('user', 'organization', 'group', 'userRoles'));
     }
 
     /**
@@ -80,6 +81,7 @@ class UserController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->User->patchEntity($user, $this->request->getData());
+            $user->role;
             if ($this->User->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
 
@@ -89,7 +91,8 @@ class UserController extends AppController
         }
         $organization = $this->User->Organization->find('list', ['limit' => 200]);
         $group = $this->User->Group->find('list', ['limit' => 200]);
-        $this->set(compact('user', 'organization', 'group'));
+        $userRoles = ['Admin'=> 'Admin', 'Collector' => 'Collector', 'Technician' => 'Technician'];
+        $this->set(compact('user', 'organization', 'group', 'userRoles'));
     }
 
     /**
