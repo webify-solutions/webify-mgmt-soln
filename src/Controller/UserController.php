@@ -13,6 +13,7 @@ use App\Controller\AppController;
 class UserController extends AppController
 {
 
+    protected $userRoles = ['Admin'=> 'Admin', 'Sales' => 'Sales', 'Cashier' => 'Cashier', 'Technician' => 'Technician'];
     /**
      * Index method
      *
@@ -24,8 +25,8 @@ class UserController extends AppController
             'contain' => ['Organization']
         ];
         $user = $this->paginate($this->User);
-
         $loggedUser = $this->loggedUser;
+
         $this->set(compact('user', 'loggedUser'));
     }
 
@@ -41,8 +42,8 @@ class UserController extends AppController
         $user = $this->User->get($id, [
             'contain' => ['Organization', 'Group']
         ]);
-
         $loggedUser = $this->loggedUser;
+
         $this->set(compact('user', 'loggedUser'));
     }
 
@@ -65,8 +66,8 @@ class UserController extends AppController
         }
         $organization = $this->User->Organization->find('list', ['limit' => 200]);
         $group = $this->User->Group->find('list', ['limit' => 200]);
-        $userRoles = ['Admin'=> 'Admin', 'Collector' => 'Collector', 'Technician' => 'Technician'];
         $loggedUser = $this->loggedUser;
+
         $this->set(compact('user', 'organization', 'group', 'userRoles', 'loggedUser'));
     }
 
@@ -96,6 +97,7 @@ class UserController extends AppController
         $group = $this->User->Group->find('list', ['limit' => 200]);
         $userRoles = ['Admin'=> 'Admin', 'Collector' => 'Collector', 'Technician' => 'Technician'];
         $loggedUser = $this->loggedUser;
+        
         $this->set(compact('user', 'organization', 'group', 'userRoles', 'loggedUser'));
     }
 
@@ -127,7 +129,10 @@ class UserController extends AppController
      */
     public function isAuthorized($user)
     {
-        if ($user != null and ($user['role'] == 'SuperAdmin' or $user['role'] == 'Admin') ) {
+        if ($user != null and $this->loggedUser != null
+            and $user['login_name'] == $this->loggedUser['login_name']
+            and in_array('user', $this->loggedUser['active_features'])) {
+
             return true;
         }
 

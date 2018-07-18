@@ -15,7 +15,7 @@
 namespace App\Controller;
 
 use Cake\Controller\Controller;
-use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 
 /**
  * Application Controller
@@ -78,9 +78,63 @@ class AppController extends Controller
         // continues to work. Also enable the read only actions.
         $this->Auth->allow(['display']);
 
-        $this->loggedUser = [
-            'login_name' => $this->Auth->user('login_name'),
-            'role' => $this->Auth->user('role')
-        ];
+        $organization_id = $this->Auth->user('organization_id');
+        if ($organization_id  != null) {
+            $organizations =  TableRegistry::getTableLocator()->get('Organization');
+            $organization = $organizations->get($this->Auth->user('organization_id'));
+
+            $activeFeatures = [
+                'customer',
+            ];
+            $userRole = $this->Auth->user('role');
+
+            if($userRole == 'Admin') {
+                $activeFeatures[] = ('group');
+                $activeFeatures[] = ('user');
+
+                if ($organization['active_product_feature'] == 1) {
+                    $activeFeatures[] = ('product');
+                }
+
+                if ($organization['active_order_feature'] == 1) {
+                    $activeFeatures[] = ('order');
+                }
+
+                if ($organization['active_invoicing_feature'] == 1) {
+                    $activeFeatures[] = ('invoice');
+                    $activeFeatures[] = ('payment');
+                }
+
+                if ($organization['active_case_feature'] == 1) {
+                    $activeFeatures[] = ('support_case');
+                }
+            }
+
+            $this->loggedUser = [
+                'login_name' => $this->Auth->user('login_name'),
+                'role' => $userRole,
+                'organization_id' => $organization_id,
+                'organization_name' => $organization['name'],
+                'active_features' => $activeFeatures
+            ];
+
+        } else {
+            $this->loggedUser = [
+                'login_name' => $this->Auth->user('login_name'),
+                'role' => $this->Auth->user('role'),
+                'organization_name' => 'All',
+                'active_features' => [
+                    'group',
+                    'customer',
+                    'product',
+                    'order',
+                    'invoice',
+                    'support_case',
+                    'payment',
+                    'organization',
+                    'user'
+                ]
+            ];
+        }
     }
 }

@@ -21,8 +21,9 @@ class OrganizationController extends AppController
     public function index()
     {
         $organization = $this->paginate($this->Organization);
+        $loggedUser = $this->loggedUser;
 
-        $this->set(compact('organization'));
+        $this->set(compact('organization', 'loggedUser'));
     }
 
     /**
@@ -37,8 +38,9 @@ class OrganizationController extends AppController
         $organization = $this->Organization->get($id, [
             'contain' => ['Customer', 'Group', 'Invoice', 'InvoiceItem', 'Order', 'OrderItem', 'Payment', 'PriceEntry', 'Product', 'SupportCase', 'User', 'UserGroup']
         ]);
+        $loggedUser = $this->loggedUser;
 
-        $this->set('organization', $organization);
+        $this->set(compact('organization', 'loggedUser'));
     }
 
     /**
@@ -58,7 +60,9 @@ class OrganizationController extends AppController
             }
             $this->Flash->error(__('The organization could not be saved. Please, try again.'));
         }
-        $this->set(compact('organization'));
+        $loggedUser = $this->loggedUser;
+
+        $this->set(compact('organization', 'loggedUser'));
     }
 
     /**
@@ -82,7 +86,9 @@ class OrganizationController extends AppController
             }
             $this->Flash->error(__('The organization could not be saved. Please, try again.'));
         }
-        $this->set(compact('organization'));
+        $loggedUser = $this->loggedUser;
+
+        $this->set(compact('organization', 'loggedUser'));
     }
 
     /**
@@ -113,6 +119,13 @@ class OrganizationController extends AppController
      */
     public function isAuthorized($user)
     {
+        if ($user != null and $this->loggedUser != null
+            and $user['login_name'] == $this->loggedUser['login_name']
+            and in_array('organization', $this->loggedUser['active_features'])){
+
+            return true;
+        }
+
         return false;
     }
 }
