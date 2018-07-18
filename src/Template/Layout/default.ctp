@@ -48,31 +48,31 @@ $appName = 'Activeforce';
             <?php if(isset($loggedUser)) : ?>
                 <ul class="left">
                     <li><?= $this->Html->link(__('Dashboard'), ['controller' => 'Dashboard', 'action' => 'index'])?></li>
-                    <?php if(in_array('organization', $loggedUser['active_features'])) : ?>
+                    <?php if(in_array('organization', $loggedUser['active_features'], true)) : ?>
                         <li><?= $this->Html->link(__('Organizations'), ['controller' => 'Organization', 'action' => 'index']) ?></li>
                     <?php endif; ?>
-                    <?php if(in_array('customer', $loggedUser['active_features'])) : ?>
+                    <?php if(in_array('customer', $loggedUser['active_features'], true)) : ?>
                         <li><?= $this->Html->link(__('Customers'), ['controller' => 'Customer', 'action' => 'index']) ?></li>
                     <?php endif; ?>
-                    <?php if(in_array('group', $loggedUser['active_features'])) : ?>
+                    <?php if(in_array('group', $loggedUser['active_features'], true)) : ?>
                         <li><?= $this->Html->link(__('Groups'), ['controller' => 'Group', 'action' => 'index']) ?></li>
                     <?php endif; ?>
-                    <?php if(in_array('product', $loggedUser['active_features'])) : ?>
+                    <?php if(in_array('product', $loggedUser['active_features'], true)) : ?>
                         <li><?= $this->Html->link(__('Products'), ['controller' => 'Product', 'action' => 'index']) ?></li>
                     <?php endif; ?>
-                    <?php if(in_array('order', $loggedUser['active_features'])) : ?>
+                    <?php if(in_array('order', $loggedUser['active_features'], true)) : ?>
                         <li><?= $this->Html->link(__('Orders'), ['controller' => 'Order', 'action' => 'index']) ?></li>
                     <?php endif; ?>
-                    <?php if(in_array('invoice', $loggedUser['active_features'])) : ?>
+                    <?php if(in_array('invoice', $loggedUser['active_features'], true)) : ?>
                         <li><?= $this->Html->link(__('Invoices'), ['controller' => 'Invoice', 'action' => 'index']) ?></li>
                     <?php endif; ?>
-                    <?php if(in_array('payment', $loggedUser['active_features'])) : ?>
+                    <?php if(in_array('payment', $loggedUser['active_features'], true)) : ?>
                         <li><?= $this->Html->link(__('Payments'), ['controller' => 'Payment', 'action' => 'index']) ?></li>
                     <?php endif; ?>
-                    <?php if(in_array('support_case', $loggedUser['active_features'])) : ?>
+                    <?php if(in_array('support_case', $loggedUser['active_features'], true)) : ?>
                         <li><?= $this->Html->link(__('Support Case'), ['controller' => 'SupportCase', 'action' => 'index']) ?></li>
                     <?php endif; ?>
-                    <?php if(in_array('user', $loggedUser['active_features'])) : ?>
+                    <?php if(in_array('user', $loggedUser['active_features'], true)) : ?>
                         <li><?= $this->Html->link(__('Users'), ['controller' => 'User', 'action' => 'index'])?></li>
                     <?php endif; ?>
 

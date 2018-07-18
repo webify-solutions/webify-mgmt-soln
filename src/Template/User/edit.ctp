@@ -28,14 +28,17 @@
     <fieldset>
         <legend><?= __('Edit User') ?></legend>
         <?php
-            echo $this->Form->control('organization_id', ['options' => $organization, 'empty' => true]);
-            echo $this->Form->control('employee_number');
+            if ($organization != null) {
+                echo $this->Form->control('organization_id', ['options' => $organization, 'empty' => true]);
+            }
+            echo $this->Form->control('login_name', ['disabled' => 'disabled']);
+            echo $this->Form->control('password', ['type' => 'password']);
             echo $this->Form->control('first_name');
             echo $this->Form->control('last_name');
-            echo $this->Form->control('login_name');
-            echo $this->Form->control('password', ['type' => 'password']);
             echo $this->Form->control('email');
             echo $this->Form->control('phone');
+            echo $this->Form->control('employee_number');
+
             echo $this->Form->control(
                 'start_date',
                 [

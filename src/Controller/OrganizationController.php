@@ -40,7 +40,7 @@ class OrganizationController extends AppController
         ]);
         $loggedUser = $this->loggedUser;
 
-        $this->set(compact('organization', 'loggedUser'));
+        $this->set(['organization' => $organization, 'loggedUser' => $this->loggedUser]);
     }
 
     /**
@@ -62,7 +62,7 @@ class OrganizationController extends AppController
         }
         $loggedUser = $this->loggedUser;
 
-        $this->set(compact('organization', 'loggedUser'));
+        $this->set(['organization' => $organization, 'loggedUser' => $this->loggedUser]);
     }
 
     /**
@@ -88,7 +88,7 @@ class OrganizationController extends AppController
         }
         $loggedUser = $this->loggedUser;
 
-        $this->set(compact('organization', 'loggedUser'));
+        $this->set(['organization' => $organization, 'loggedUser' => $this->loggedUser]);
     }
 
     /**

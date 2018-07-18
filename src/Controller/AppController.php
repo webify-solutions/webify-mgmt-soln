@@ -29,6 +29,7 @@ class AppController extends Controller
 {
 
     public $loggedUser;
+    public $loggedUserOrgId;
 
     /**
      * Initialization hook method.
@@ -118,6 +119,8 @@ class AppController extends Controller
                 'active_features' => $activeFeatures
             ];
 
+            $this->loggedUserOrgId = $organization_id;
+
         } else {
             $this->loggedUser = [
                 'login_name' => $this->Auth->user('login_name'),
@@ -135,6 +138,16 @@ class AppController extends Controller
                     'user'
                 ]
             ];
+
+            $this->loggedUserOrgId = null;
         }
+    }
+
+    public function getLoggedUserAttribute($attribute_name) {
+        if ($this->loggedUser != null and array_key_exists($attribute_name, $this->loggedUser)) {
+            return $this->loggedUser[$attribute_name];
+        }
+
+        return null;
     }
 }

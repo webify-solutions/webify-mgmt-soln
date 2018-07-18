@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Http\Exception\NotFoundException;
 
 /**
  * User Controller
@@ -24,10 +25,16 @@ class UserController extends AppController
         $this->paginate = [
             'contain' => ['Organization']
         ];
-        $user = $this->paginate($this->User);
-        $loggedUser = $this->loggedUser;
 
-        $this->set(compact('user', 'loggedUser'));
+        if ($this->loggedUserOrgId != null) {
+            $user = $this->paginate($this->User->find()->where(['organization_id' => $this->loggedUserOrgId]));
+        } else {
+            $user = $this->paginate($this->User);
+        }
+
+//        $loggedUser = $this->loggedUser;
+
+        $this->set(['user' => $user, 'loggedUser' => $this->loggedUser]);
     }
 
     /**
@@ -42,9 +49,11 @@ class UserController extends AppController
         $user = $this->User->get($id, [
             'contain' => ['Organization', 'Group']
         ]);
-        $loggedUser = $this->loggedUser;
 
-        $this->set(compact('user', 'loggedUser'));
+        if ($this->loggedUserOrgId != null and $user['organization_id'] != ($this->loggedUserOrgId)) {
+            throw new NotFoundException('Record not found');
+        }
+        $this->set(['user' => $user, 'loggedUser' => $this->loggedUser]);
     }
 
     /**
@@ -57,6 +66,12 @@ class UserController extends AppController
         $user = $this->User->newEntity();
         if ($this->request->is('post')) {
             $user = $this->User->patchEntity($user, $this->request->getData());
+
+
+            if ($this->loggedUserOrgId != null) {
+                $user->set('organization_id', $this->loggedUserOrgId);
+            }
+
             if ($this->User->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
 
@@ -64,11 +79,17 @@ class UserController extends AppController
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
-        $organization = $this->User->Organization->find('list', ['limit' => 200]);
-        $group = $this->User->Group->find('list', ['limit' => 200]);
-        $loggedUser = $this->loggedUser;
 
-        $this->set(compact('user', 'organization', 'group', 'userRoles', 'loggedUser'));
+
+        if ($this->loggedUserOrgId == null) {
+            $organization = $this->User->Organization->find('list', ['limit' => 200]);
+            $group = $this->User->Group->find('list', ['limit' => 200]);
+        } else {
+            $organization = null;
+            $group = $this->User->Group->find('list', ['limit' => 200])->where(['organization_id' => $this->loggedUserOrgId]);
+        }
+
+        $this->set(['user' => $user, 'loggedUser' => $this->loggedUser, 'organization' => $organization, 'group' => $group, 'userRoles' => $this->userRoles]);
     }
 
     /**
@@ -83,6 +104,11 @@ class UserController extends AppController
         $user = $this->User->get($id, [
             'contain' => ['Group']
         ]);
+
+        if ($this->loggedUserOrgId != null and $user['organization_id'] != ($this->loggedUserOrgId)) {
+            throw new NotFoundException('Record not found');
+        }
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->User->patchEntity($user, $this->request->getData());
             $user->role;
@@ -93,12 +119,20 @@ class UserController extends AppController
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
-        $organization = $this->User->Organization->find('list', ['limit' => 200]);
-        $group = $this->User->Group->find('list', ['limit' => 200]);
-        $userRoles = ['Admin'=> 'Admin', 'Collector' => 'Collector', 'Technician' => 'Technician'];
-        $loggedUser = $this->loggedUser;
-        
-        $this->set(compact('user', 'organization', 'group', 'userRoles', 'loggedUser'));
+
+        if ($this->loggedUserOrgId == null) {
+            $organization = $this->User->Organization->find('list', ['limit' => 200]);
+        } else {
+            $organization = null;
+        }
+
+        if ($this->loggedUserOrgId == null) {
+            $group = $this->User->Group->find('list', ['limit' => 200]);
+        } else {
+            $group = $this->User->Group->find('list', ['limit' => 200])->where(['organization_id' => $this->loggedUserOrgId]);
+        }
+
+        $this->set(['user' => $user, 'loggedUser' => $this->loggedUser, 'organization' => $organization, 'group' => $group, 'userRoles' => $this->userRoles]);
     }
 
     /**
@@ -112,6 +146,11 @@ class UserController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $user = $this->User->get($id);
+
+        if ($this->loggedUserOrgId != null and $user['organization_id'] != ($this->loggedUserOrgId)) {
+            throw new NotFoundException('Record not found');
+        }
+
         if ($this->User->delete($user)) {
             $this->Flash->success(__('The user has been deleted.'));
         } else {

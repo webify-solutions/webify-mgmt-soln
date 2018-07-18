@@ -27,13 +27,15 @@
 <div class="user view large-9 medium-8 columns content">
     <h3><?= h($user->login_name) ?></h3>
     <table class="vertical-table">
+        <?php if(in_array('organization', $loggedUser['active_features'], true)) : ?>
         <tr>
             <th scope="row"><?= __('Organization') ?></th>
             <td><?= $user->has('organization') ? $this->Html->link($user->organization->name, ['controller' => 'Organization', 'action' => 'view', $user->organization->id]) : '' ?></td>
         </tr>
+        <?php endif; ?>
         <tr>
-            <th scope="row"><?= __('Employee Number') ?></th>
-            <td><?= h($user->employee_number) ?></td>
+            <th scope="row"><?= __('Login Name') ?></th>
+            <td><?= h($user->login_name) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('First Name') ?></th>
@@ -44,16 +46,16 @@
             <td><?= h($user->last_name) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Security Name') ?></th>
-            <td><?= h($user->login_name) ?></td>
-        </tr>
-        <tr>
             <th scope="row"><?= __('Email') ?></th>
             <td><?= h($user->email) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Phone') ?></th>
             <td><?= h($user->phone) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Employee Number') ?></th>
+            <td><?= h($user->employee_number) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Role') ?></th>
