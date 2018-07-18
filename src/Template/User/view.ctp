@@ -44,7 +44,7 @@
             <td><?= h($user->last_name) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Login Name') ?></th>
+            <th scope="row"><?= __('Security Name') ?></th>
             <td><?= h($user->login_name) ?></td>
         </tr>
         <tr>

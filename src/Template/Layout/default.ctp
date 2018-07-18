@@ -11,6 +11,9 @@
  * @link          https://cakephp.org CakePHP(tm) Project
  * @since         0.10.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
+ *
+ * @var \App\View\AppView $this
+ * @var \App\Model\Entity\User $user
  */
 
 $appName = 'Activeforce';
@@ -27,6 +30,7 @@ $appName = 'Activeforce';
     <?= $this->Html->meta('icon') ?>
 
     <?= $this->Html->css('base.css') ?>
+    <?= $this->Html->css('base.extension.css') ?>
     <?= $this->Html->css('style.css') ?>
 
     <?= $this->fetch('meta') ?>
@@ -41,18 +45,30 @@ $appName = 'Activeforce';
             </li>
         </ul>
         <div class="top-bar-section">
-            <ul class="left">
-                <li><?= $this->Html->link(__('Dashboard'), ['controller' => 'Dashboard', 'action' => 'index'])?></li>
-                <li><?= $this->Html->link(__('Groups'), ['controller' => 'Group', 'action' => 'index']) ?></li>
-                <li><?= $this->Html->link(__('Customers'), ['controller' => 'Customer', 'action' => 'index']) ?></li>
-                <li><?= $this->Html->link(__('Orders'), ['controller' => 'Order', 'action' => 'index']) ?></li>
-                <li><?= $this->Html->link(__('Products'), ['controller' => 'Product', 'action' => 'index']) ?></li>
-                <li><?= $this->Html->link(__('Invoices'), ['controller' => 'Invoice', 'action' => 'index']) ?></li>
-                <li><?= $this->Html->link(__('Payments'), ['controller' => 'Payment', 'action' => 'index']) ?></li>
-                <li><?= $this->Html->link(__('Support Case'), ['controller' => 'SupportCase', 'action' => 'index']) ?></li>
-                <li><?= $this->Html->link(__('Organizations'), ['controller' => 'Organization', 'action' => 'index']) ?></li>
-                <li><?= $this->Html->link(__('Users'), ['controller' => 'User', 'action' => 'index'])?></li>
-            </ul>
+            <?php if(isset($loggedUser)) : ?>
+                <ul class="left">
+                    <li><?= $this->Html->link(__('Dashboard'), ['controller' => 'Dashboard', 'action' => 'index'])?></li>
+                    <li><?= $this->Html->link(__('Groups'), ['controller' => 'Group', 'action' => 'index']) ?></li>
+                    <li><?= $this->Html->link(__('Customers'), ['controller' => 'Customer', 'action' => 'index']) ?></li>
+                    <li><?= $this->Html->link(__('Orders'), ['controller' => 'Order', 'action' => 'index']) ?></li>
+                    <li><?= $this->Html->link(__('Products'), ['controller' => 'Product', 'action' => 'index']) ?></li>
+                    <li><?= $this->Html->link(__('Invoices'), ['controller' => 'Invoice', 'action' => 'index']) ?></li>
+                    <li><?= $this->Html->link(__('Payments'), ['controller' => 'Payment', 'action' => 'index']) ?></li>
+                    <li><?= $this->Html->link(__('Support Case'), ['controller' => 'SupportCase', 'action' => 'index']) ?></li>
+                    <?php if($loggedUser['role'] == 'SuperAdmin') : ?>
+                        <li><?= $this->Html->link(__('Organizations'), ['controller' => 'Organization', 'action' => 'index']) ?></li>
+                    <?php endif; ?>
+                    <?php if($loggedUser['role'] == 'SuperAdmin' or $loggedUser['role'] == 'Admin') : ?>
+                        <li><?= $this->Html->link(__('Users'), ['controller' => 'User', 'action' => 'index'])?></li>
+                    <?php endif; ?>
+
+
+                </ul>
+                <ul class="right">
+                    <li class="logged-user"><?= $loggedUser['login_name'] ?></li>
+                    <li><?= $this->Html->link(__('Log Out'), ['controller' => 'Security', 'action' => 'logout'])?></li>
+                </ul>
+            <?php endif; ?>
         </div>
     </nav>
     <?= $this->Flash->render() ?>

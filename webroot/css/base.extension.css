@@ -1,0 +1,9 @@
+.top-bar-section .logged-user {
+    line-height: 2.8125rem;
+    color: #FFFFFF;
+    font-style: italic;
+}
+
+iframe {
+    display: none;
+}

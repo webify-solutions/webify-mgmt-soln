@@ -109,4 +109,15 @@ class InvoiceController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    /**
+     * Is authorized method
+     *
+     * @param $user
+     * @return bool
+     */
+    public function isAuthorized($user)
+    {
+        return false;
+    }
 }

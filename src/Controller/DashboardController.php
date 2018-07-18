@@ -24,6 +24,22 @@ class DashboardController extends AppController
      */
     public function index() {
 
-        $this->set(compact('dashboard'));
+        $loggedUser = $this->loggedUser;
+        $this->set(compact('dashboard', 'loggedUser'));
+    }
+
+    /**
+     * Is authorized method
+     *
+     * @param $user
+     * @return bool
+     */
+    public function isAuthorized($user)
+    {
+        if ($user != null) {
+            return true;
+        }
+
+        return false;
     }
 }

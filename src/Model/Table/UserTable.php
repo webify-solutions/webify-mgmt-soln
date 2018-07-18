@@ -73,7 +73,12 @@ class UserTable extends Table
         $validator
             ->scalar('login_name')
             ->maxLength('login_name', 255)
-            ->allowEmpty('login_name');
+            ->notEmpty('login_name');
+
+        $validator
+            ->scalar('password')
+            ->maxLength('password', 255)
+            ->notEmpty('password');
 
         $validator
             ->email('email')
@@ -130,7 +135,7 @@ class UserTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['email']));
+        $rules->add($rules->isUnique(['login_name']));
         $rules->add($rules->existsIn(['organization_id'], 'Organization'));
 
         return $rules;

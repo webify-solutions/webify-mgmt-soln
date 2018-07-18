@@ -25,7 +25,8 @@ class UserController extends AppController
         ];
         $user = $this->paginate($this->User);
 
-        $this->set(compact('user'));
+        $loggedUser = $this->loggedUser;
+        $this->set(compact('user', 'loggedUser'));
     }
 
     /**
@@ -41,7 +42,8 @@ class UserController extends AppController
             'contain' => ['Organization', 'Group']
         ]);
 
-        $this->set('user', $user);
+        $loggedUser = $this->loggedUser;
+        $this->set(compact('user', 'loggedUser'));
     }
 
     /**
@@ -64,7 +66,8 @@ class UserController extends AppController
         $organization = $this->User->Organization->find('list', ['limit' => 200]);
         $group = $this->User->Group->find('list', ['limit' => 200]);
         $userRoles = ['Admin'=> 'Admin', 'Collector' => 'Collector', 'Technician' => 'Technician'];
-        $this->set(compact('user', 'organization', 'group', 'userRoles'));
+        $loggedUser = $this->loggedUser;
+        $this->set(compact('user', 'organization', 'group', 'userRoles', 'loggedUser'));
     }
 
     /**
@@ -92,7 +95,8 @@ class UserController extends AppController
         $organization = $this->User->Organization->find('list', ['limit' => 200]);
         $group = $this->User->Group->find('list', ['limit' => 200]);
         $userRoles = ['Admin'=> 'Admin', 'Collector' => 'Collector', 'Technician' => 'Technician'];
-        $this->set(compact('user', 'organization', 'group', 'userRoles'));
+        $loggedUser = $this->loggedUser;
+        $this->set(compact('user', 'organization', 'group', 'userRoles', 'loggedUser'));
     }
 
     /**
@@ -113,5 +117,20 @@ class UserController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    /**
+     * Is authorized method
+     *
+     * @param $user
+     * @return bool
+     */
+    public function isAuthorized($user)
+    {
+        if ($user != null and ($user['role'] == 'SuperAdmin' or $user['role'] == 'Admin') ) {
+            return true;
+        }
+
+        return false;
     }
 }
