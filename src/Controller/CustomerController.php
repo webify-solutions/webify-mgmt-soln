@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Http\Exception\NotFoundException;
 
 /**
  * Customer Controller
@@ -23,9 +24,15 @@ class CustomerController extends AppController
         $this->paginate = [
             'contain' => ['Group', 'Organization']
         ];
-        $customer = $this->paginate($this->Customer);
 
-        $this->set(compact('customer'));
+        if ($this->loggedUserOrgId != null) {
+            $customer = $this->paginate($this->Customer->find()->where(['Customer.organization_id' => $this->loggedUserOrgId]));
+        } else {
+            $customer = $this->paginate($this->Customer);
+        }
+
+
+        $this->set(['customer' => $customer, 'loggedUser' => $this->loggedUser]);
     }
 
     /**
@@ -41,7 +48,11 @@ class CustomerController extends AppController
             'contain' => ['Group', 'Organization', 'Order', 'SupportCase']
         ]);
 
-        $this->set('customer', $customer);
+        if ($this->loggedUserOrgId != null and $customer['organization_id'] != ($this->loggedUserOrgId)) {
+            throw new NotFoundException('Record not found');
+        }
+
+        $this->set(['customer' => $customer, 'loggedUser' => $this->loggedUser]);
     }
 
     /**
@@ -54,6 +65,11 @@ class CustomerController extends AppController
         $customer = $this->Customer->newEntity();
         if ($this->request->is('post')) {
             $customer = $this->Customer->patchEntity($customer, $this->request->getData());
+
+            if ($this->loggedUserOrgId != null) {
+                $customer->set('organization_id', $this->loggedUserOrgId);
+            }
+
             if ($this->Customer->save($customer)) {
                 $this->Flash->success(__('The customer has been saved.'));
 
@@ -61,9 +77,16 @@ class CustomerController extends AppController
             }
             $this->Flash->error(__('The customer could not be saved. Please, try again.'));
         }
-        $group = $this->Customer->Group->find('list', ['limit' => 200]);
-        $organization = $this->Customer->Organization->find('list', ['limit' => 200]);
-        $this->set(compact('customer', 'group', 'organization'));
+
+        if ($this->loggedUserOrgId == null) {
+            $organization = $this->Customer->Organization->find('list', ['limit' => 200]);
+            $group = $this->Customer->Group->find('list', ['limit' => 200]);
+        } else {
+            $organization = null;
+            $group = $this->Customer->Group->find('list', ['limit' => 200])->where(['organization_id' => $this->loggedUserOrgId]);
+        }
+
+        $this->set(['customer' => $customer, 'loggedUser' => $this->loggedUser, 'group' => $group, 'organization' => $organization]);
     }
 
     /**
@@ -78,6 +101,11 @@ class CustomerController extends AppController
         $customer = $this->Customer->get($id, [
             'contain' => []
         ]);
+
+        if ($this->loggedUserOrgId != null and $customer['organization_id'] != ($this->loggedUserOrgId)) {
+            throw new NotFoundException('Record not found');
+        }
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $customer = $this->Customer->patchEntity($customer, $this->request->getData());
             if ($this->Customer->save($customer)) {
@@ -87,9 +115,16 @@ class CustomerController extends AppController
             }
             $this->Flash->error(__('The customer could not be saved. Please, try again.'));
         }
-        $group = $this->Customer->Group->find('list', ['limit' => 200]);
-        $organization = $this->Customer->Organization->find('list', ['limit' => 200]);
-        $this->set(compact('customer', 'group', 'organization'));
+
+        if ($this->loggedUserOrgId == null) {
+            $organization = $this->Customer->Organization->find('list', ['limit' => 200]);
+            $group = $this->Customer->Group->find('list', ['limit' => 200]);
+        } else {
+            $organization = null;
+            $group = $this->Customer->Group->find('list', ['limit' => 200])->where(['organization_id' => $this->loggedUserOrgId]);
+        }
+
+        $this->set(['customer' => $customer, 'loggedUser' => $this->loggedUser, 'group' => $group, 'organization' => $organization]);
     }
 
     /**
@@ -103,6 +138,11 @@ class CustomerController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $customer = $this->Customer->get($id);
+
+        if ($this->loggedUserOrgId != null and $customer['organization_id'] != ($this->loggedUserOrgId)) {
+            throw new NotFoundException('Record not found');
+        }
+
         if ($this->Customer->delete($customer)) {
             $this->Flash->success(__('The customer has been deleted.'));
         } else {
@@ -120,6 +160,13 @@ class CustomerController extends AppController
      */
     public function isAuthorized($user)
     {
+        if ($user != null and $this->loggedUser != null
+            and $user['login_name'] == $this->loggedUser['login_name']
+            and in_array('customer', $this->loggedUser['active_features'])) {
+
+            return true;
+        }
+
         return false;
     }
 }

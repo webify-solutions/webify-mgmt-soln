@@ -41,6 +41,7 @@ class Customer extends Entity
     protected $_accessible = [
         'group_id' => true,
         'organization_id' => true,
+        'customer_number' => true,
         'title' => true,
         'first_name' => true,
         'last_name' => true,

@@ -1,10 +1,13 @@
 <?php
 namespace App\Model\Table;
 
-use Cake\ORM\Query;
+use ArrayObject;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\Event\Event;
+use Cake\Datasource\EntityInterface;
+
 
 /**
  * Customer Model
@@ -65,6 +68,11 @@ class CustomerTable extends Table
         $validator
             ->integer('id')
             ->allowEmpty('id', 'create');
+
+        $validator
+            ->scalar('customer_number')
+            ->maxLength('customer_number', 255)
+            ->allowEmpty('customer_number');
 
         $validator
             ->scalar('title')
@@ -128,10 +136,19 @@ class CustomerTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['email']));
         $rules->add($rules->existsIn(['group_id'], 'Group'));
         $rules->add($rules->existsIn(['organization_id'], 'Organization'));
 
         return $rules;
+    }
+
+    public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
+    {
+        debug($entity);
+
+        if($entity->get('customer_number') == null) {
+            $customerNumber = uniqid("C-", false);
+            $entity->set('customer_number', __($customerNumber));
+        }
     }
 }

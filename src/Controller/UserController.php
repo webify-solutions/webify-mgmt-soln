@@ -32,8 +32,6 @@ class UserController extends AppController
             $user = $this->paginate($this->User);
         }
 
-//        $loggedUser = $this->loggedUser;
-
         $this->set(['user' => $user, 'loggedUser' => $this->loggedUser]);
     }
 
@@ -122,13 +120,9 @@ class UserController extends AppController
 
         if ($this->loggedUserOrgId == null) {
             $organization = $this->User->Organization->find('list', ['limit' => 200]);
-        } else {
-            $organization = null;
-        }
-
-        if ($this->loggedUserOrgId == null) {
             $group = $this->User->Group->find('list', ['limit' => 200]);
         } else {
+            $organization = null;
             $group = $this->User->Group->find('list', ['limit' => 200])->where(['organization_id' => $this->loggedUserOrgId]);
         }
 
