@@ -49,7 +49,7 @@ class UserController extends AppController
         ]);
 
         if ($this->loggedUserOrgId != null and $user['organization_id'] != ($this->loggedUserOrgId)) {
-            throw new NotFoundException('Record not found');
+            $this->unauthorizedAccessRedirect();
         }
         $this->set(['user' => $user, 'loggedUser' => $this->loggedUser]);
     }
@@ -104,7 +104,7 @@ class UserController extends AppController
         ]);
 
         if ($this->loggedUserOrgId != null and $user['organization_id'] != ($this->loggedUserOrgId)) {
-            throw new NotFoundException('Record not found');
+            $this->unauthorizedAccessRedirect();
         }
 
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -142,7 +142,7 @@ class UserController extends AppController
         $user = $this->User->get($id);
 
         if ($this->loggedUserOrgId != null and $user['organization_id'] != ($this->loggedUserOrgId)) {
-            throw new NotFoundException('Record not found');
+            $this->unauthorizedAccessRedirect();
         }
 
         if ($this->User->delete($user)) {

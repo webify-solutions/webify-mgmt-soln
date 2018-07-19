@@ -49,7 +49,7 @@ class CustomerController extends AppController
         ]);
 
         if ($this->loggedUserOrgId != null and $customer['organization_id'] != ($this->loggedUserOrgId)) {
-            throw new NotFoundException('Record not found');
+            $this->unauthorizedAccessRedirect();
         }
 
         $this->set(['customer' => $customer, 'loggedUser' => $this->loggedUser]);
@@ -103,7 +103,7 @@ class CustomerController extends AppController
         ]);
 
         if ($this->loggedUserOrgId != null and $customer['organization_id'] != ($this->loggedUserOrgId)) {
-            throw new NotFoundException('Record not found');
+            $this->unauthorizedAccessRedirect();
         }
 
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -140,7 +140,7 @@ class CustomerController extends AppController
         $customer = $this->Customer->get($id);
 
         if ($this->loggedUserOrgId != null and $customer['organization_id'] != ($this->loggedUserOrgId)) {
-            throw new NotFoundException('Record not found');
+            $this->unauthorizedAccessRedirect();
         }
 
         if ($this->Customer->delete($customer)) {

@@ -143,6 +143,12 @@ class AppController extends Controller
         }
     }
 
+    public function unauthorizedAccessRedirect() {
+        $this->Flash->error(__('You are not authorized to access that location.'));
+
+        return $this->redirect(['controller' => 'Dashboard', 'action' => 'index']);
+    }
+
     public function getLoggedUserAttribute($attribute_name) {
         if ($this->loggedUser != null and array_key_exists($attribute_name, $this->loggedUser)) {
             return $this->loggedUser[$attribute_name];
