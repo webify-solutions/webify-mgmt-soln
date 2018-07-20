@@ -25,7 +25,7 @@
     </ul>
 </nav>
 <div class="product view large-9 medium-8 columns content">
-    <h3><?= h($product->name) ?></h3>
+    <h3><?= __('Product') ?></h3>
     <table class="vertical-table">
         <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
             <tr>
@@ -66,35 +66,37 @@
 
     <?php if(in_array('Product', $loggedUser['active_features'], true)) : ?>
         <div class="related">
-            <h4><?= __('Related Price Entry') ?></h4>
+            <h4><?= __('Related Price Entry ({0})', $this->Html->link(__('Add New'), ['controller' => 'PriceEntry', 'action' => 'add', $product->id]))  ?></h4>
             <?php if (!empty($product->price_entry)): ?>
                 <table cellpadding="0" cellspacing="0">
                     <tr>
-                        <th scope="col"><?= __('Id') ?></th>
-                        <th scope="col"><?= __('Product Id') ?></th>
-                        <th scope="col"><?= __('Organization Id') ?></th>
+                        <th scope="col" class="actions"><?= __('Actions') ?></th>
+                        <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
+                            <th scope="col"><?= __('Organization Id') ?></th>
+                        <?php endif; ?>
+                        <th scope="col"><?= __('Id')?></th>
                         <th scope="col"><?= __('Price') ?></th>
                         <th scope="col"><?= __('Available Discount') ?></th>
                         <th scope="col"><?= __('Active') ?></th>
                         <th scope="col"><?= __('Created At') ?></th>
                         <th scope="col"><?= __('Last Updated') ?></th>
-                        <th scope="col" class="actions"><?= __('Actions') ?></th>
                     </tr>
                     <?php foreach ($product->price_entry as $priceEntry): ?>
                         <tr>
-                            <td><?= h($priceEntry->id) ?></td>
-                            <td><?= h($priceEntry->product_id) ?></td>
-                            <td><?= h($priceEntry->organization_id) ?></td>
-                            <td><?= h($priceEntry->price) ?></td>
-                            <td><?= h($priceEntry->available_discount) ?></td>
-                            <td><?= h($priceEntry->active) ?></td>
-                            <td><?= h($priceEntry->created_at) ?></td>
-                            <td><?= h($priceEntry->last_updated) ?></td>
                             <td class="actions">
                                 <?= $this->Html->link(__('View'), ['controller' => 'PriceEntry', 'action' => 'view', $priceEntry->id]) ?>
                                 <?= $this->Html->link(__('Edit'), ['controller' => 'PriceEntry', 'action' => 'edit', $priceEntry->id]) ?>
                                 <?= $this->Form->postLink(__('Delete'), ['controller' => 'PriceEntry', 'action' => 'delete', $priceEntry->id], ['confirm' => __('Are you sure you want to delete # {0}?', $priceEntry->id)]) ?>
                             </td>
+                            <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
+                                <td><?= h($priceEntry->organization_id) ?></td>
+                            <?php endif; ?>
+                            <td><?= h($priceEntry->id) ?></td>
+                            <td><?= h($priceEntry->price) ?></td>
+                            <td><?= h($priceEntry->available_discount) ?></td>
+                            <td><?= h($priceEntry->active ? __('Yes') : __('No')) ?></td>
+                            <td><?= h($priceEntry->created_at) ?></td>
+                            <td><?= h($priceEntry->last_updated) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </table>

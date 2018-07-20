@@ -95,14 +95,17 @@ class AppController extends Controller
 
                 if ($organization['active_product_feature'] == 1) {
                     $activeFeatures[] = ('Product');
+                    $activeFeatures[] = ('PriceEntry');
                 }
 
                 if ($organization['active_order_feature'] == 1) {
                     $activeFeatures[] = ('Order');
+                    $activeFeatures[] = ('OrderItem');
                 }
 
                 if ($organization['active_invoicing_feature'] == 1) {
                     $activeFeatures[] = ('Invoice');
+                    $activeFeatures[] = ('InvoiceItem');
                     $activeFeatures[] = ('Payment');
                 }
 

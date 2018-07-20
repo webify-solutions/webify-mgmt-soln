@@ -25,7 +25,7 @@
     </ul>
 </nav>
 <div class="user view large-9 medium-8 columns content">
-    <h3><?= h($user->login_name) ?></h3>
+    <h3><?= __('User') ?></h3>
     <table class="vertical-table">
         <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
         <tr>

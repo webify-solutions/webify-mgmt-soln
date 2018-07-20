@@ -18,15 +18,20 @@ class PriceEntryController extends AppController
      *
      * @return \Cake\Http\Response|void
      */
-    public function index()
-    {
-        $this->paginate = [
-            'contain' => ['Product', 'Organization']
-        ];
-        $priceEntry = $this->paginate($this->PriceEntry);
-
-        $this->set(compact('priceEntry'));
-    }
+//    public function index()
+//    {
+//        $this->paginate = [
+//            'contain' => ['Product', 'Organization']
+//        ];
+//
+//        if ($this->loggedUserOrgId != null) {
+//            $priceEntry = $this->paginate($this->PriceEntry->find()->where(['organization_id' => $this->loggedUserOrgId]));
+//        } else {
+//            $priceEntry = $this->paginate($this->PriceEntry);
+//        }
+//
+//        $this->set(['priceEntry' => $priceEntry, 'loggedUser' => $this->loggedUser]);
+//    }
 
     /**
      * View method
@@ -41,7 +46,11 @@ class PriceEntryController extends AppController
             'contain' => ['Product', 'Organization', 'OrderItem']
         ]);
 
-        $this->set('priceEntry', $priceEntry);
+        if ($this->loggedUserOrgId != null and $priceEntry['organization_id'] != ($this->loggedUserOrgId)) {
+            $this->unauthorizedAccessRedirect();
+        }
+
+        $this->set(['priceEntry' => $priceEntry, 'loggedUser' => $this->loggedUser]);
     }
 
     /**
@@ -49,21 +58,37 @@ class PriceEntryController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add($product_id = null)
     {
         $priceEntry = $this->PriceEntry->newEntity();
+        if ($product_id != null) {
+            $priceEntry->set('product_id', $product_id);
+        }
+
         if ($this->request->is('post')) {
             $priceEntry = $this->PriceEntry->patchEntity($priceEntry, $this->request->getData());
+
+            if ($this->loggedUserOrgId != null) {
+                $priceEntry->set('organization_id', $this->loggedUserOrgId);
+            }
+
             if ($this->PriceEntry->save($priceEntry)) {
                 $this->Flash->success(__('The price entry has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'Product', 'action' => 'view', $priceEntry->product_id]);
             }
             $this->Flash->error(__('The price entry could not be saved. Please, try again.'));
         }
-        $product = $this->PriceEntry->Product->find('list', ['limit' => 200]);
-        $organization = $this->PriceEntry->Organization->find('list', ['limit' => 200]);
-        $this->set(compact('priceEntry', 'product', 'organization'));
+
+        if ($this->loggedUserOrgId == null) {
+            $organization = $this->PriceEntry->Organization->find('list', ['limit' => 200]);
+            $product = $this->PriceEntry->Product->find('list', ['limit' => 200]);
+        } else {
+            $organization = null;
+            $product = $this->PriceEntry->Product->find('list', ['limit' => 200])->where(['organization_id' => $this->loggedUserOrgId]);
+        }
+
+        $this->set(['priceEntry' => $priceEntry, 'loggedUser' => $this->loggedUser, 'product' => $product, 'organization' => $organization]);
     }
 
     /**
@@ -78,18 +103,30 @@ class PriceEntryController extends AppController
         $priceEntry = $this->PriceEntry->get($id, [
             'contain' => []
         ]);
+
+        if ($this->loggedUserOrgId != null and $priceEntry['organization_id'] != ($this->loggedUserOrgId)) {
+            $this->unauthorizedAccessRedirect();
+        }
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $priceEntry = $this->PriceEntry->patchEntity($priceEntry, $this->request->getData());
             if ($this->PriceEntry->save($priceEntry)) {
                 $this->Flash->success(__('The price entry has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'Product', 'action' => 'view', $priceEntry->product_id]);
             }
             $this->Flash->error(__('The price entry could not be saved. Please, try again.'));
         }
-        $product = $this->PriceEntry->Product->find('list', ['limit' => 200]);
-        $organization = $this->PriceEntry->Organization->find('list', ['limit' => 200]);
-        $this->set(compact('priceEntry', 'product', 'organization'));
+
+        if ($this->loggedUserOrgId == null) {
+            $organization = $this->PriceEntry->Organization->find('list', ['limit' => 200]);
+            $product = $this->PriceEntry->Product->find('list', ['limit' => 200]);
+        } else {
+            $organization = null;
+            $product = $this->PriceEntry->Product->find('list', ['limit' => 200])->where(['organization_id' => $this->loggedUserOrgId]);
+        }
+
+        $this->set(['priceEntry' => $priceEntry, 'loggedUser' => $this->loggedUser, 'product' => $product, 'organization' => $organization]);
     }
 
     /**
@@ -103,13 +140,18 @@ class PriceEntryController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $priceEntry = $this->PriceEntry->get($id);
+
+        if ($this->loggedUserOrgId != null and $priceEntry['organization_id'] != ($this->loggedUserOrgId)) {
+            $this->unauthorizedAccessRedirect();
+        }
+
         if ($this->PriceEntry->delete($priceEntry)) {
             $this->Flash->success(__('The price entry has been deleted.'));
         } else {
             $this->Flash->error(__('The price entry could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['controller' => 'Product', 'action' => 'view', $priceEntry->product_id]);
     }
 
     /**
@@ -120,6 +162,6 @@ class PriceEntryController extends AppController
      */
     public function isAuthorized($user)
     {
-        return false;
+        return $this->isUserAuthorizedFor($user, $this->getName());
     }
 }

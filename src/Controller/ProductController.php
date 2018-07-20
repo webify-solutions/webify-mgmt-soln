@@ -46,6 +46,10 @@ class ProductController extends AppController
             'contain' => ['Organization', 'InvoiceItem', 'OrderItem', 'PriceEntry']
         ]);
 
+        if ($this->loggedUserOrgId != null and $product['organization_id'] != ($this->loggedUserOrgId)) {
+            $this->unauthorizedAccessRedirect();
+        }
+
         $this->set(['product' => $product, 'loggedUser' => $this->loggedUser]);
     }
 

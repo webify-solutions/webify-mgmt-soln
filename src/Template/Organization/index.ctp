@@ -11,7 +11,7 @@
     </ul>
 </nav>
 <div class="organization index large-9 medium-8 columns content">
-    <h3><?= __('Organization') ?></h3>
+    <h3><?= __('Organizations') ?></h3>
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>

@@ -23,7 +23,7 @@
     </ul>
 </nav>
 <div class="group view large-9 medium-8 columns content">
-    <h3><?= h($group->name) ?></h3>
+    <h3><?= __('Group') ?></h3>
     <table class="vertical-table">
         <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
             <tr>

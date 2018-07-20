@@ -24,7 +24,7 @@
     </ul>
 </nav>
 <div class="customer view large-9 medium-8 columns content">
-    <h3><?= h($customer->title) ?></h3>
+    <h3><?= __('Customer') ?></h3>
     <table class="vertical-table">
         <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
             <tr>

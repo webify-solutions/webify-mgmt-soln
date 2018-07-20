@@ -17,7 +17,7 @@
     </ul>
 </nav>
 <div class="priceEntry index large-9 medium-8 columns content">
-    <h3><?= __('Price Entry') ?></h3>
+    <h3><?= __('Price Entries') ?></h3>
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>

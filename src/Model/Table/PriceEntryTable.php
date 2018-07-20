@@ -63,6 +63,10 @@ class PriceEntryTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
+            ->integer('product_id')
+            ->notEmpty('product_id');
+
+        $validator
             ->numeric('price')
             ->allowEmpty('price');
 
