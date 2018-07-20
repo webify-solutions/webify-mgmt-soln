@@ -16,7 +16,7 @@
         <thead>
             <tr>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
-                <?php if(in_array('organization', $loggedUser['active_features'], true)) : ?>
+                <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
                     <th scope="col"><?= $this->Paginator->sort('organization_id') ?></th>
                 <?php endif; ?>
                 <th scope="col"><?= $this->Paginator->sort('name') ?></th>

@@ -23,9 +23,14 @@ class ProductController extends AppController
         $this->paginate = [
             'contain' => ['Organization']
         ];
-        $product = $this->paginate($this->Product);
 
-        $this->set(compact('product'));
+        if ($this->loggedUserOrgId != null) {
+            $product = $this->paginate($this->Product->find()->where(['organization_id' => $this->loggedUserOrgId]));
+        } else {
+            $product = $this->paginate($this->Product);
+        }
+
+        $this->set(['product' => $product, 'loggedUser' => $this->loggedUser]);
     }
 
     /**
@@ -41,7 +46,7 @@ class ProductController extends AppController
             'contain' => ['Organization', 'InvoiceItem', 'OrderItem', 'PriceEntry']
         ]);
 
-        $this->set('product', $product);
+        $this->set(['product' => $product, 'loggedUser' => $this->loggedUser]);
     }
 
     /**
@@ -54,6 +59,11 @@ class ProductController extends AppController
         $product = $this->Product->newEntity();
         if ($this->request->is('post')) {
             $product = $this->Product->patchEntity($product, $this->request->getData());
+
+            if ($this->loggedUserOrgId != null) {
+                $product->set('organization_id', $this->loggedUserOrgId);
+            }
+
             if ($this->Product->save($product)) {
                 $this->Flash->success(__('The product has been saved.'));
 
@@ -61,8 +71,14 @@ class ProductController extends AppController
             }
             $this->Flash->error(__('The product could not be saved. Please, try again.'));
         }
-        $organization = $this->Product->Organization->find('list', ['limit' => 200]);
-        $this->set(compact('product', 'organization'));
+
+        if ($this->loggedUserOrgId == null) {
+            $organization = $this->Product->Organization->find('list', ['limit' => 200]);
+        } else {
+            $organization = null;
+        }
+
+        $this->set(['product' => $product, 'loggedUser' => $this->loggedUser, 'organization' => $organization]);
     }
 
     /**
@@ -77,6 +93,11 @@ class ProductController extends AppController
         $product = $this->Product->get($id, [
             'contain' => []
         ]);
+
+        if ($this->loggedUserOrgId != null and $product['organization_id'] != ($this->loggedUserOrgId)) {
+            $this->unauthorizedAccessRedirect();
+        }
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $product = $this->Product->patchEntity($product, $this->request->getData());
             if ($this->Product->save($product)) {
@@ -86,8 +107,14 @@ class ProductController extends AppController
             }
             $this->Flash->error(__('The product could not be saved. Please, try again.'));
         }
-        $organization = $this->Product->Organization->find('list', ['limit' => 200]);
-        $this->set(compact('product', 'organization'));
+
+        if ($this->loggedUserOrgId == null) {
+            $organization = $this->Product->Organization->find('list', ['limit' => 200]);
+        } else {
+            $organization = null;
+        }
+
+        $this->set(['product' => $product, 'loggedUser' => $this->loggedUser, 'organization' => $organization]);
     }
 
     /**
@@ -101,6 +128,11 @@ class ProductController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $product = $this->Product->get($id);
+
+        if ($this->loggedUserOrgId != null and $product['organization_id'] != ($this->loggedUserOrgId)) {
+            $this->unauthorizedAccessRedirect();
+        }
+
         if ($this->Product->delete($product)) {
             $this->Flash->success(__('The product has been deleted.'));
         } else {
@@ -118,6 +150,6 @@ class ProductController extends AppController
      */
     public function isAuthorized($user)
     {
-        return false;
+        return $this->isUserAuthorizedFor($user, $this->getName());
     }
 }

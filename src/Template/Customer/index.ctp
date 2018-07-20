@@ -16,7 +16,7 @@
         <thead>
             <tr>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
-                <?php if(in_array('organization', $loggedUser['active_features'], true)) : ?>
+                <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
                     <th scope="col"><?= $this->Paginator->sort('organization_id') ?></th>
                 <?php endif; ?>
                 <th scope="col"><?= $this->Paginator->sort('customer_number') ?></th>
@@ -47,7 +47,7 @@
                             ]
                     ) ?>
                 </td>
-                <?php if(in_array('organization', $loggedUser['active_features'], true)) : ?>
+                <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
                     <td><?= $customer->has('organization') ? $this->Html->link($customer->organization->name, ['controller' => 'Organization', 'action' => 'view', $customer->organization->id]) : '' ?></td>
                 <?php endif; ?>
                 <td><?= $this->Html->link(h($customer->customer_number), ['controller' => 'Customer', 'action' => 'view', $customer->id]) ?></td>

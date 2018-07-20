@@ -85,29 +85,29 @@ class AppController extends Controller
             $organization = $organizations->get($this->Auth->user('organization_id'));
 
             $activeFeatures = [
-                'customer',
+                'Customer',
             ];
             $userRole = $this->Auth->user('role');
 
             if($userRole == 'Admin') {
-                $activeFeatures[] = ('group');
-                $activeFeatures[] = ('user');
+                $activeFeatures[] = ('Group');
+                $activeFeatures[] = ('User');
 
                 if ($organization['active_product_feature'] == 1) {
-                    $activeFeatures[] = ('product');
+                    $activeFeatures[] = ('Product');
                 }
 
                 if ($organization['active_order_feature'] == 1) {
-                    $activeFeatures[] = ('order');
+                    $activeFeatures[] = ('Order');
                 }
 
                 if ($organization['active_invoicing_feature'] == 1) {
-                    $activeFeatures[] = ('invoice');
-                    $activeFeatures[] = ('payment');
+                    $activeFeatures[] = ('Invoice');
+                    $activeFeatures[] = ('Payment');
                 }
 
                 if ($organization['active_case_feature'] == 1) {
-                    $activeFeatures[] = ('support_case');
+                    $activeFeatures[] = ('SupportCase');
                 }
             }
 
@@ -127,15 +127,15 @@ class AppController extends Controller
                 'role' => $this->Auth->user('role'),
                 'organization_name' => 'All',
                 'active_features' => [
-                    'group',
-                    'customer',
-                    'product',
-                    'order',
-                    'invoice',
-                    'support_case',
-                    'payment',
-                    'organization',
-                    'user'
+                    'Group',
+                    'Customer',
+                    'Product',
+                    'Order',
+                    'Invoice',
+                    'Support_case',
+                    'Payment',
+                    'Organization',
+                    'User'
                 ]
             ];
 
@@ -155,5 +155,16 @@ class AppController extends Controller
         }
 
         return null;
+    }
+
+    public function isUserAuthorizedFor($user, $controllerName) {
+        if ($user != null and $this->loggedUser != null
+            and $user['login_name'] == $this->loggedUser['login_name']
+            and in_array($controllerName, $this->loggedUser['active_features'])) {
+
+            return true;
+        }
+
+        return false;
     }
 }

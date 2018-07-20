@@ -26,7 +26,7 @@
 <div class="customer view large-9 medium-8 columns content">
     <h3><?= h($customer->title) ?></h3>
     <table class="vertical-table">
-        <?php if(in_array('organization', $loggedUser['active_features'], true)) : ?>
+        <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
             <tr>
                 <th scope="row"><?= __('Organization') ?></th>
                 <td><?= $customer->has('organization') ? $this->Html->link($customer->organization->name, ['controller' => 'Organization', 'action' => 'view', $customer->organization->id]) : '' ?></td>
@@ -85,7 +85,7 @@
             <td><?= h($customer->last_updated) ?></td>
         </tr>
     </table>
-    <?php if(in_array('order', $loggedUser['active_features'], true)) : ?>
+    <?php if(in_array('Order', $loggedUser['active_features'], true)) : ?>
         <div class="related">
             <h4><?= __('Related Order') ?></h4>
             <?php if (!empty($customer->order)): ?>
@@ -130,7 +130,7 @@
             <?php endif; ?>
         </div>
     <?php endif; ?>
-    <?php if(in_array('support_case', $loggedUser['active_features'], true)) : ?>
+    <?php if(in_array('SupportCase', $loggedUser['active_features'], true)) : ?>
         <div class="related">
             <h4><?= __('Related Support Case') ?></h4>
             <?php if (!empty($customer->support_case)): ?>

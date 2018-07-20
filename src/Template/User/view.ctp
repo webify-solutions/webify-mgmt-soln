@@ -27,7 +27,7 @@
 <div class="user view large-9 medium-8 columns content">
     <h3><?= h($user->login_name) ?></h3>
     <table class="vertical-table">
-        <?php if(in_array('organization', $loggedUser['active_features'], true)) : ?>
+        <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
         <tr>
             <th scope="row"><?= __('Organization') ?></th>
             <td><?= $user->has('organization') ? $this->Html->link($user->organization->name, ['controller' => 'Organization', 'action' => 'view', $user->organization->id]) : '' ?></td>

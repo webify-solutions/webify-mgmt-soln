@@ -160,13 +160,6 @@ class CustomerController extends AppController
      */
     public function isAuthorized($user)
     {
-        if ($user != null and $this->loggedUser != null
-            and $user['login_name'] == $this->loggedUser['login_name']
-            and in_array('customer', $this->loggedUser['active_features'])) {
-
-            return true;
-        }
-
-        return false;
+        return $this->isUserAuthorizedFor($user, $this->getName());
     }
 }

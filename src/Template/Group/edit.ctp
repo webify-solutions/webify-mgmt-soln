@@ -8,8 +8,9 @@
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Html->link(__('Groups'), ['controller' => 'Group', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Group'), ['controller'=>'Group', 'action' => 'add']) ?></li>
         <li><?= $this->Form->postLink(
-                __('Delete'),
+                __('Delete Group'),
                 [
                     'controller' => 'Group',
                     'action' => 'delete', $group->id

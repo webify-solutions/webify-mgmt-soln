@@ -25,7 +25,7 @@
 <div class="group view large-9 medium-8 columns content">
     <h3><?= h($group->name) ?></h3>
     <table class="vertical-table">
-        <?php if(in_array('organization', $loggedUser['active_features'], true)) : ?>
+        <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
             <tr>
                 <th scope="row"><?= __('Organization') ?></th>
                 <td><?= $group->has('organization') ? $this->Html->link($group->organization->name, ['controller' => 'Organization', 'action' => 'view', $group->organization->id]) : '' ?></td>
@@ -44,7 +44,7 @@
             <td><?= h($group->last_updated) ?></td>
         </tr>
     </table>
-    <?php if(in_array('user', $loggedUser['active_features'], true)) : ?>
+    <?php if(in_array('User', $loggedUser['active_features'], true)) : ?>
         <div class="related">
             <h4><?= __('Related User') ?></h4>
             <?php if (!empty($group->user)): ?>
@@ -82,7 +82,7 @@
         </div>
     <?php endif; ?>
 
-    <?php if(in_array('customer', $loggedUser['active_features'], true)) : ?>
+    <?php if(in_array('Customer', $loggedUser['active_features'], true)) : ?>
         <div class="related">
             <h4><?= __('Related Customer') ?></h4>
             <?php if (!empty($group->customer)): ?>

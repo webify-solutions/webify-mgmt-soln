@@ -69,12 +69,12 @@ class ProductTable extends Table
         $validator
             ->scalar('name')
             ->maxLength('name', 255)
-            ->allowEmpty('name');
+            ->notEmpty('name');
 
         $validator
             ->scalar('sku')
             ->maxLength('sku', 255)
-            ->allowEmpty('sku');
+            ->notEmpty('sku');
 
         $validator
             ->scalar('description')
