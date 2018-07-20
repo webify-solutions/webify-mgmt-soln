@@ -36,6 +36,10 @@
             <td><?= h($organization->address) ?></td>
         </tr>
         <tr>
+            <th scope="row"><?= __('Currency Used') ?></th>
+            <td><?= h($organization->currency_used) ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('Is Organization Active') ?></th>
             <td><?= $organization->active ? __('Yes') : __('No'); ?></td>
         </tr>

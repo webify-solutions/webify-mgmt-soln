@@ -40,13 +40,20 @@
             </tr>
         <?php endif; ?>
         <tr>
+            <th scope="row"><?= __('Price') ?></th>
+            <td><?= $this->Number->format($priceEntry->price) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Price Unit') ?></th>
+            <td><?= h($priceEntry->price_unit) ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('Available Discount') ?></th>
             <td><?= h($priceEntry->available_discount) ?></td>
         </tr>
-
         <tr>
-            <th scope="row"><?= __('Price') ?></th>
-            <td><?= $this->Number->format($priceEntry->price) ?></td>
+            <th scope="row"><?= __('Available Discount Unit') ?></th>
+            <td><?= h($priceEntry->available_discount_unit) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Active') ?></th>

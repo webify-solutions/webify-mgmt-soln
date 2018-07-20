@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-use Cake\Http\Exception\NotFoundException;
+use App\Model\Entity\User;
 
 /**
  * User Controller
@@ -14,7 +14,6 @@ use Cake\Http\Exception\NotFoundException;
 class UserController extends AppController
 {
 
-    protected $userRoles = ['Admin'=> 'Admin', 'Sales' => 'Sales', 'Cashier' => 'Cashier', 'Technician' => 'Technician'];
     /**
      * Index method
      *
@@ -87,7 +86,7 @@ class UserController extends AppController
             $group = $this->User->Group->find('list', ['limit' => 200])->where(['organization_id' => $this->loggedUserOrgId]);
         }
 
-        $this->set(['user' => $user, 'loggedUser' => $this->loggedUser, 'organization' => $organization, 'group' => $group, 'userRoles' => $this->userRoles]);
+        $this->set(['user' => $user, 'loggedUser' => $this->loggedUser, 'organization' => $organization, 'group' => $group, 'userRoles' => User::$roles]);
     }
 
     /**

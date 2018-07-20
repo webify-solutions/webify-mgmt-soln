@@ -101,7 +101,7 @@ class OrganizationTable extends Table
         $validator
             ->scalar('name')
             ->maxLength('name', 255)
-            ->allowEmpty('name');
+            ->notEmpty('name');
 
         $validator
             ->email('email')
@@ -116,6 +116,11 @@ class OrganizationTable extends Table
             ->scalar('address')
             ->maxLength('address', 255)
             ->allowEmpty('address');
+
+        $validator
+            ->scalar('currency_used')
+            ->maxLength('currency_used', 45)
+            ->notEmpty('currency_used');
 
         $validator
             ->boolean('active')

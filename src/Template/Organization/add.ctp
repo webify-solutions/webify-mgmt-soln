@@ -19,6 +19,7 @@
             echo $this->Form->control('email');
             echo $this->Form->control('phone');
             echo $this->Form->control('address');
+            echo $this->Form->control('currency_used', ['options' => $currencies]);
             echo $this->Form->control('active', ['label'=> 'Is Active']);
 
             echo '<legend>Activate Application features</legend>';

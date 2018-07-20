@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Model\Entity\Organization;
 
 /**
  * PriceEntry Controller
@@ -83,12 +84,23 @@ class PriceEntryController extends AppController
         if ($this->loggedUserOrgId == null) {
             $organization = $this->PriceEntry->Organization->find('list', ['limit' => 200]);
             $product = $this->PriceEntry->Product->find('list', ['limit' => 200]);
+            $currencies = Organization::$currencies;
         } else {
             $organization = null;
             $product = $this->PriceEntry->Product->find('list', ['limit' => 200])->where(['organization_id' => $this->loggedUserOrgId]);
+            $currencies = $this->loggedUser['organization_currency_used'];
         }
 
-        $this->set(['priceEntry' => $priceEntry, 'loggedUser' => $this->loggedUser, 'product' => $product, 'organization' => $organization]);
+        $discountUnits = Organization::$discountUnits;
+
+        $this->set([
+            'priceEntry' => $priceEntry,
+            'loggedUser' => $this->loggedUser,
+            'product' => $product,
+            'organization' => $organization,
+            'currencies' => $currencies,
+            'discountUnits' => $discountUnits
+        ]);
     }
 
     /**
@@ -121,12 +133,23 @@ class PriceEntryController extends AppController
         if ($this->loggedUserOrgId == null) {
             $organization = $this->PriceEntry->Organization->find('list', ['limit' => 200]);
             $product = $this->PriceEntry->Product->find('list', ['limit' => 200]);
+            $currencies = Organization::$currencies;
         } else {
             $organization = null;
             $product = $this->PriceEntry->Product->find('list', ['limit' => 200])->where(['organization_id' => $this->loggedUserOrgId]);
+            $currencies = $this->loggedUser['organization_currency_used'];
         }
 
-        $this->set(['priceEntry' => $priceEntry, 'loggedUser' => $this->loggedUser, 'product' => $product, 'organization' => $organization]);
+        $discountUnits = Organization::$discountUnits;
+
+        $this->set([
+            'priceEntry' => $priceEntry,
+            'loggedUser' => $this->loggedUser,
+            'product' => $product,
+            'organization' => $organization,
+            'currencies' => $currencies,
+            'discountUnits' => $discountUnits
+        ]);
     }
 
     /**

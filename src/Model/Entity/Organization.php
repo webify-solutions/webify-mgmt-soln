@@ -35,6 +35,9 @@ use Cake\ORM\Entity;
 class Organization extends Entity
 {
 
+    public static $currencies = ['USD' => 'USD', 'LL' => 'LL'];
+    public static $discountUnits = ['Percentage' => 'Percentage', 'Amount' => 'Amount'];
+
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -49,6 +52,7 @@ class Organization extends Entity
         'email' => true,
         'phone' => true,
         'address' => true,
+        'currency_used' => true,
         'active' => true,
         'active_product_feature' => true,
         'active_order_feature' => true,

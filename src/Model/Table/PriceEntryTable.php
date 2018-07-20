@@ -68,12 +68,21 @@ class PriceEntryTable extends Table
 
         $validator
             ->numeric('price')
-            ->allowEmpty('price');
+            ->notEmpty('price');
 
         $validator
-            ->scalar('available_discount')
-            ->maxLength('available_discount', 255)
+            ->scalar('price_unit')
+            ->maxLength('price_unit', 45)
+            ->notEmpty('price_unit');
+
+        $validator
+            ->numeric('available_discount')
             ->allowEmpty('available_discount');
+
+        $validator
+            ->scalar('available_discount_unit')
+            ->maxLength('available_discount_unit', 45)
+            ->allowEmpty('available_discount_unit');
 
         $validator
             ->boolean('active')

@@ -7,6 +7,7 @@
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
+        <li><?= $this->Html->link(__('View Product'), ['controller' => 'Product', 'action' => 'view', $priceEntry->product_id]) ?></li>
         <li><?= $this->Html->link(__('New Price Entry'), ['controller' => 'PriceEntry', 'action' => 'add', $priceEntry->product_id]) ?> </li>
         <li><?= $this->Form->postLink(
             __('Delete Price Entry'),
@@ -31,7 +32,9 @@
         }
         echo $this->Form->control('product_id', ['options' => $product]);
         echo $this->Form->control('price');
+        echo $this->Form->control('price_unit', ['options' => $currencies]);
         echo $this->Form->control('available_discount');
+        echo $this->Form->control('available_discount_unit', ['options' => $discountUnits, 'empty' => true]);
         echo $this->Form->control('active');
         ?>
     </fieldset>

@@ -14,6 +14,7 @@
  */
 namespace App\Controller;
 
+use App\Model\Entity\Organization;
 use Cake\Controller\Controller;
 use Cake\ORM\TableRegistry;
 
@@ -119,6 +120,7 @@ class AppController extends Controller
                 'role' => $userRole,
                 'organization_id' => $organization_id,
                 'organization_name' => $organization['name'],
+                'organization_currency_used' => [$organization['currency_used'] => $organization['currency_used']],
                 'active_features' => $activeFeatures
             ];
 
@@ -129,12 +131,16 @@ class AppController extends Controller
                 'login_name' => $this->Auth->user('login_name'),
                 'role' => $this->Auth->user('role'),
                 'organization_name' => 'All',
+                'organization_currency_used' => Organization::$currencies,
                 'active_features' => [
                     'Group',
                     'Customer',
                     'Product',
+                    'PriceEntry',
                     'Order',
+                    'OrderItem',
                     'Invoice',
+                    'InvoiceItem',
                     'Support_case',
                     'Payment',
                     'Organization',

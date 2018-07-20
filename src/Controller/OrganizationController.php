@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Model\Entity\Organization;
 
 /**
  * Organization Controller
@@ -60,9 +61,10 @@ class OrganizationController extends AppController
             }
             $this->Flash->error(__('The organization could not be saved. Please, try again.'));
         }
-        $loggedUser = $this->loggedUser;
 
-        $this->set(['organization' => $organization, 'loggedUser' => $this->loggedUser]);
+        $currencies = Organization::$currencies;
+
+        $this->set(['organization' => $organization, 'loggedUser' => $this->loggedUser, 'currencies' => $currencies]);
     }
 
     /**
@@ -86,9 +88,10 @@ class OrganizationController extends AppController
             }
             $this->Flash->error(__('The organization could not be saved. Please, try again.'));
         }
-        $loggedUser = $this->loggedUser;
 
-        $this->set(['organization' => $organization, 'loggedUser' => $this->loggedUser]);
+        $currencies = Organization::$currencies;
+
+        $this->set(['organization' => $organization, 'loggedUser' => $this->loggedUser, 'currencies' => $currencies]);
     }
 
     /**
