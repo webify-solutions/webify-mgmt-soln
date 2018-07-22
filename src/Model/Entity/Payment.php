@@ -33,6 +33,7 @@ class Payment extends Entity
     protected $_accessible = [
         'order_id' => true,
         'organization_id' => true,
+        'invoice_id' => true,
         'total_amount' => true,
         'transaction_date' => true,
         'void' => true,

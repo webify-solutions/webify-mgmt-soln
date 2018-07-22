@@ -1,12 +1,9 @@
 <?php
 namespace App\Model\Table;
 
-use ArrayObject;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-use Cake\Event\Event;
-use Cake\Datasource\EntityInterface;
 
 
 /**
@@ -38,6 +35,8 @@ class CustomerTable extends Table
     public function initialize(array $config)
     {
         parent::initialize($config);
+
+        $this->addBehavior('Customer');
 
         $this->setTable('customer');
         $this->setDisplayField('title');
@@ -142,13 +141,4 @@ class CustomerTable extends Table
         return $rules;
     }
 
-    public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
-    {
-        debug($entity);
-
-        if($entity->get('customer_number') == null) {
-            $customerNumber = uniqid("C-", false);
-            $entity->set('customer_number', __($customerNumber));
-        }
-    }
 }

@@ -7,23 +7,20 @@
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
+        <li><?= $this->Html->link(__('Orders'), ['controller' => 'Order', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Order'), ['controller' => 'Order', 'action' => 'add']) ?></li>
         <li><?= $this->Form->postLink(
                 __('Delete'),
                 ['action' => 'delete', $order->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $order->id)]
+                ['confirm' => __('Are you sure you want to delete {0}?', $order->order_number)]
             )
         ?></li>
-        <li><?= $this->Html->link(__('List Order'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Customer'), ['controller' => 'Customer', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Customer'), ['controller' => 'Customer', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Organization'), ['controller' => 'Organization', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Organization'), ['controller' => 'Organization', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Invoice'), ['controller' => 'Invoice', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Invoice'), ['controller' => 'Invoice', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Order Item'), ['controller' => 'OrderItem', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Order Item'), ['controller' => 'OrderItem', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Payment'), ['controller' => 'Payment', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Payment'), ['controller' => 'Payment', 'action' => 'add']) ?></li>
+        <li><?= $this->Form->postLink(
+                __('Cancel'),
+                ['action' => 'cancel', $order->id],
+                ['confirm' => __('Are you sure you want to Cancel {0}?', $order->order_number)]
+            )
+        ?></li>
     </ul>
 </nav>
 <div class="order form large-9 medium-8 columns content">
@@ -31,17 +28,17 @@
     <fieldset>
         <legend><?= __('Edit Order') ?></legend>
         <?php
+            if ($organization != null) {
+                echo $this->Form->control('organization_id', ['options' => $organization, 'empty' => true]);
+            }
             echo $this->Form->control('customer_id', ['options' => $customer, 'empty' => true]);
-            echo $this->Form->control('organization_id', ['options' => $organization, 'empty' => true]);
-            echo $this->Form->control('order_number');
-            echo $this->Form->control('description');
+            echo $this->Form->control('order_date', ['empty' => true]);
             echo $this->Form->control('effective_date', ['empty' => true]);
+            echo $this->Form->control('delivery_date', ['empty' => true]);
             echo $this->Form->control('type');
+            echo $this->Form->control('notes');
             echo $this->Form->control('total_amount');
             echo $this->Form->control('total_discount');
-            echo $this->Form->control('active');
-            echo $this->Form->control('created_at', ['empty' => true]);
-            echo $this->Form->control('last_updated', ['empty' => true]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

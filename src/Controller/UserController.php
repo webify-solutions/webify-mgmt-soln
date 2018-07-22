@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use App\Model\Entity\User;
+use App\Utils\PropertyUtils;
 
 /**
  * User Controller
@@ -86,7 +87,7 @@ class UserController extends AppController
             $group = $this->User->Group->find('list', ['limit' => 200])->where(['organization_id' => $this->loggedUserOrgId]);
         }
 
-        $this->set(['user' => $user, 'loggedUser' => $this->loggedUser, 'organization' => $organization, 'group' => $group, 'userRoles' => User::$roles]);
+        $this->set(['user' => $user, 'loggedUser' => $this->loggedUser, 'organization' => $organization, 'group' => $group, 'userRoles' => PropertyUtils::$roles]);
     }
 
     /**
@@ -125,7 +126,7 @@ class UserController extends AppController
             $group = $this->User->Group->find('list', ['limit' => 200])->where(['organization_id' => $this->loggedUserOrgId]);
         }
 
-        $this->set(['user' => $user, 'loggedUser' => $this->loggedUser, 'organization' => $organization, 'group' => $group, 'userRoles' => $this->userRoles]);
+        $this->set(['user' => $user, 'loggedUser' => $this->loggedUser, 'organization' => $organization, 'group' => $group, 'userRoles' => PropertyUtils::$roles]);
     }
 
     /**

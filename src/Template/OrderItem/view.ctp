@@ -69,7 +69,7 @@
     </table>
     <div class="row">
         <h4><?= __('Description') ?></h4>
-        <?= $this->Text->autoParagraph(h($orderItem->description)); ?>
+        <?= $this->Text->autoParagraph(h($orderItem->notes)); ?>
     </div>
     <div class="related">
         <h4><?= __('Related Invoice Item') ?></h4>
@@ -98,7 +98,7 @@
                 <td><?= h($invoiceItem->organization_id) ?></td>
                 <td><?= h($invoiceItem->invoice_item_number) ?></td>
                 <td><?= h($invoiceItem->total_price) ?></td>
-                <td><?= h($invoiceItem->description) ?></td>
+                <td><?= h($invoiceItem->notes) ?></td>
                 <td><?= h($invoiceItem->created_at) ?></td>
                 <td><?= h($invoiceItem->last_updated) ?></td>
                 <td><?= h($invoiceItem->last_updated_by) ?></td>

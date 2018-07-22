@@ -29,8 +29,6 @@ use Cake\ORM\Entity;
 class User extends Entity
 {
 
-    public static  $roles = ['Admin'=> 'Admin', 'Sales' => 'Sales', 'Cashier' => 'Cashier', 'Technician' => 'Technician'];
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *

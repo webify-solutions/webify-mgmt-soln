@@ -13,7 +13,7 @@ use Cake\ORM\Entity;
  * @property int $organization_id
  * @property string $order_item_number
  * @property float $price_discount
- * @property string $description
+ * @property string $notes
  * @property bool $active
  * @property \Cake\I18n\FrozenTime $created_at
  * @property \Cake\I18n\FrozenTime $last_updated
@@ -43,7 +43,7 @@ class OrderItem extends Entity
         'organization_id' => true,
         'order_item_number' => true,
         'price_discount' => true,
-        'description' => true,
+        'notes' => true,
         'active' => true,
         'created_at' => true,
         'last_updated' => true,

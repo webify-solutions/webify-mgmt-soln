@@ -1,7 +1,6 @@
 <?php
 namespace App\Model\Table;
 
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -37,6 +36,8 @@ class OrderTable extends Table
     {
         parent::initialize($config);
 
+        $this->addBehavior('Order');
+
         $this->setTable('order');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
@@ -71,34 +72,57 @@ class OrderTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
+            ->integer('customer_id')
+            ->notEmpty('customer_id');
+
+        $validator
             ->scalar('order_number')
             ->maxLength('order_number', 255)
             ->allowEmpty('order_number');
 
         $validator
-            ->scalar('description')
-            ->allowEmpty('description');
+            ->scalar('notes')
+            ->allowEmpty('notes');
+
+        $validator
+            ->scalar('type')
+            ->notEmpty('type');
+
+        $validator
+            ->numeric('type_period')
+            ->allowEmpty('type_period');
+
+        $validator
+            ->date('order_date')
+            ->allowEmpty('order_date');
 
         $validator
             ->date('effective_date')
             ->allowEmpty('effective_date');
 
         $validator
-            ->scalar('type')
-            ->allowEmpty('type');
+            ->date('delivery_date')
+            ->allowEmpty('delivery_date');
 
         $validator
             ->numeric('total_amount')
             ->allowEmpty('total_amount');
 
         $validator
-            ->numeric('total_discount')
-            ->allowEmpty('total_discount');
+            ->scalar('total_amount_unit')
+            ->allowEmpty('total_amount_unit');
+
+        $validator
+            ->numeric('order_discount')
+            ->allowEmpty('order_discount');
+
+        $validator
+            ->scalar('order_discount_unit')
+            ->allowEmpty('order_discount_unit');
 
         $validator
             ->boolean('active')
-            ->requirePresence('active', 'create')
-            ->notEmpty('active');
+            ->allowEmpty('active');
 
         $validator
             ->dateTime('created_at')

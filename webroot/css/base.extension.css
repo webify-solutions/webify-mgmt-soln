@@ -4,6 +4,33 @@
     font-style: italic;
 }
 
+.period-picker {
+    margin-bottom: 54px;
+}
+
+.period-picker span,
+.period-picker select {
+    display: inline-block;
+    float: left;
+}
+
+.period-picker span {
+    margin-left: 0;
+    margin-right: 12px;
+    margin-top: 5px;
+    width: auto;
+    color: #4d4d4d;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: normal;
+    line-height: 1.5;
+}
+
+.period-picker select {
+    margin-right: 10px;
+    width: auto;
+}
+
 iframe {
     display: none;
 }

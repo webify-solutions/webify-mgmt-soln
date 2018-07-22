@@ -37,7 +37,7 @@
             echo $this->Form->control('organization_id', ['options' => $organization, 'empty' => true]);
             echo $this->Form->control('order_item_number');
             echo $this->Form->control('price_discount');
-            echo $this->Form->control('description');
+            echo $this->Form->control('notes');
             echo $this->Form->control('active');
             echo $this->Form->control('created_at', ['empty' => true]);
             echo $this->Form->control('last_updated', ['empty' => true]);

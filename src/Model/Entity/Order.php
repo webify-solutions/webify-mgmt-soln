@@ -10,11 +10,11 @@ use Cake\ORM\Entity;
  * @property int $customer_id
  * @property int $organization_id
  * @property string $order_number
- * @property string $description
+ * @property string $notes
  * @property \Cake\I18n\FrozenDate $effective_date
  * @property string $type
  * @property float $total_amount
- * @property float $total_discount
+ * @property float $order_discount
  * @property bool $active
  * @property \Cake\I18n\FrozenTime $created_at
  * @property \Cake\I18n\FrozenTime $last_updated
@@ -41,11 +41,16 @@ class Order extends Entity
         'customer_id' => true,
         'organization_id' => true,
         'order_number' => true,
-        'description' => true,
-        'effective_date' => true,
+        'notes' => true,
         'type' => true,
+        'type_period' => true,
+        'order_date' => true,
+        'effective_date' => true,
+        'delivery_date' => true,
         'total_amount' => true,
-        'total_discount' => true,
+        'total_amount_unit' => true,
+        'order_discount' => true,
+        'order_discount_unit' => true,
         'active' => true,
         'created_at' => true,
         'last_updated' => true,

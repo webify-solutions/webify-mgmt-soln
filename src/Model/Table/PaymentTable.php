@@ -44,6 +44,9 @@ class PaymentTable extends Table
         $this->belongsTo('Organization', [
             'foreignKey' => 'organization_id'
         ]);
+        $this->belongsTo('Order', [
+            'foreignKey' => 'invoice_id'
+        ]);
     }
 
     /**
@@ -93,6 +96,7 @@ class PaymentTable extends Table
     {
         $rules->add($rules->existsIn(['order_id'], 'Order'));
         $rules->add($rules->existsIn(['organization_id'], 'Organization'));
+        $rules->add($rules->existsIn(['invoice_id'], 'Invoice'));
 
         return $rules;
     }
