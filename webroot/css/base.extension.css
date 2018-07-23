@@ -32,6 +32,10 @@
     width: auto;
 }
 
+.left-justified {
+    text-align: right;
+}
+
 iframe {
     display: none;
 }

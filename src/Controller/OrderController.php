@@ -54,17 +54,6 @@ class OrderController extends AppController
 
         $order->set('type', PropertyUtils::$orderTypes[$order->type]);
 
-        if($order->total_amount >= 0) {
-            $discount = 0;
-            if($order->order_discount_unit == 'Amount') {
-                $discount = $order->order_discount;
-            } else if ($order->order_discount_unit == 'Percentage') {
-                $discount = $order->total_amount * ($order->order_discount / 100);
-            }
-
-            $order->set('total_amount', $discount);
-        }
-
         $this->set(['order' => $order, 'loggedUser' => $this->loggedUser]);
     }
 
@@ -78,23 +67,30 @@ class OrderController extends AppController
     {
         $order = $this->Order->newEntity();
 
-        if ($this->request->is('post')) {
-            $order = $this->Order->patchEntity($order, $this->request->getData());
+        if ($this->request->is('post'))
+        {
+            if(($this->request->getData('order_discount') == null and $this->request->getData('order_discount_unit') == null)
+                or ($this->request->getData('order_discount') != null and $this->request->getData('order_discount_unit') != null))
+            {
+                $order = $this->Order->patchEntity($order, $this->request->getData());
 
-            if ($this->loggedUserOrgId != null) {
-                $order->set('organization_id', $this->loggedUserOrgId);
+                if ($this->loggedUserOrgId != null) {
+                    $order->set('organization_id', $this->loggedUserOrgId);
+                }
+
+                if ($this->Order->save($order)) {
+                    $this->Flash->success(__('The order has been saved.'));
+
+                    return $this->redirect(['action' => 'index']);
+                }
+                $this->Flash->error(__('The order could not be saved. Please, try again.'));
+            } else {
+
+                $this->Flash->error(__('Order Discount and Order Discount Unit must be both present'));
             }
-
-            debug($order);
-            if ($this->Order->save($order)) {
-                $this->Flash->success(__('The order has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The order could not be saved. Please, try again.'));
         }
 
-        $order->set('total_amount_unit', $this->loggedUser['organization_currency_used']);
+        $order->set('currency', $this->loggedUser['organization_currency_used']);
         $order->set('customer_id', $customerId);
 
         if ($this->loggedUserOrgId == null) {
@@ -118,7 +114,7 @@ class OrderController extends AppController
             'types' => PropertyUtils::$orderTypes,
             'typePeriods' => range(0, 84),
             'orderDiscountUnits' => PropertyUtils::$discountUnits,
-            'totalAmountUnits' => $this->loggedUser['organization_currency_used']
+            'currencies' => $this->loggedUser['organization_currency_used']
         ]);
     }
 
@@ -131,6 +127,7 @@ class OrderController extends AppController
      */
     public function edit($id = null)
     {
+
         $order = $this->Order->get($id, [
             'contain' => []
         ]);
@@ -140,13 +137,18 @@ class OrderController extends AppController
         }
 
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $order = $this->Order->patchEntity($order, $this->request->getData());
-            if ($this->Order->save($order)) {
-                $this->Flash->success(__('The order has been saved.'));
+            if(($this->request->getData('order_discount') == null and $this->request->getData('order_discount_unit') == null)
+                or ($this->request->getData('order_discount') != null and $this->request->getData('order_discount_unit') != null)) {
+                $order = $this->Order->patchEntity($order, $this->request->getData());
+                if ($this->Order->save($order)) {
+                    $this->Flash->success(__('The order has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                    return $this->redirect(['action' => 'index']);
+                }
+                $this->Flash->error(__('The order could not be saved. Please, try again.'));
+            } else {
+                $this->Flash->error(__('Order Discount and Order Discount Unit must be both present'));
             }
-            $this->Flash->error(__('The order could not be saved. Please, try again.'));
         }
 
         if ($this->loggedUserOrgId == null) {
@@ -170,7 +172,7 @@ class OrderController extends AppController
             'types' => PropertyUtils::$orderTypes,
             'typePeriods' => range(0, 84),
             'orderDiscountUnits' => PropertyUtils::$discountUnits,
-            'totalAmountUnits' => $this->loggedUser['organization_currency_used']
+            'currencies' => $this->loggedUser['organization_currency_used']
         ]);
     }
 

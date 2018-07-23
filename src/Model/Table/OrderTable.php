@@ -105,12 +105,16 @@ class OrderTable extends Table
             ->allowEmpty('delivery_date');
 
         $validator
+            ->numeric('subtotal_amount')
+            ->allowEmpty('subtotal_amount');
+
+        $validator
             ->numeric('total_amount')
             ->allowEmpty('total_amount');
 
         $validator
-            ->scalar('total_amount_unit')
-            ->allowEmpty('total_amount_unit');
+            ->scalar('currency')
+            ->allowEmpty('currency');
 
         $validator
             ->numeric('order_discount')

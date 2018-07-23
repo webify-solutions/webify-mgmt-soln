@@ -70,17 +70,11 @@
                     'minYear' => date( 'Y') - 40,
                     'maxYear' => date('Y')
                 ]);
+            echo $this->Form->control('subtotal_amount', ['disabled' => 'disabled']);
             echo $this->Form->control('total_amount', ['disabled' => 'disabled']);
-            echo $this->Form->control('total_amount_unit', ['options' => $totalAmountUnits, 'empty' => true]);
+            echo $this->Form->control('currency', ['options' => $currencies, 'empty' => false]);
             echo $this->Form->control('order_discount');
-            echo $this->Form->control(
-                'order_discount_unit',
-                [
-                    'options' => $orderDiscountUnits,
-                    'empty' => true,
-                    ['disabled' => 'disabled']
-                ]
-            );
+            echo $this->Form->control('order_discount_unit', ['options' => $orderDiscountUnits, 'empty' => true]);
             echo $this->Form->control('notes');
         ?>
     </fieldset>

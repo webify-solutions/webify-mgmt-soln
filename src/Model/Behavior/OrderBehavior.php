@@ -52,5 +52,23 @@ class OrderBehavior extends Behavior
         if($entity->get('active') == null) {
             $entity->set('active', true);
         }
+
+        if($entity->get('subtotal_amount') != null
+            and $entity->get('subtotal_amount') >= 0
+            and ($entity->isDirty('subtotal_amount')
+                or $entity->isDirty('order_discount')
+                or $entity->isDirty('order_discount_unit')
+            ))
+        {
+            $discount = 0;
+            if($entity->get('order_discount_unit') == 'Amount') {
+                $discount = $entity->get('order_discount');
+            } else if ($entity->get('order_discount_unit') == 'Percentage') {
+                $discount = $entity->get('total_amount') * ($entity->get('order_discount_unit') / 100);
+            }
+
+            $entity->set('total_amount', $entity->get('total_amount') - $discount);
+
+        }
     }
 }

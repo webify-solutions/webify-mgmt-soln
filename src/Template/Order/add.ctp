@@ -30,7 +30,6 @@
                     'empty' => true]);
             echo '<span> month(s) </span>';
             echo '</div>';
-            echo $this->Form->control('total_amount_unit', ['options' => $totalAmountUnits, 'empty' => true]);
             echo $this->Form->control(
                 'order_date',
                 [
@@ -53,6 +52,7 @@
                     'maxYear' => date('Y')
                 ]);
 //            echo $this->Form->control('total_amount');
+            echo $this->Form->control('currency', ['options' => $currencies, 'empty' => false]);
             echo $this->Form->control('order_discount');
             echo $this->Form->control(
                 'order_discount_unit',

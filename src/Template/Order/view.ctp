@@ -80,12 +80,16 @@
             <td><?= h($order->delivery_date) ?></td>
         </tr>
         <tr>
+            <th scope="row"><?= __('Subtotal Amount') ?></th>
+            <td><?= __($this->Number->format($order->subtotal_amount) . ' ' . h($order->currency)) ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('Order Discount') ?></th>
-            <td><?= __($this->Number->format($order->order_discount) . '' . ($order->order_discount_unit == 'Percentage' ? '%' : ' ' . h($order->total_amount_unit))) ?></td>
+            <td><?= __($this->Number->format($order->order_discount) . '' . ($order->order_discount_unit == 'Percentage' ? '%' : ' ' . h($order->currency))) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Total Amount') ?></th>
-            <td><?= __($this->Number->format($order->total_amount) . ' ' . h($order->total_amount_unit)) ?></td>
+            <td><?= __($this->Number->format($order->total_amount) . ' ' . h($order->currency)) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Created At') ?></th>
