@@ -30,6 +30,7 @@
                     'empty' => true]);
             echo '<span> month(s) </span>';
             echo '</div>';
+            echo $this->Form->control('total_amount_unit', ['options' => $totalAmountUnits, 'empty' => true]);
             echo $this->Form->control(
                 'order_date',
                 [

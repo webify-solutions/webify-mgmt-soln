@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use App\Model\Entity\Organization;
+use App\Utils\PropertyUtils;
 
 /**
  * PriceEntry Controller
@@ -84,14 +85,14 @@ class PriceEntryController extends AppController
         if ($this->loggedUserOrgId == null) {
             $organization = $this->PriceEntry->Organization->find('list', ['limit' => 200]);
             $product = $this->PriceEntry->Product->find('list', ['limit' => 200]);
-            $currencies = Organization::$currencies;
+            $currencies = PropertyUtils::$currencies;
         } else {
             $organization = null;
             $product = $this->PriceEntry->Product->find('list', ['limit' => 200])->where(['organization_id' => $this->loggedUserOrgId]);
             $currencies = $this->loggedUser['organization_currency_used'];
         }
 
-        $discountUnits = Organization::$discountUnits;
+        $discountUnits = PropertyUtils::$discountUnits;
 
         $this->set([
             'priceEntry' => $priceEntry,
@@ -133,14 +134,14 @@ class PriceEntryController extends AppController
         if ($this->loggedUserOrgId == null) {
             $organization = $this->PriceEntry->Organization->find('list', ['limit' => 200]);
             $product = $this->PriceEntry->Product->find('list', ['limit' => 200]);
-            $currencies = Organization::$currencies;
+            $currencies = PagesController::$currencies;
         } else {
             $organization = null;
             $product = $this->PriceEntry->Product->find('list', ['limit' => 200])->where(['organization_id' => $this->loggedUserOrgId]);
             $currencies = $this->loggedUser['organization_currency_used'];
         }
 
-        $discountUnits = Organization::$discountUnits;
+        $discountUnits = PropertyUtils::$discountUnits;
 
         $this->set([
             'priceEntry' => $priceEntry,

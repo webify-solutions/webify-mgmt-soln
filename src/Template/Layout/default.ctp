@@ -48,9 +48,6 @@ $appName = 'Activeforce';
             <?php if(isset($loggedUser)) : ?>
                 <ul class="left">
                     <li><?= $this->Html->link(__('Dashboard'), ['controller' => 'Dashboard', 'action' => 'index'])?></li>
-                    <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
-                        <li><?= $this->Html->link(__('Organizations'), ['controller' => 'Organization', 'action' => 'index']) ?></li>
-                    <?php endif; ?>
                     <?php if(in_array('Customer', $loggedUser['active_features'], true)) : ?>
                         <li><?= $this->Html->link(__('Customers'), ['controller' => 'Customer', 'action' => 'index']) ?></li>
                     <?php endif; ?>
@@ -74,6 +71,9 @@ $appName = 'Activeforce';
                     <?php endif; ?>
                     <?php if(in_array('User', $loggedUser['active_features'], true)) : ?>
                         <li><?= $this->Html->link(__('Users'), ['controller' => 'User', 'action' => 'index'])?></li>
+                    <?php endif; ?>
+                    <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
+                        <li><?= $this->Html->link(__('Organizations'), ['controller' => 'Organization', 'action' => 'index']) ?></li>
                     <?php endif; ?>
 
                 </ul>

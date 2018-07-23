@@ -87,45 +87,35 @@
     </table>
     <?php if(in_array('Order', $loggedUser['active_features'], true)) : ?>
         <div class="related">
-            <h4><?= __('Related Order') ?></h4>
+            <h4><?= 'Related Order (' . $this->Html->link('Add New', ['controller' => 'Order', 'action' => 'add', $customer->id]) . ')' ?></h4>
             <?php if (!empty($customer->order)): ?>
             <table cellpadding="0" cellspacing="0">
-                <tr>
-                    <th scope="col"><?= __('Id') ?></th>
-                    <th scope="col"><?= __('Customer Id') ?></th>
-                    <th scope="col"><?= __('Organization Id') ?></th>
-                    <th scope="col"><?= __('Order Number') ?></th>
-                    <th scope="col"><?= __('Description') ?></th>
-                    <th scope="col"><?= __('Effective Date') ?></th>
-                    <th scope="col"><?= __('Type') ?></th>
-                    <th scope="col"><?= __('Total Amount') ?></th>
-                    <th scope="col"><?= __('Total Discount') ?></th>
-                    <th scope="col"><?= __('Active') ?></th>
-                    <th scope="col"><?= __('Created At') ?></th>
-                    <th scope="col"><?= __('Last Updated') ?></th>
-                    <th scope="col" class="actions"><?= __('Actions') ?></th>
-                </tr>
-                <?php foreach ($customer->order as $order): ?>
-                <tr>
-                    <td><?= h($order->id) ?></td>
-                    <td><?= h($order->customer_id) ?></td>
-                    <td><?= h($order->organization_id) ?></td>
-                    <td><?= h($order->order_number) ?></td>
-                    <td><?= h($order->description) ?></td>
-                    <td><?= h($order->effective_date) ?></td>
-                    <td><?= h($order->type) ?></td>
-                    <td><?= h($order->total_amount) ?></td>
-                    <td><?= h($order->total_discount) ?></td>
-                    <td><?= h($order->active) ?></td>
-                    <td><?= h($order->created_at) ?></td>
-                    <td><?= h($order->last_updated) ?></td>
-                    <td class="actions">
-                        <?= $this->Html->link(__('View'), ['controller' => 'Order', 'action' => 'view', $order->id]) ?>
-                        <?= $this->Html->link(__('Edit'), ['controller' => 'Order', 'action' => 'edit', $order->id]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['controller' => 'Order', 'action' => 'delete', $order->id], ['confirm' => __('Are you sure you want to delete # {0}?', $order->id)]) ?>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
+                <thead>
+                    <tr>
+                        <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
+                            <th scope="col"><?= $this->Paginator->sort('organization_id') ?></th>
+                        <?php endif; ?>
+                        <th scope="col"><?= $this->Paginator->sort('order_number') ?></th>
+                        <th scope="col"><?= $this->Paginator->sort('order_date') ?></th>
+                        <th scope="col"><?= $this->Paginator->sort('order_discount') ?></th>
+                        <th scope="col"><?= $this->Paginator->sort('total_amount') ?></th>
+                        <th scope="col"><?= $this->Paginator->sort('active', 'Cancelled') ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($customer->order as $order): ?>
+                    <tr>
+                        <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
+                            <td><?= $order->has('organization') ? $this->Html->link($order->organization->name, ['controller' => 'Organization', 'action' => 'view', $order->organization->id]) : '' ?></td>
+                        <?php endif; ?>
+                        <td><?= $this->Html->link(h($order->order_number), ['controller' => 'Order', 'action' => 'view', $order->id]) ?></td>
+                        <td><?= h($order->order_date) ?></td>
+                        <td><?= __($this->Number->format($order->order_discount) . '' . ($order->order_discount_unit == 'Percentage' ? '%' : ' ' . h($order->total_amount_unit))) ?></td>
+                        <td><?= $this->Number->format($order->total_amount) . ' ' . h($order->total_amount_unit) ?></td>
+                        <td><?= h($order->active ? 'No' : 'Yes') ?></td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
             </table>
             <?php endif; ?>
         </div>

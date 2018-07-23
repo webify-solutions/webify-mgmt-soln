@@ -64,48 +64,46 @@
         <?= $this->Text->autoParagraph(h($product->description)); ?>
     </div>
 
-    <?php if(in_array('Product', $loggedUser['active_features'], true)) : ?>
-        <div class="related">
-            <h4><?= __('Related Price Entry ({0})', $this->Html->link(__('Add New'), ['controller' => 'PriceEntry', 'action' => 'add', $product->id]))  ?></h4>
-            <?php if (!empty($product->price_entry)): ?>
-                <table cellpadding="0" cellspacing="0">
+    <div class="related">
+        <h4><?= __('Related Price Entry ({0})', $this->Html->link(__('Add New'), ['controller' => 'PriceEntry', 'action' => 'add', $product->id]))  ?></h4>
+        <?php if (!empty($product->price_entry)): ?>
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <th scope="col" class="actions"><?= __('Actions') ?></th>
+                    <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
+                        <th scope="col"><?= __('Organization Id') ?></th>
+                    <?php endif; ?>
+                    <th scope="col"><?= __('Id')?></th>
+                    <th scope="col"><?= __('Price') ?></th>
+                    <th scope="col"><?= __('Price Unit') ?></th>
+                    <th scope="col"><?= __('Available Discount') ?></th>
+                    <th scope="col"><?= __('Available Discount Unit') ?></th>
+                    <th scope="col"><?= __('Active') ?></th>
+                    <th scope="col"><?= __('Created At') ?></th>
+                    <th scope="col"><?= __('Last Updated') ?></th>
+                </tr>
+                <?php foreach ($product->price_entry as $priceEntry): ?>
                     <tr>
-                        <th scope="col" class="actions"><?= __('Actions') ?></th>
+                        <td class="actions">
+                            <?= $this->Html->link(__('Edit'), ['controller' => 'PriceEntry', 'action' => 'edit', $priceEntry->id]) ?>
+                            <?= $this->Form->postLink(__('Delete'), ['controller' => 'PriceEntry', 'action' => 'delete', $priceEntry->id], ['confirm' => __('Are you sure you want to delete # {0}?', $priceEntry->id)]) ?>
+                        </td>
                         <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
-                            <th scope="col"><?= __('Organization Id') ?></th>
+                            <td><?= h($priceEntry->organization_id) ?></td>
                         <?php endif; ?>
-                        <th scope="col"><?= __('Id')?></th>
-                        <th scope="col"><?= __('Price') ?></th>
-                        <th scope="col"><?= __('Price Unit') ?></th>
-                        <th scope="col"><?= __('Available Discount') ?></th>
-                        <th scope="col"><?= __('Available Discount Unit') ?></th>
-                        <th scope="col"><?= __('Active') ?></th>
-                        <th scope="col"><?= __('Created At') ?></th>
-                        <th scope="col"><?= __('Last Updated') ?></th>
+                        <td><?= $this->Html->link(h($priceEntry->id), ['controller' => 'PriceEntry', 'action' => 'view', $priceEntry->id]) ?></td>
+                        <td><?= h($priceEntry->price) ?></td>
+                        <td><?= h($priceEntry->price_unit) ?></td>
+                        <td><?= h($priceEntry->available_discount) ?></td>
+                        <td><?= h($priceEntry->available_discount_unit) ?></td>
+                        <td><?= h($priceEntry->active ? __('Yes') : __('No')) ?></td>
+                        <td><?= h($priceEntry->created_at) ?></td>
+                        <td><?= h($priceEntry->last_updated) ?></td>
                     </tr>
-                    <?php foreach ($product->price_entry as $priceEntry): ?>
-                        <tr>
-                            <td class="actions">
-                                <?= $this->Html->link(__('Edit'), ['controller' => 'PriceEntry', 'action' => 'edit', $priceEntry->id]) ?>
-                                <?= $this->Form->postLink(__('Delete'), ['controller' => 'PriceEntry', 'action' => 'delete', $priceEntry->id], ['confirm' => __('Are you sure you want to delete # {0}?', $priceEntry->id)]) ?>
-                            </td>
-                            <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
-                                <td><?= h($priceEntry->organization_id) ?></td>
-                            <?php endif; ?>
-                            <td><?= $this->Html->link(h($priceEntry->id), ['controller' => 'PriceEntry', 'action' => 'view', $priceEntry->id]) ?></td>
-                            <td><?= h($priceEntry->price) ?></td>
-                            <td><?= h($priceEntry->price_unit) ?></td>
-                            <td><?= h($priceEntry->available_discount) ?></td>
-                            <td><?= h($priceEntry->available_discount_unit) ?></td>
-                            <td><?= h($priceEntry->active ? __('Yes') : __('No')) ?></td>
-                            <td><?= h($priceEntry->created_at) ?></td>
-                            <td><?= h($priceEntry->last_updated) ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                </table>
-            <?php endif; ?>
-        </div>
-    <?php endif; ?>
+                <?php endforeach; ?>
+            </table>
+        <?php endif; ?>
+    </div>
     <?php if(in_array('Invoice', $loggedUser['active_features'], true)) : ?>
         <div class="related">
             <h4><?= __('Related Invoice Item') ?></h4>

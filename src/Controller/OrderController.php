@@ -1,9 +1,7 @@
 <?php
 namespace App\Controller;
 
-use App\Controller\AppController;
 use App\Model\Behavior\OrderBehavior;
-use App\Model\Entity\Order;
 use App\Utils\PropertyUtils;
 
 /**
@@ -54,6 +52,19 @@ class OrderController extends AppController
             $this->unauthorizedAccessRedirect();
         }
 
+        $order->set('type', PropertyUtils::$orderTypes[$order->type]);
+
+        if($order->total_amount >= 0) {
+            $discount = 0;
+            if($order->order_discount_unit == 'Amount') {
+                $discount = $order->order_discount;
+            } else if ($order->order_discount_unit == 'Percentage') {
+                $discount = $order->total_amount * ($order->order_discount / 100);
+            }
+
+            $order->set('total_amount', $discount);
+        }
+
         $this->set(['order' => $order, 'loggedUser' => $this->loggedUser]);
     }
 
@@ -63,9 +74,10 @@ class OrderController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      * @throws \Aura\Intl\Exception
      */
-    public function add()
+    public function add($customerId = null)
     {
         $order = $this->Order->newEntity();
+
         if ($this->request->is('post')) {
             $order = $this->Order->patchEntity($order, $this->request->getData());
 
@@ -73,6 +85,7 @@ class OrderController extends AppController
                 $order->set('organization_id', $this->loggedUserOrgId);
             }
 
+            debug($order);
             if ($this->Order->save($order)) {
                 $this->Flash->success(__('The order has been saved.'));
 
@@ -80,6 +93,9 @@ class OrderController extends AppController
             }
             $this->Flash->error(__('The order could not be saved. Please, try again.'));
         }
+
+        $order->set('total_amount_unit', $this->loggedUser['organization_currency_used']);
+        $order->set('customer_id', $customerId);
 
         if ($this->loggedUserOrgId == null) {
             $organization = $this->Order->Organization->find('list', ['limit' => 200]);
@@ -90,11 +106,8 @@ class OrderController extends AppController
         } else {
             $organization = null;
 
-            $customerQuery = $this->Order->Customer->find('all', ['limit' => 200])
-                ->where(['organization_id', $this->loggedUserOrgId]);
+            $customerQuery = $this->Order->Customer->find('')->where(['Customer.organization_id' => $this->loggedUserOrgId]);
             $customers = OrderBehavior::getCustomersAsPickList($customerQuery);
-
-
         }
 
         $this->set([
@@ -103,8 +116,9 @@ class OrderController extends AppController
             'organization' => $organization,
             'customer' => $customers,
             'types' => PropertyUtils::$orderTypes,
-            'typePeriods' => range(1, 84),
-            'orderDiscountUnits' => PropertyUtils::$discountUnits
+            'typePeriods' => range(0, 84),
+            'orderDiscountUnits' => PropertyUtils::$discountUnits,
+            'totalAmountUnits' => $this->loggedUser['organization_currency_used']
         ]);
     }
 
@@ -136,29 +150,27 @@ class OrderController extends AppController
         }
 
         if ($this->loggedUserOrgId == null) {
-            $customer = $this->Order->Customer->find(['limit' => 200])
-                ->select(['id', 'contact(first_name, last_name) as name'])
-                ->combine(
-                    'id',
-                    'name'
-                );
             $organization = $this->Order->Organization->find('list', ['limit' => 200]);
+
+            $customerQuery = $this->Order->Customer->find('all', ['limit' => 200]);
+            $customers = OrderBehavior::getCustomersAsPickList($customerQuery);
+
         } else {
-            $customer = $this->Order->Customer->find(['limit' => 200])
-                ->select(['id', 'contact(first_name, last_name) as name'])
-                ->where(['organization_id', $this->loggedUserOrgId])
-                ->combine(
-                    'id',
-                    'name'
-                );
             $organization = null;
+
+            $customerQuery = $this->Order->Customer->find('')->where(['Customer.organization_id' => $this->loggedUserOrgId]);
+            $customers = OrderBehavior::getCustomersAsPickList($customerQuery);
         }
 
         $this->set([
             'order' => $order,
             'loggedUser' => $this->loggedUser,
             'organization' => $organization,
-            'customer' => $customer
+            'customer' => $customers,
+            'types' => PropertyUtils::$orderTypes,
+            'typePeriods' => range(0, 84),
+            'orderDiscountUnits' => PropertyUtils::$discountUnits,
+            'totalAmountUnits' => $this->loggedUser['organization_currency_used']
         ]);
     }
 
@@ -195,14 +207,14 @@ class OrderController extends AppController
             $this->unauthorizedAccessRedirect();
         }
 
-        $order->set('active', false);
 
-        if ($this->Order->save($order)) {
+        if ($this->Order->updateAll(['active' => false], ['id' => $order->id])) {
             $this->Flash->success(__('The order has been cancelled.'));
         } else {
             $this->Flash->error(__('The order could not be cancelled. Please, try again.'));
         }
 
+//        $modelType = $this->request->$this->getModelType();
         return $this->redirect(['action' => 'index']);
     }
 

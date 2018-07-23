@@ -17,10 +17,15 @@
         ?></li>
         <li><?= $this->Form->postLink(
                 __('Cancel'),
-                ['action' => 'cancel', $order->id],
-                ['confirm' => __('Are you sure you want to Cancel {0}?', $order->order_number)]
-            )
-        ?></li>
+                [
+                    'contoller' => 'Order',
+                    'action' => 'cancel',
+                    $order->id
+                ],
+                [
+                    'confirm' => __('Are you sure you want to cancel {0}?', $order->order_number)
+                ]
+            ) ?></li>
     </ul>
 </nav>
 <div class="order form large-9 medium-8 columns content">
@@ -28,17 +33,55 @@
     <fieldset>
         <legend><?= __('Edit Order') ?></legend>
         <?php
+            echo $this->Form->control('order_number', ['empty' => true, 'disabled' => 'disabled']);
             if ($organization != null) {
                 echo $this->Form->control('organization_id', ['options' => $organization, 'empty' => true]);
             }
-            echo $this->Form->control('customer_id', ['options' => $customer, 'empty' => true]);
-            echo $this->Form->control('order_date', ['empty' => true]);
-            echo $this->Form->control('effective_date', ['empty' => true]);
-            echo $this->Form->control('delivery_date', ['empty' => true]);
-            echo $this->Form->control('type');
+            echo $this->Form->control('customer_id', ['options' => $customer, 'empty' => true, 'disabled' => 'disabled']);
+            echo $this->Form->control('type', ['options' => $types, 'empty' => true, 'disabled' => 'disabled']);
+            echo '<div  class="period-picker">';
+            echo '<span> Reminder every </span>';
+            echo $this->Form->control(
+                'type_period',
+                [
+                    'label' => '',
+                    'options' => $typePeriods,
+                    'empty' => true]);
+            echo '<span> month(s) </span>';
+            echo '</div>';
+            echo $this->Form->control(
+                'order_date',
+                [
+                    'empty' => false,
+                    'minYear' => date( 'Y') - 40,
+                    'maxYear' => date('Y')
+                ]);
+            echo $this->Form->control(
+                'effective_date',
+                [
+                    'empty' => false,
+                    'minYear' => date( 'Y') - 40,
+                    'maxYear' => date('Y')
+                ]);
+            echo $this->Form->control(
+                'delivery_date',
+                [
+                    'empty' => true,
+                    'minYear' => date( 'Y') - 40,
+                    'maxYear' => date('Y')
+                ]);
+            echo $this->Form->control('total_amount', ['disabled' => 'disabled']);
+            echo $this->Form->control('total_amount_unit', ['options' => $totalAmountUnits, 'empty' => true]);
+            echo $this->Form->control('order_discount');
+            echo $this->Form->control(
+                'order_discount_unit',
+                [
+                    'options' => $orderDiscountUnits,
+                    'empty' => true,
+                    ['disabled' => 'disabled']
+                ]
+            );
             echo $this->Form->control('notes');
-            echo $this->Form->control('total_amount');
-            echo $this->Form->control('total_discount');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
