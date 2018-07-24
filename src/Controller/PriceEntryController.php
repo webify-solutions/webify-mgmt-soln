@@ -88,7 +88,8 @@ class PriceEntryController extends AppController
             $currencies = PropertyUtils::$currencies;
         } else {
             $organization = null;
-            $product = $this->PriceEntry->Product->find('list', ['limit' => 200])->where(['organization_id' => $this->loggedUserOrgId]);
+            $product = $this->PriceEntry->Product->find('list', ['limit' => 200])
+                ->where(['organization_id' => $this->loggedUserOrgId]);
             $currencies = $this->loggedUser['organization_currency_used'];
         }
 

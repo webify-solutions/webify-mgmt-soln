@@ -43,6 +43,7 @@ class OrderItem extends Entity
         'organization_id' => true,
         'order_item_number' => true,
         'price_discount' => true,
+        'price_discount_unit' => true,
         'notes' => true,
         'active' => true,
         'created_at' => true,

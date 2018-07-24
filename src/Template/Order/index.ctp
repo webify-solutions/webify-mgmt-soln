@@ -35,17 +35,6 @@
                 <td class="actions">
                     <?= $this->Html->link(__('Edit'), ['controller' => 'Order', 'action' => 'edit', $order->id]) ?>
                     <?= $this->Form->postLink(
-                        __('Delete'),
-                        [
-                            'controller' => 'Order',
-                            'action' => 'delete',
-                            $order->id
-                        ],
-                        [
-                            'confirm' => __('Are you sure you want to delete {0}?', $order->order_number)
-                        ]
-                    ) ?>
-                    <?= $this->Form->postLink(
                         __('Cancel'),
                         [
                             'controller' => 'Order',
@@ -54,6 +43,17 @@
                         ],
                         [
                             'confirm' => __('Are you sure you want to cancel {0}?', $order->order_number)
+                        ]
+                    ) ?>
+                    <?= $this->Form->postLink(
+                        __('Del'),
+                        [
+                            'controller' => 'Order',
+                            'action' => 'delete',
+                            $order->id
+                        ],
+                        [
+                            'confirm' => __('Are you sure you want to delete {0}?', $order->order_number)
                         ]
                     ) ?>
                 </td>

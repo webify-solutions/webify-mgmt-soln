@@ -11,13 +11,7 @@
         <li><?= $this->Html->link(__('New Order'), ['controller' => 'Order', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('Edit Order'), ['controller' => 'Order', 'action' => 'edit', $order->id]) ?> </li>
         <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $order->id],
-                ['confirm' => __('Are you sure you want to delete {0}?', $order->order_number)]
-            )
-            ?></li>
-        <li><?= $this->Form->postLink(
-                __('Cancel'),
+                __('Cancel Order'),
                 [
                     'contoller' => 'Order',
                     'action' => 'cancel',
@@ -27,6 +21,12 @@
                     'confirm' => __('Are you sure you want to cancel {0}?', $order->order_number)
                 ]
             ) ?></li>
+        <li><?= $this->Form->postLink(
+                __('Delete Order'),
+                ['action' => 'delete', $order->id],
+                ['confirm' => __('Are you sure you want to delete {0}?', $order->order_number)]
+            )
+            ?></li>
     </ul>
 </nav>
 <div class="order view large-9 medium-8 columns content">
@@ -105,7 +105,7 @@
         <?= $this->Text->autoParagraph(h($order->notes)); ?>
     </div>
     <div class="related">
-        <h4><?= __('Related Order Item') ?></h4>
+        <h4><?= 'Related Order Item (' . $this->Html->link(__('Add New'), ['controller' => 'OrderItem', 'action' => 'add', $order->id]) . ')' ?></h4>
         <?php if (!empty($order->order_item)): ?>
             <table cellpadding="0" cellspacing="0">
                 <tr>

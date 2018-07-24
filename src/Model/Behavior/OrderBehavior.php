@@ -68,7 +68,6 @@ class OrderBehavior extends Behavior
             }
 
             $entity->set('total_amount', $entity->get('total_amount') - $discount);
-
         }
     }
 }

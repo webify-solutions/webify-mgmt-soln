@@ -80,6 +80,10 @@ class OrderItemTable extends Table
             ->allowEmpty('price_discount');
 
         $validator
+            ->scalar('price_discount_unit')
+            ->allowEmpty('price_discount_uni');
+
+        $validator
             ->scalar('notes')
             ->allowEmpty('notes');
 
