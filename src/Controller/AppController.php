@@ -121,6 +121,7 @@ class AppController extends Controller
                 'role' => $userRole,
                 'organization_id' => $organization_id,
                 'organization_name' => $organization['name'],
+                'organization_default_currency' => $organization['currency_used'],
                 'organization_currency_used' => [$organization['currency_used'] => $organization['currency_used']],
                 'active_features' => $activeFeatures
             ];
@@ -133,6 +134,7 @@ class AppController extends Controller
                 'role' => $this->Auth->user('role'),
                 'organization_name' => 'All',
                 'organization_currency_used' => PropertyUtils::$currencies,
+                'organization_default_currency' => null,
                 'active_features' => [
                     'Group',
                     'Customer',

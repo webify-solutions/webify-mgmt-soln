@@ -73,11 +73,9 @@
                     <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
                         <th scope="col"><?= __('Organization Id') ?></th>
                     <?php endif; ?>
-                    <th scope="col"><?= __('Id')?></th>
+                    <th scope="col"><?= __('Price Number')?></th>
                     <th scope="col"><?= __('Price') ?></th>
-                    <th scope="col"><?= __('Price Unit') ?></th>
-                    <th scope="col"><?= __('Available Discount') ?></th>
-                    <th scope="col"><?= __('Available Discount Unit') ?></th>
+                    <th scope="col"><?= __('Currency') ?></th>
                     <th scope="col"><?= __('Active') ?></th>
                     <th scope="col"><?= __('Created At') ?></th>
                     <th scope="col"><?= __('Last Updated') ?></th>
@@ -86,16 +84,14 @@
                     <tr>
                         <td class="actions">
                             <?= $this->Html->link(__('Edit'), ['controller' => 'PriceEntry', 'action' => 'edit', $priceEntry->id]) ?>
-                            <?= $this->Form->postLink(__('Delete'), ['controller' => 'PriceEntry', 'action' => 'delete', $priceEntry->id], ['confirm' => __('Are you sure you want to delete # {0}?', $priceEntry->id)]) ?>
+                            <?= $this->Form->postLink(__('Delete'), ['controller' => 'PriceEntry', 'action' => 'delete', $priceEntry->id], ['confirm' => __('Are you sure you want to delete {0}?', $priceEntry->price_entry_number)]) ?>
                         </td>
                         <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
                             <td><?= h($priceEntry->organization_id) ?></td>
                         <?php endif; ?>
-                        <td><?= $this->Html->link(h($priceEntry->id), ['controller' => 'PriceEntry', 'action' => 'view', $priceEntry->id]) ?></td>
+                        <td><?= $this->Html->link(h($priceEntry->price_entry_number), ['controller' => 'PriceEntry', 'action' => 'view', $priceEntry->id]) ?></td>
                         <td><?= h($priceEntry->price) ?></td>
-                        <td><?= h($priceEntry->price_unit) ?></td>
-                        <td><?= h($priceEntry->available_discount) ?></td>
-                        <td><?= h($priceEntry->available_discount_unit) ?></td>
+                        <td><?= h($priceEntry->currency) ?></td>
                         <td><?= h($priceEntry->active ? __('Yes') : __('No')) ?></td>
                         <td><?= h($priceEntry->created_at) ?></td>
                         <td><?= h($priceEntry->last_updated) ?></td>

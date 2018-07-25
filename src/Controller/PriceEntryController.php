@@ -67,6 +67,8 @@ class PriceEntryController extends AppController
             $priceEntry->set('product_id', $product_id);
         }
 
+        $priceEntry->set('currency', $this->loggedUser['organization_default_currency']);
+
         if ($this->request->is('post')) {
             $priceEntry = $this->PriceEntry->patchEntity($priceEntry, $this->request->getData());
 
@@ -135,7 +137,7 @@ class PriceEntryController extends AppController
         if ($this->loggedUserOrgId == null) {
             $organization = $this->PriceEntry->Organization->find('list', ['limit' => 200]);
             $product = $this->PriceEntry->Product->find('list', ['limit' => 200]);
-            $currencies = PagesController::$currencies;
+            $currencies = PropertyUtils::$currencies;
         } else {
             $organization = null;
             $product = $this->PriceEntry->Product->find('list', ['limit' => 200])->where(['organization_id' => $this->loggedUserOrgId]);

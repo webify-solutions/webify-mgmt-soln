@@ -34,8 +34,9 @@ class PriceEntry extends Entity
     protected $_accessible = [
         'product_id' => true,
         'organization_id' => true,
+        'price_entry_number' => true,
         'price' => true,
-        'price_unit' => true,
+        'currency' => true,
         'available_discount' => true,
         'available_discount_unit' => true,
         'active' => true,

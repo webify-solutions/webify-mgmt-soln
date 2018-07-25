@@ -17,7 +17,7 @@
                     $priceEntry->id
                 ],
                 [
-                    'confirm' => __('Are you sure you want to delete # {0}?', $priceEntry->id)
+                    'confirm' => __('Are you sure you want to delete {0}?', $priceEntry->price_entry_number)
                 ])
         ?> </li>
     </ul>
@@ -26,8 +26,8 @@
     <h3><?= __('Price Entry') ?></h3>
     <table class="vertical-table">
         <tr>
-            <th scope="row"><?= __('Id') ?></th>
-            <td><?= $this->Number->format($priceEntry->id) ?></td>
+            <th scope="row"><?= __('Price Number') ?></th>
+            <td><?= h($priceEntry->price_entry_number) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Product') ?></th>
@@ -44,16 +44,8 @@
             <td><?= $this->Number->format($priceEntry->price) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Price Unit') ?></th>
-            <td><?= h($priceEntry->price_unit) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Available Discount') ?></th>
-            <td><?= h($priceEntry->available_discount) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Available Discount Unit') ?></th>
-            <td><?= h($priceEntry->available_discount_unit) ?></td>
+            <th scope="row"><?= __('Currency') ?></th>
+            <td><?= h($priceEntry->currency) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Active') ?></th>

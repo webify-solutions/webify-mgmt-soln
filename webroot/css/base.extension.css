@@ -36,6 +36,10 @@
     text-align: right;
 }
 
+.hidden {
+    display: none;
+}
+
 iframe {
     display: none;
 }

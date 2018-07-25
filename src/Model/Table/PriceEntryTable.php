@@ -35,6 +35,8 @@ class PriceEntryTable extends Table
     {
         parent::initialize($config);
 
+        $this->addBehavior('PriceEntry');
+
         $this->setTable('price_entry');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
@@ -67,13 +69,17 @@ class PriceEntryTable extends Table
             ->notEmpty('product_id');
 
         $validator
+            ->scalar('price_entry_number')
+            ->allowEmpty('price_entry_number');
+
+        $validator
             ->numeric('price')
             ->notEmpty('price');
 
         $validator
-            ->scalar('price_unit')
-            ->maxLength('price_unit', 45)
-            ->notEmpty('price_unit');
+            ->scalar('currency')
+            ->maxLength('currency', 45)
+            ->allowEmpty('currency');
 
         $validator
             ->numeric('available_discount')
