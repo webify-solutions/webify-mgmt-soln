@@ -81,13 +81,17 @@ class OrderItemTable extends Table
             ->notEmpty('product_id');
 
         $validator
-            ->integer('price_entry_id')
-            ->notEmpty('price_entry_id');
-
-        $validator
             ->scalar('order_item_number')
             ->maxLength('order_item_number', 255)
             ->allowEmpty('order_item_number');
+
+        $validator
+            ->numeric('unit_price')
+            ->notEmpty('unit_price');
+
+        $validator
+            ->numeric('unit_quantity')
+            ->notEmpty('unit_quantity');
 
         $validator
             ->numeric('price_discount')
@@ -96,6 +100,10 @@ class OrderItemTable extends Table
         $validator
             ->scalar('price_discount_unit')
             ->allowEmpty('price_discount_unit');
+
+        $validator
+            ->numeric('total')
+            ->allowEmpty('total');
 
         $validator
             ->scalar('notes')

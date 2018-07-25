@@ -73,6 +73,7 @@ class OrderItemController extends AppController
         $orderItem->set('order_id', $orderId);
 
         if ($this->request->is('post')) {
+            debug($this->request->getData());
             $orderItem = $this->OrderItem->patchEntity($orderItem, $this->request->getData());
 
             if ($this->loggedUserOrgId != null) {
@@ -82,7 +83,7 @@ class OrderItemController extends AppController
             if ($this->OrderItem->save($orderItem)) {
                 $this->Flash->success(__('The order item has been saved.'));
 
-                return $this->redirect(['controller' => 'Order', 'action' => 'view', $orderId]);
+                return $this->redirect(['action' => 'add', $orderId]);
             }
             $this->Flash->error(__('The order item could not be saved. Please, try again.'));
         }
