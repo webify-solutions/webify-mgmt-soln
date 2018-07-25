@@ -10,12 +10,6 @@
         <li><?= $this->Html->link(__('Orders'), ['controller' => 'Order', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Order'), ['controller' => 'Order', 'action' => 'add']) ?></li>
         <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $order->id],
-                ['confirm' => __('Are you sure you want to delete {0}?', $order->order_number)]
-            )
-        ?></li>
-        <li><?= $this->Form->postLink(
                 __('Cancel'),
                 [
                     'contoller' => 'Order',
@@ -26,6 +20,12 @@
                     'confirm' => __('Are you sure you want to cancel {0}?', $order->order_number)
                 ]
             ) ?></li>
+        <li><?= $this->Form->postLink(
+                __('Delete'),
+                ['action' => 'delete', $order->id],
+                ['confirm' => __('Are you sure you want to delete {0}?', $order->order_number)]
+            )
+            ?></li>
     </ul>
 </nav>
 <div class="order form large-9 medium-8 columns content">
@@ -72,7 +72,7 @@
                 ]);
             echo $this->Form->control('subtotal_amount', ['disabled' => 'disabled']);
             echo $this->Form->control('total_amount', ['disabled' => 'disabled']);
-            echo $this->Form->control('currency', ['options' => $currencies, 'empty' => false]);
+            echo '<div class="hidden">' . $this->Form->control('currency', ['options' => $currencies, 'empty' => false]) . '</div>';
             echo $this->Form->control('order_discount');
             echo $this->Form->control('order_discount_unit', ['options' => $orderDiscountUnits, 'empty' => true]);
             echo $this->Form->control('notes');

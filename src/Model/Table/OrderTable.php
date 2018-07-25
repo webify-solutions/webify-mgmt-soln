@@ -126,7 +126,7 @@ class OrderTable extends Table
 
         $validator
             ->boolean('active')
-            ->allowEmpty('active');
+            ->allowEmpty('active', 'create');
 
         $validator
             ->dateTime('created_at')

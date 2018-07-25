@@ -67,6 +67,8 @@ class OrderController extends AppController
     {
         $order = $this->Order->newEntity();
 
+        $order->set('currency', $this->loggedUser['organization_default_currency']);
+
         if ($this->request->is('post'))
         {
             if(($this->request->getData('order_discount') == null and $this->request->getData('order_discount_unit') == null)
@@ -81,7 +83,7 @@ class OrderController extends AppController
                 if ($this->Order->save($order)) {
                     $this->Flash->success(__('The order has been saved.'));
 
-                    return $this->redirect(['action' => 'index']);
+                    return $this->redirect(['action' => 'view', $order->id]);
                 }
                 $this->Flash->error(__('The order could not be saved. Please, try again.'));
             } else {
@@ -143,7 +145,7 @@ class OrderController extends AppController
                 if ($this->Order->save($order)) {
                     $this->Flash->success(__('The order has been saved.'));
 
-                    return $this->redirect(['action' => 'index']);
+                    return $this->redirect(['action' => 'view', $order->id]);
                 }
                 $this->Flash->error(__('The order could not be saved. Please, try again.'));
             } else {
