@@ -12,7 +12,7 @@
         <li><?= $this->Form->postLink(
                 __('Cancel'),
                 [
-                    'contoller' => 'Order',
+                    'controller' => 'Order',
                     'action' => 'cancel',
                     $order->id
                 ],
