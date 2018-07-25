@@ -2,7 +2,9 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Model\Behavior\OrderItemBehavior;
 use App\Utils\PropertyUtils;
+use App\Utils\StringUtils;
 
 /**
  * OrderItem Controller
@@ -62,9 +64,13 @@ class OrderItemController extends AppController
     public function add($orderId = null)
     {
         $orderItem = $this->OrderItem->newEntity();
-        if ($orderId != null) {
-            $orderItem->set('order_id', $orderId);
+
+        if ($orderId == null) {
+            $this->Flash->error(__('Error occurred while adding new order. Please, try again.'));
+            return $this->redirect(['controller' => 'Order', 'action' => 'index']);
         }
+
+        $orderItem->set('order_id', $orderId);
 
         if ($this->request->is('post')) {
             $orderItem = $this->OrderItem->patchEntity($orderItem, $this->request->getData());
@@ -82,32 +88,39 @@ class OrderItemController extends AppController
         }
 
         if ($this->loggedUserOrgId == null) {
-            $order = $this->OrderItem->Order->find('list', ['limit' => 200])->where(['organization_id' => $this->loggedUserOrgId]);
-            $priceEntry = $this->OrderItem->PriceEntry->find('list', ['limit' => 200]);
-            $product = $this->OrderItem->Product->find('list', ['limit' => 200]);
             $organization = $this->OrderItem->Organization->find('list', ['limit' => 200]);
-            $currencies = PropertyUtils::$currencies;
+
+            $orderQuery = $this->OrderItem->Order->find('all', ['limit' => 200])
+                ->where(['organization_id' => $this->loggedUserOrgId]);
+            $orders = OrderItemBehavior::getOrdersAsPickList($orderQuery);
+
+            $product = $this->OrderItem->Product->find('list', ['limit' => 200]);
+
         } else {
             $organization = null;
-            $order = $this->OrderItem->Order->find('list', ['limit' => 200])
+
+            $orderQuery = $this->OrderItem->Order->find('all', ['limit' => 200])
                 ->where(['organization_id' => $this->loggedUserOrgId]);
-            $priceEntry = $this->OrderItem->PriceEntry->find('list', ['limit' => 200])
-                ->where(['organization_id' => $this->loggedUserOrgId]);
+            $orders = OrderItemBehavior::getOrdersAsPickList($orderQuery);
+
+
             $product = $this->OrderItem->Product->find('list', ['limit' => 200])
                 ->where(['organization_id' => $this->loggedUserOrgId]);
-
-            $currencies = $this->loggedUser['organization_currency_used'];
         }
+
+        $productIds = array_keys($product->extract('id')->toArray());
+
+        $priceEntryQuery = $this->OrderItem->Product->PriceEntry->find('all', ['limit' => 200])
+            ->where(['active' => true, "product_id IN " => $productIds]);
+        $priceEntryJSON = OrderItemBehavior::getProductPriceEntriesAsJSON($priceEntryQuery);
 
         $this->set([
             'orderItem' => $orderItem,
             'loggedUser' => $this->loggedUser,
-            'order' => $order,
-            'priceEntry' => $priceEntry,
+            'order' => $orders,
+            'priceEntryJSON' => $priceEntryJSON,
             'product' => $product,
-            'organization' => $organization,
-            'currencies' => $currencies,
-            'discountUnites' => PropertyUtils::$discountUnits
+            'organization' => $organization
         ]);
     }
 
@@ -139,32 +152,33 @@ class OrderItemController extends AppController
         }
 
         if ($this->loggedUserOrgId == null) {
-            $order = $this->OrderItem->Order->find('list', ['limit' => 200])->where(['organization_id' => $this->loggedUserOrgId]);
-            $priceEntry = $this->OrderItem->PriceEntry->find('list', ['limit' => 200]);
-            $product = $this->OrderItem->Product->find('list', ['limit' => 200]);
             $organization = $this->OrderItem->Organization->find('list', ['limit' => 200]);
-            $currencies = PropertyUtils::$currencies;
+
+            $orderQuery = $this->OrderItem->Order->find('all', ['limit' => 200])
+                ->where(['organization_id' => $this->loggedUserOrgId]);
+            $orders = OrderItemBehavior::getOrdersAsPickList($orderQuery);
+
+            $product = $this->OrderItem->Product->find('list', ['limit' => 200]);
+
         } else {
             $organization = null;
-            $order = $this->OrderItem->Order->find('list', ['limit' => 200])
+
+            $orderQuery = $this->OrderItem->Order->find('all', ['limit' => 200])
                 ->where(['organization_id' => $this->loggedUserOrgId]);
-            $priceEntry = $this->OrderItem->PriceEntry->find('list', ['limit' => 200])
-                ->where(['organization_id' => $this->loggedUserOrgId]);
+            $orders = OrderItemBehavior::getOrdersAsPickList($orderQuery);
+
+
             $product = $this->OrderItem->Product->find('list', ['limit' => 200])
                 ->where(['organization_id' => $this->loggedUserOrgId]);
-
-            $currencies = $this->loggedUser['organization_currency_used'];
         }
 
         $this->set([
             'orderItem' => $orderItem,
             'loggedUser' => $this->loggedUser,
-            'order' => $order,
-            'priceEntry' => $priceEntry,
+            'order' => $orders,
+            'priceEntry' => null,
             'product' => $product,
-            'organization' => $organization,
-            'currencies' => $currencies,
-            'discountUnites' => PropertyUtils::$discountUnits
+            'organization' => $organization
         ]);
     }
 

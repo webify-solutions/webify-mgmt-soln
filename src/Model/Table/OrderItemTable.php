@@ -37,6 +37,8 @@ class OrderItemTable extends Table
     {
         parent::initialize($config);
 
+        $this->addBehavior('OrderItem');
+
         $this->setTable('order_item');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
@@ -71,6 +73,18 @@ class OrderItemTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
+            ->integer('order_id')
+            ->notEmpty('order_id');
+
+        $validator
+            ->integer('product_id')
+            ->notEmpty('product_id');
+
+        $validator
+            ->integer('price_entry_id')
+            ->notEmpty('price_entry_id');
+
+        $validator
             ->scalar('order_item_number')
             ->maxLength('order_item_number', 255)
             ->allowEmpty('order_item_number');
@@ -81,7 +95,7 @@ class OrderItemTable extends Table
 
         $validator
             ->scalar('price_discount_unit')
-            ->allowEmpty('price_discount_uni');
+            ->allowEmpty('price_discount_unit');
 
         $validator
             ->scalar('notes')
@@ -89,8 +103,7 @@ class OrderItemTable extends Table
 
         $validator
             ->boolean('active')
-            ->requirePresence('active', 'create')
-            ->notEmpty('active');
+            ->allowEmpty('active', 'create');
 
         $validator
             ->dateTime('created_at')
