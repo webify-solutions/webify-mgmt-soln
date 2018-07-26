@@ -58,7 +58,6 @@ class OrderItemBehavior extends Behavior
     }
 
     public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options) {
-        debug(explode(' ', $data['unit_price'])[0]);
         $data['unit_price'] = explode(' ', $data['unit_price'])[0];
     }
 

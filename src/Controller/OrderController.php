@@ -45,16 +45,23 @@ class OrderController extends AppController
     public function view($id = null)
     {
         $order = $this->Order->get($id, [
-            'contain' => ['Customer', 'Organization', 'Invoice', 'OrderItem', 'Payment']
+            'contain' => ['Customer', 'Organization', 'Invoice', 'Payment']
         ]);
+
+        $orderItems = $this->Order->OrderItem->find('all', ['contain' => 'Product'])
+            ->where(['order_id' => $id]);
 
         if ($this->loggedUserOrgId != null and $order['organization_id'] != ($this->loggedUserOrgId)) {
             $this->unauthorizedAccessRedirect();
         }
 
-        $order->set('type', PropertyUtils::$orderTypes[$order->type]);
+        $order->set('displayable_type', PropertyUtils::$orderTypes[$order->type]);
 
-        $this->set(['order' => $order, 'loggedUser' => $this->loggedUser]);
+        $this->set([
+            'order' => $order,
+            'orderItems' => $orderItems,
+            'loggedUser' => $this->loggedUser
+        ]);
     }
 
     /**

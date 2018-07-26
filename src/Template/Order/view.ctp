@@ -61,12 +61,14 @@
         </tr>
         <tr>
             <th scope="row"><?= __('Type') ?></th>
-            <td><?= h($order->type) ?></td>
+            <td><?= h($order->displayable_type) ?></td>
         </tr>
+        <?php if($order->type != 'one-time') : ?>
         <tr>
             <th scope="row"><?= __('Reminder') ?></th>
             <td><?= __('Every ' . h($order->type_period) . ' month(s)') ?></td>
         </tr>
+        <?php endif; ?>
         <tr>
             <th scope="row"><?= __('Order Date') ?></th>
             <td><?= h($order->order_date) ?></td>
@@ -106,40 +108,39 @@
     </div>
     <div class="related">
         <h4><?= 'Related Order Item (' . $this->Html->link(__('Add New'), ['controller' => 'OrderItem', 'action' => 'add', $order->id]) . ')' ?></h4>
-        <?php if (!empty($order->order_item)): ?>
+        <?php if (!empty($orderItems)): ?>
             <table cellpadding="0" cellspacing="0">
                 <tr>
-                    <th scope="col"><?= __('Id') ?></th>
-                    <th scope="col"><?= __('Order Id') ?></th>
-                    <th scope="col"><?= __('Price Entry Id') ?></th>
-                    <th scope="col"><?= __('Product Id') ?></th>
-                    <th scope="col"><?= __('Organization Id') ?></th>
+
+                    <th scope="col" class="actions"><?= __('Actions') ?></th>
+                    <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
+                        <th scope="col"><?= __('Organization Id') ?></th>
+                    <?php endif; ?>
                     <th scope="col"><?= __('Order Item Number') ?></th>
-                    <th scope="col"><?= __('Price Discount') ?></th>
-                    <th scope="col"><?= __('Description') ?></th>
-                    <th scope="col"><?= __('Active') ?></th>
+                    <th scope="col"><?= __('Product Name') ?></th>
+                    <th scope="col"><?= __('Unit Price') ?></th>
+                    <th scope="col"><?= __('Unit Quantity') ?></th>
+                    <th scope="col"><?= __('Total Price') ?></th>
                     <th scope="col"><?= __('Created At') ?></th>
                     <th scope="col"><?= __('Last Updated') ?></th>
-                    <th scope="col" class="actions"><?= __('Actions') ?></th>
                 </tr>
-                <?php foreach ($order->order_item as $orderItem): ?>
+                <?php foreach ($orderItems as $orderItem): ?>
                     <tr>
-                        <td><?= h($orderItem->id) ?></td>
-                        <td><?= h($orderItem->order_id) ?></td>
-                        <td><?= h($orderItem->price_entry_id) ?></td>
-                        <td><?= h($orderItem->product_id) ?></td>
-                        <td><?= h($orderItem->organization_id) ?></td>
-                        <td><?= h($orderItem->order_item_number) ?></td>
-                        <td><?= h($orderItem->price_discount) ?></td>
-                        <td><?= h($orderItem->notes) ?></td>
-                        <td><?= h($orderItem->active) ?></td>
+                        <td class="actions">
+                            <?= $this->Html->link(__('Edit'), ['controller' => 'OrderItem', 'action' => 'edit', $orderItem->id]) ?>
+                            <?= $this->Form->postLink(__('Delete'), ['controller' => 'OrderItem', 'action' => 'delete', $orderItem->id], ['confirm' => __('Are you sure you want to delete ?', $orderItem->order_item_number)]) ?>
+                        </td>
+                        <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
+                            <td><?= h($orderItem->organization_id) ?></td>
+                        <?php endif; ?>
+                        <td><?= $this->Html->link(h($orderItem->order_item_number), ['controller' => 'OrderItem', 'action' => 'view', $orderItem->id]) ?></td>
+                        <td><?= h($orderItem->product->name) ?></td>
+                        <td><?= $this->Number->format($orderItem->unit_price) . ' ' . h($order->currency) ?></td>
+                        <td><?= $this->Number->format($orderItem->unit_quantity) ?></td>
+                        <td><?= $this->Number->format($orderItem->total) . ' ' . h($order->currency) ?></td>
                         <td><?= h($orderItem->created_at) ?></td>
                         <td><?= h($orderItem->last_updated) ?></td>
-                        <td class="actions">
-                            <?= $this->Html->link(__('View'), ['controller' => 'OrderItem', 'action' => 'view', $orderItem->id]) ?>
-                            <?= $this->Html->link(__('Edit'), ['controller' => 'OrderItem', 'action' => 'edit', $orderItem->id]) ?>
-                            <?= $this->Form->postLink(__('Delete'), ['controller' => 'OrderItem', 'action' => 'delete', $orderItem->id], ['confirm' => __('Are you sure you want to delete # {0}?', $orderItem->id)]) ?>
-                        </td>
+
                     </tr>
                 <?php endforeach; ?>
             </table>

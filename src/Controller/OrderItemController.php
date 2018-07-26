@@ -46,7 +46,7 @@ class OrderItemController extends AppController
     public function view($id = null)
     {
         $orderItem = $this->OrderItem->get($id, [
-            'contain' => ['Order', 'PriceEntry', 'Product', 'Organization', 'InvoiceItem']
+            'contain' => ['Order', 'Product', 'Organization', 'InvoiceItem']
         ]);
 
         if ($this->loggedUserOrgId != null and $orderItem['organization_id'] != ($this->loggedUserOrgId)) {
@@ -73,8 +73,10 @@ class OrderItemController extends AppController
         $orderItem->set('order_id', $orderId);
 
         if ($this->request->is('post')) {
-            debug($this->request->getData());
-            $orderItem = $this->OrderItem->patchEntity($orderItem, $this->request->getData());
+            $requestData = $this->request->getData();
+//            debug($requestData);
+
+            $orderItem = $this->OrderItem->patchEntity($orderItem, $requestData);
 
             if ($this->loggedUserOrgId != null) {
                 $orderItem->set('organization_id', $this->loggedUserOrgId);
@@ -83,7 +85,12 @@ class OrderItemController extends AppController
             if ($this->OrderItem->save($orderItem)) {
                 $this->Flash->success(__('The order item has been saved.'));
 
-                return $this->redirect(['action' => 'add', $orderId]);
+                if($requestData['do-continue'] == "true") {
+                    return $this->redirect(['action' => 'add', $orderId]);
+                } else {
+                    return $this->redirect(['controller' => 'Order', 'action' => 'view', $orderId]);
+                }
+
             }
             $this->Flash->error(__('The order item could not be saved. Please, try again.'));
         }

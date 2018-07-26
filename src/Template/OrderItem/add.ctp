@@ -13,31 +13,28 @@
 <div class="orderItem form large-9 medium-8 columns content">
     <script>
         function updatePriceList(selectObject) {
-            price_list_json = JSON.parse(document.getElementById('priceEntryJSON').value);
+            price_list_json_string = '<?php echo $priceEntryJSON ?>';
+            // (price_list_json_string);
+            price_list_json = JSON.parse(price_list_json_string);
+            // alert(JSON.stringify(price_list_json));
             price_json = price_list_json[selectObject.value];
             // alert(JSON.stringify(price_json));
 
             price_element = document.getElementById('unit-price');
             key = Object.keys(price_json);
             price_element.value = price_json[key];
-            // while (priceSelectElement.length > 0) {
-            //     // alert(priceSelectElement.length);
-            //     priceSelectElement.remove(priceSelectElement.length - 1);
-            // }
-            //
-            // option = document.createElement("option");
-            // option.id = Object.keys(price_json);
-            // option.value = price_json[option.id];
-            // option.text = price_json[option.id];
-            // option.selected = "selected";
-            // priceSelectElement.add(option);
+        }
+
+        function do_not_continue() {
+           document.getElementById("do-continue").value = "false";
+           // alert(document.getElementById("do-continue").value)
         }
     </script>
-    <?= $this->Form->create($orderItem) ?>
+    <?= $this->Form->create($orderItem, ['id' => 'order-item-form']) ?>
     <fieldset>
         <legend><?= __('Add Order Item') ?></legend>
         <?php
-            echo '<input id="priceEntryJSON" type="hidden" value=\'' . $priceEntryJSON . '\'>';
+            echo '<input id="do-continue" name="do-continue" type="hidden" value="true">';
             if ($organization != null) {
                 echo $this->Form->control('organization_id', ['options' => $organization, 'empty' => true]);
             }
@@ -50,6 +47,7 @@
             echo $this->Form->control('notes');
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit & New')) ?>
+    <?= $this->Form->button(__('Submit & Add New')) ?>
+    <?= $this->Form->button(__('Submit & Done'), ['onclick' => 'do_not_continue()']) ?>
     <?= $this->Form->end() ?>
 </div>
