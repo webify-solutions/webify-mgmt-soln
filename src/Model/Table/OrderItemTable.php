@@ -83,7 +83,7 @@ class OrderItemTable extends Table
         $validator
             ->scalar('order_item_number')
             ->maxLength('order_item_number', 255)
-            ->allowEmpty('order_item_number');
+            ->allowEmpty('order_item_number', 'create');
 
         $validator
             ->numeric('unit_price')
