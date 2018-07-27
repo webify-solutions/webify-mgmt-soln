@@ -26,13 +26,17 @@ class OrderController extends AppController
         ];
 
         if ($this->loggedUserOrgId != null) {
-            $order = $this->paginate($this->Order->find()->where(['Order.organization_id' => $this->loggedUserOrgId]));
+            $orders = $this->paginate($this->Order->find()->where(['Order.organization_id' => $this->loggedUserOrgId]));
         } else {
-            $order = $this->paginate($this->Order);
+            $orders = $this->paginate($this->Order);
+        }
+
+        foreach ($orders as $order ) {
+            $order->set('total_amount', OrderBehavior::calculateTotalAmount($order));
         }
 
 
-        $this->set(['order' => $order, 'loggedUser' => $this->loggedUser]);
+        $this->set(['order' => $orders, 'loggedUser' => $this->loggedUser]);
     }
 
     /**
@@ -56,6 +60,7 @@ class OrderController extends AppController
         }
 
         $order->set('displayable_type', PropertyUtils::$orderTypes[$order->type]);
+        $order->set('total_amount', OrderBehavior::calculateTotalAmount($order));
 
         $this->set([
             'order' => $order,

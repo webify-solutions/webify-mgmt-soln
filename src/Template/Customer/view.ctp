@@ -88,7 +88,7 @@
     <?php if(in_array('Order', $loggedUser['active_features'], true)) : ?>
         <div class="related">
             <h4><?= 'Related Order (' . $this->Html->link('Add New', ['controller' => 'Order', 'action' => 'add', $customer->id]) . ')' ?></h4>
-            <?php if (!empty($customer->order)): ?>
+            <?php if (!empty($orders)): ?>
             <table cellpadding="0" cellspacing="0">
                 <thead>
                     <tr>
@@ -104,7 +104,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($customer->order as $order): ?>
+                    <?php foreach ($orders as $order): ?>
                     <tr>
                         <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
                             <td><?= $order->has('organization') ? $this->Html->link($order->organization->name, ['controller' => 'Organization', 'action' => 'view', $order->organization->id]) : '' ?></td>

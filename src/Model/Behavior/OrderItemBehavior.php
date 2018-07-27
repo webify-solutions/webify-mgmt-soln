@@ -74,4 +74,13 @@ class OrderItemBehavior extends Behavior
 
         $entity->set('total', $entity->get('unit_price') * $entity->get('unit_quantity'));
     }
+
+    public function afterSaveCommit(Event $event, EntityInterface $entity, ArrayObject $options) {
+//        debug($entity->get('order_id'));
+        OrderBehavior::updateTotal($entity->get('order_id'), $entity->get('total'), '+');
+    }
+
+    public function afterDeleteCommit(Event $event, EntityInterface $entity, ArrayObject $options) {
+        OrderBehavior::updateTotal($entity->get('order_id'), $entity->get('total'), '-');
+    }
 }

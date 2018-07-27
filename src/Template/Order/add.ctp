@@ -51,7 +51,6 @@
                     'minYear' => date( 'Y') - 40,
                     'maxYear' => date('Y')
                 ]);
-//            echo $this->Form->control('total_amount');
             echo '<div class="hidden">' . $this->Form->control('currency', ['options' => $currencies, 'empty' => false]) . '</div>';
             echo $this->Form->control('order_discount');
             echo $this->Form->control(

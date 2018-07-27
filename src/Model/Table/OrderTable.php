@@ -109,10 +109,6 @@ class OrderTable extends Table
             ->allowEmpty('subtotal_amount');
 
         $validator
-            ->numeric('total_amount')
-            ->allowEmpty('total_amount');
-
-        $validator
             ->scalar('currency')
             ->allowEmpty('currency');
 

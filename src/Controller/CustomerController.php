@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Model\Behavior\OrderBehavior;
 use Cake\Http\Exception\NotFoundException;
 
 /**
@@ -45,14 +46,19 @@ class CustomerController extends AppController
     public function view($id = null)
     {
         $customer = $this->Customer->get($id, [
-            'contain' => ['Group', 'Organization', 'Order', 'SupportCase']
+            'contain' => ['Group', 'Organization', 'SupportCase']
         ]);
 
         if ($this->loggedUserOrgId != null and $customer['organization_id'] != ($this->loggedUserOrgId)) {
             $this->unauthorizedAccessRedirect();
         }
 
-        $this->set(['customer' => $customer, 'loggedUser' => $this->loggedUser]);
+        $orders = $this->Customer->Order->find('all')->where(['customer_id', $id]);
+        foreach ($orders as $order) {
+            $order->set('total_amount', OrderBehavior::calculateTotalAmount($order));
+        }
+
+        $this->set(['customer' => $customer, 'loggedUser' => $this->loggedUser, 'orders' => $orders]);
     }
 
     /**

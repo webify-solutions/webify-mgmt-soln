@@ -48,7 +48,6 @@ class Order extends Entity
         'effective_date' => true,
         'delivery_date' => true,
         'subtotal_amount' => true,
-        'total_amount' => true,
         'currency' => true,
         'order_discount' => true,
         'order_discount_unit' => true,

@@ -71,7 +71,6 @@
                     'maxYear' => date('Y')
                 ]);
             echo $this->Form->control('subtotal_amount', ['disabled' => 'disabled']);
-            echo $this->Form->control('total_amount', ['disabled' => 'disabled']);
             echo '<div class="hidden">' . $this->Form->control('currency', ['options' => $currencies, 'empty' => false]) . '</div>';
             echo $this->Form->control('order_discount');
             echo $this->Form->control('order_discount_unit', ['options' => $orderDiscountUnits, 'empty' => true]);

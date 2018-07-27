@@ -8,7 +8,8 @@
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Html->link(__('View Order'), ['controller' => 'Order', 'action' => 'view', $orderItem->order_id]) ?></li>
-        <li><?= $this->Html->link(__('View Order Item'), ['controller' => 'OrderItem', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('New Order Item'), ['controller' => 'OrderItem', 'action' => 'add', $orderItem->order_id]) ?></li>
+        <li><?= $this->Html->link(__('View Order Item'), ['controller' => 'OrderItem', 'action' => 'view', $orderItem->order_id]) ?></li>
         <li><?= $this->Form->postLink(
                 __('Delete'),
                 ['action' => 'delete', $orderItem->id],
@@ -22,14 +23,14 @@
     <fieldset>
         <legend><?= __('Edit Order Item') ?></legend>
         <?php
+            echo $this->Form->control('order_item_number', ['disabled' => 'disabled']);
             if ($organization != null) {
                 echo $this->Form->control('organization_id', ['options' => $organization, 'empty' => true]);
             }
-            echo $this->Form->control('order_id', ['options' => $order, 'empty' => true]);
-            echo $this->Form->control('product_id', ['options' => $product, 'empty' => true]);
-            echo $this->Form->control('price_entry_id', ['options' => $priceEntry, 'empty' => true]);
-            //            echo $this->Form->control('price_discount');
-            //            echo $this->Form->control('price_discount_unit');
+            echo $this->Form->control('order_id', ['options' => $order, 'empty' => true, 'disabled' => 'disabled']);
+            echo $this->Form->control('product_id', ['options' => $product, 'empty' => true, 'onchange' => 'updatePriceList(this)', 'disabled' => 'disabled']);
+            echo $this->Form->control('unit_price', ['type'=>'text', 'readonly' => 'readonly', 'empty' => true]);
+            echo $this->Form->control('unit_quantity');
             echo $this->Form->control('notes');
         ?>
     </fieldset>
