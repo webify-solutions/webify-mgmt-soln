@@ -66,7 +66,7 @@ $appName = 'Webify Management';
                     <?php if(in_array('Payment', $loggedUser['active_features'], true)) : ?>
                         <li><?= $this->Html->link(__('Payments'), ['controller' => 'Payment', 'action' => 'index']) ?></li>
                     <?php endif; ?>
-                    <?php if(in_array('Support_case', $loggedUser['active_features'], true)) : ?>
+                    <?php if(in_array('SupportCase', $loggedUser['active_features'], true)) : ?>
                         <li><?= $this->Html->link(__('Support Case'), ['controller' => 'SupportCase', 'action' => 'index']) ?></li>
                     <?php endif; ?>
                     <?php if(in_array('User', $loggedUser['active_features'], true)) : ?>
