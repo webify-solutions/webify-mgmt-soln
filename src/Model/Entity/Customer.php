@@ -10,8 +10,7 @@ use Cake\ORM\Entity;
  * @property int $group_id
  * @property int $organization_id
  * @property string $title
- * @property string $first_name
- * @property string $last_name
+ * @property string $name
  * @property string $email
  * @property string $phone
  * @property string $address

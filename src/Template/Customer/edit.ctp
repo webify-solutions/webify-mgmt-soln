@@ -16,7 +16,7 @@
                     'action' => 'delete', $customer->id
                 ],
                 [
-                    'confirm' => __('Are you sure you want to delete {0} {1}?', $customer->first_name, $customer-> last_name)
+                    'confirm' => __('Are you sure you want to delete {0}?', $customer->name)
                 ]
             )
         ?> </li>
