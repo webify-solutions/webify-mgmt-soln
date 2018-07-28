@@ -16,7 +16,7 @@
  * @var \App\Model\Entity\User $user
  */
 
-$appName = 'Activeforce';
+$appName = 'Webify Management';
 ?>
 <!DOCTYPE html>
 <html>
