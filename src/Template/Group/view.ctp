@@ -52,8 +52,7 @@
                 <tr>
                     <th scope="col" class="actions"><?= __('Actions') ?></th>
                     <th scope="col"><?=__('login_name') ?></th>
-                    <th scope="col"><?=__('first_name') ?></th>
-                    <th scope="col"><?=__('last_name') ?></th>
+                    <th scope="col"><?=__('name') ?></th>
                     <?php if(in_array('organization', $loggedUser['active_features'], true)) : ?>
                         <th scope="col"><?=__('organization_id') ?></th>
                     <?php endif; ?>
@@ -67,8 +66,7 @@
                         <?= $this->Html->link(__('Edit'), ['controller' => 'User', 'action' => 'edit', $user->id]) ?>
                     </td>
                     <td><?= $this->Html->link(__(h($user->login_name)), ['controller' => 'User', 'action' => 'view', $user->id]) ?></td>
-                    <td><?= h($user->first_name) ?></td>
-                    <td><?= h($user->last_name) ?></td>
+                    <td><?= h($user->name) ?></td>
                     <?php if(in_array('organization', $loggedUser['active_features'], true)) : ?>
                         <td><?= $user->has('organization') ? $this->Html->link($user->organization->name, ['controller' => 'Organization', 'action' => 'view', $user->organization->id]) : '' ?></td>
                     <?php endif; ?>
@@ -94,7 +92,7 @@
                     <?php endif; ?>
                     <th scope="col"><?=__('customer_number') ?></th>
                     <th scope="col"><?=__('title') ?></th>
-                    <th scope="col"><?=__('first_name', 'Name') ?></th>
+                    <th scope="col"><?=__('name', 'Name') ?></th>
                     <th scope="col"><?=__('phone') ?></th>
                     <th scope="col"><?=__('active', 'Is Active') ?></th>
                 </tr>
@@ -108,7 +106,7 @@
                     <?php endif; ?>
                     <td><?= $this->Html->link(h($customer->customer_number), ['controller' => 'Customer', 'action' => 'view', $customer->id]) ?></td>
                     <td><?= h($customer->title) ?></td>
-                    <td><?= h(__('{0} {1}', $customer->first_name, $customer->last_name)) ?></td>
+                    <td><?= h($customer->name) ?></td>
                     <td><?= h($customer->phone) ?></td>
                     <td><?= h($customer->active ? __('Yes') : __('No')) ?></td>
                 </tr>

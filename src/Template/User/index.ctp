@@ -17,8 +17,7 @@
             <tr>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('login_name') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('first_name') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('last_name') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('name') ?></th>
                 <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
                     <th scope="col"><?= $this->Paginator->sort('organization_id') ?></th>
                 <?php endif; ?>
@@ -46,8 +45,7 @@
                     ) ?>
                 </td>
                 <td><?= $this->Html->link(__(h($user->login_name)), ['controller' => 'User', 'action' => 'view', $user->id]) ?></td>
-                <td><?= h($user->first_name) ?></td>
-                <td><?= h($user->last_name) ?></td>
+                <td><?= h($user->name) ?></td>
                 <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
                     <td><?= $user->has('organization') ? $this->Html->link($user->organization->name, ['controller' => 'Organization', 'action' => 'view', $user->organization->id]) : '' ?></td>
                 <?php endif; ?>

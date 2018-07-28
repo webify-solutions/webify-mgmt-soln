@@ -61,14 +61,9 @@ class UserTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->scalar('first_name')
-            ->maxLength('first_name', 20)
-            ->allowEmpty('first_name');
-
-        $validator
-            ->scalar('last_name')
-            ->maxLength('last_name', 20)
-            ->allowEmpty('last_name');
+            ->scalar('name')
+            ->maxLength('name', 255)
+            ->allowEmpty('name');
 
         $validator
             ->scalar('login_name')
