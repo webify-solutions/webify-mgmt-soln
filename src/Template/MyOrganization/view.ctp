@@ -7,13 +7,7 @@
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Organizations'), ['controller' => 'Organization', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Organization'), ['controller' => 'Organization', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('Edit Organization'), ['controller' => 'Organization', 'action' => 'edit', $organization->id]) ?> </li>
-        <li>
-            <?= $this->Form->postLink(__('Delete Organization'), ['controller' => 'Organization', 'action' => 'delete', $organization->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $organization->id)]) ?>
-        </li>
+        <li><?= $this->Html->link(__('Edit My Organization'), ['controller' => 'MyOrganization', 'action' => 'edit', $loggedUser['organization_id']]) ?> </li>
     </ul>
 </nav>
 <div class="organization view large-9 medium-8 columns content">

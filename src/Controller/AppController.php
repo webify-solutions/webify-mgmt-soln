@@ -92,27 +92,28 @@ class AppController extends Controller
             $userRole = $this->Auth->user('role');
 
             if($userRole == 'Admin') {
-                $activeFeatures[] = ('Group');
-                $activeFeatures[] = ('User');
+                $activeFeatures[] = 'Group';
+                $activeFeatures[] = 'User';
+                $activeFeatures[] = 'MyOrganization';
 
                 if ($organization['active_product_feature'] == 1) {
-                    $activeFeatures[] = ('Product');
-                    $activeFeatures[] = ('PriceEntry');
+                    $activeFeatures[] = 'Product';
+                    $activeFeatures[] = 'PriceEntry';
                 }
 
                 if ($organization['active_order_feature'] == 1) {
-                    $activeFeatures[] = ('Order');
-                    $activeFeatures[] = ('OrderItem');
+                    $activeFeatures[] = 'Order';
+                    $activeFeatures[] = 'OrderItem';
                 }
 
                 if ($organization['active_invoicing_feature'] == 1) {
-                    $activeFeatures[] = ('Invoice');
-                    $activeFeatures[] = ('InvoiceItem');
-                    $activeFeatures[] = ('Payment');
+                    $activeFeatures[] = 'Invoice';
+                    $activeFeatures[] = 'InvoiceItem';
+                    $activeFeatures[] = 'Payment';
                 }
 
                 if ($organization['active_case_feature'] == 1) {
-                    $activeFeatures[] = ('SupportCase');
+                    $activeFeatures[] = 'SupportCase';
                 }
             }
 
@@ -144,7 +145,7 @@ class AppController extends Controller
                     'OrderItem',
                     'Invoice',
                     'InvoiceItem',
-                    'Support_case',
+                    'SupportCase',
                     'Payment',
                     'Organization',
                     'User'

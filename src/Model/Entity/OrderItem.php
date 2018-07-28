@@ -8,11 +8,14 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property int $order_id
- * @property int $price_entry_id
  * @property int $product_id
  * @property int $organization_id
  * @property string $order_item_number
+ * @property float $unit_price
+ * @property float $unit_quantity
  * @property float $price_discount
+ * @property string $price_discount_unit
+ * @property float $total
  * @property string $notes
  * @property bool $active
  * @property \Cake\I18n\FrozenTime $created_at
@@ -38,7 +41,6 @@ class OrderItem extends Entity
      */
     protected $_accessible = [
         'order_id' => true,
-        'price_entry_id' => true,
         'product_id' => true,
         'organization_id' => true,
         'order_item_number' => true,

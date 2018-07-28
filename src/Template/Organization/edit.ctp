@@ -23,6 +23,8 @@
             echo $this->Form->control('name');
             echo $this->Form->control('email');
             echo $this->Form->control('phone');
+            echo $this->Form->control('fax');
+            echo $this->Form->control('logo_url');
             echo $this->Form->control('address');
             echo $this->Form->control('currency_used', ['options' => $currencies]);
             echo $this->Form->control('active', ['label'=> 'Is Organization Active']);

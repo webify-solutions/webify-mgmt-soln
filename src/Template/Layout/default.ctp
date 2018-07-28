@@ -75,6 +75,9 @@ $appName = 'Webify Management';
                     <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
                         <li><?= $this->Html->link(__('Organizations'), ['controller' => 'Organization', 'action' => 'index']) ?></li>
                     <?php endif; ?>
+                    <?php if(in_array('MyOrganization', $loggedUser['active_features'], true)) : ?>
+                        <li><?= $this->Html->link(__('My Organization'), ['controller' => 'MyOrganization', 'action' => 'view', $loggedUser['organization_id']]) ?></li>
+                    <?php endif; ?>
 
                 </ul>
                 <ul class="right">

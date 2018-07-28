@@ -113,6 +113,16 @@ class OrganizationTable extends Table
             ->allowEmpty('phone');
 
         $validator
+            ->scalar('fax')
+            ->maxLength('fax', 20)
+            ->allowEmpty('fax');
+
+        $validator
+            ->scalar('logo_url')
+            ->maxLength('logo_url', 255)
+            ->allowEmpty('logo_url');
+
+        $validator
             ->scalar('address')
             ->maxLength('address', 255)
             ->allowEmpty('address');

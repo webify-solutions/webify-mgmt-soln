@@ -10,6 +10,8 @@ use Cake\ORM\Entity;
  * @property string $name
  * @property string $email
  * @property string $phone
+ * @property string fax
+ * @property string logo_url
  * @property string $address
  * @property bool $active
  * @property bool $active_product_feature
@@ -48,6 +50,8 @@ class Organization extends Entity
         'name' => true,
         'email' => true,
         'phone' => true,
+        'fax' => true,
+        'logo_url' => true,
         'address' => true,
         'currency_used' => true,
         'active' => true,

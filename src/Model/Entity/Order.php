@@ -12,9 +12,14 @@ use Cake\ORM\Entity;
  * @property string $order_number
  * @property string $notes
  * @property \Cake\I18n\FrozenDate $effective_date
+ * @property \Cake\I18n\FrozenDate $order_date
+ * @property \Cake\I18n\FrozenDate $delivery_date
  * @property string $type
- * @property float $total_amount
+ * @property int $type_period
+ * @property float $subtotal_amount
+ * @property string $currency
  * @property float $order_discount
+ * @property string $order_discount_unit
  * @property bool $active
  * @property \Cake\I18n\FrozenTime $created_at
  * @property \Cake\I18n\FrozenTime $last_updated
