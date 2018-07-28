@@ -11,6 +11,22 @@
     </ul>
 </nav>
 <div class="order form large-9 medium-8 columns content">
+    <script>
+        function toggle_period_picker_display(selectedObject){
+            period_picker = document.getElementById("period-picker");
+            type_period = document.getElementById("type_period");
+
+            if (selectedObject.value === 'one-time') {
+                period_picker.classList.add('hidden');
+            } else if (selectedObject.value === 'recurring-payments') {
+                period_picker.classList.remove('hidden');
+                type_period.innerHTML = 'Reminder every'
+            } else {
+                period_picker.classList.remove('hidden');
+                type_period.innerHTML = 'Invoice every'
+            }
+        }
+    </script>
     <?= $this->Form->create($order) ?>
     <fieldset>
         <legend><?= __('Add Order') ?></legend>
@@ -19,9 +35,9 @@
                 echo $this->Form->control('organization_id', ['options' => $organization, 'empty' => true]);
             }
             echo $this->Form->control('customer_id', ['options' => $customer, 'empty' => true]);
-            echo $this->Form->control('type', ['options' => $types, 'empty' => true]);
-            echo '<div  class="period-picker">';
-            echo '<span> Reminder every </span>';
+            echo $this->Form->control('type', ['options' => $types, 'empty' => true, 'onchange' => 'toggle_period_picker_display(this)']);
+            echo '<div id="period-picker" class="period-picker hidden">';
+            echo '<span id="type_period" name="type_period"> Reminder every </span>';
             echo $this->Form->control(
                 'type_period',
                 [

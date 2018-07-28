@@ -56,7 +56,7 @@
         </tr>
         <?php if($order->type != 'one-time') : ?>
         <tr>
-            <th scope="row"><?= __('Reminder') ?></th>
+            <th scope="row"><?= $order->type == 'recurring-payments' ? __('Reminder') : __('Invoice') ?></th>
             <td><?= __('Every ' . h($order->type_period) . ' month(s)') ?></td>
         </tr>
         <?php endif; ?>

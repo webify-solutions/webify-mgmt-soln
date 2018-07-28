@@ -12,12 +12,12 @@
 </nav>
 <div class="orderItem form large-9 medium-8 columns content">
     <script>
-        function updatePriceList(selectObject) {
+        function update_unit_price(selectedObject) {
             price_list_json_string = '<?php echo $priceEntryJSON ?>';
             // (price_list_json_string);
             price_list_json = JSON.parse(price_list_json_string);
             // alert(JSON.stringify(price_list_json));
-            price_json = price_list_json[selectObject.value];
+            price_json = price_list_json[selectedObject.value];
             // alert(JSON.stringify(price_json));
 
             price_element = document.getElementById('unit-price');
@@ -39,7 +39,7 @@
                 echo $this->Form->control('organization_id', ['options' => $organization, 'empty' => true]);
             }
             echo $this->Form->control('order_id', ['options' => $order, 'empty' => true]);
-            echo $this->Form->control('product_id', ['options' => $product, 'empty' => true, 'onchange' => 'updatePriceList(this)']);
+            echo $this->Form->control('product_id', ['options' => $product, 'empty' => true, 'onchange' => 'update_unit_price(this)']);
             echo $this->Form->control('unit_price', ['type'=>'text', 'readonly' => 'readonly', 'empty' => true]);
             echo $this->Form->control('unit_quantity');
 //            echo $this->Form->control('price_discount');

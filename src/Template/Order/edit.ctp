@@ -39,16 +39,23 @@
             }
             echo $this->Form->control('customer_id', ['options' => $customer, 'empty' => true, 'disabled' => 'disabled']);
             echo $this->Form->control('type', ['options' => $types, 'empty' => true, 'disabled' => 'disabled']);
-            echo '<div  class="period-picker">';
-            echo '<span> Reminder every </span>';
-            echo $this->Form->control(
-                'type_period',
-                [
-                    'label' => '',
-                    'options' => $typePeriods,
-                    'empty' => true]);
-            echo '<span> month(s) </span>';
-            echo '</div>';
+            if ($order->type != 'one-time') {
+                echo '<div  class="period-picker">';
+                if ($order->type == 'recurring-payments') {
+                    echo '<span name="type_period"> Reminder every </span>';
+                } else {
+                    echo '<span name="type_period"> Invoice every </span>';
+                }
+
+                echo $this->Form->control(
+                    'type_period',
+                    [
+                        'label' => '',
+                        'options' => $typePeriods,
+                        'empty' => true]);
+                echo '<span> month(s) </span>';
+                echo '</div>';
+            }
             echo $this->Form->control(
                 'order_date',
                 [
