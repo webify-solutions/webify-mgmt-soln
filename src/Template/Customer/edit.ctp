@@ -31,8 +31,7 @@
                 echo $this->Form->control('organization_id', ['options' => $organization, 'empty' => true]);
             }
             echo $this->Form->control('title');
-            echo $this->Form->control('first_name');
-            echo $this->Form->control('last_name');
+            echo $this->Form->control('name');
             echo $this->Form->control('phone');
             echo $this->Form->control('active');
             echo $this->Form->control('group_id', ['options' => $group, 'empty' => true]);

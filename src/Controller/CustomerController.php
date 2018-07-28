@@ -53,7 +53,7 @@ class CustomerController extends AppController
             $this->unauthorizedAccessRedirect();
         }
 
-        $orders = $this->Customer->Order->find('all')->where(['customer_id', $id]);
+        $orders = $this->Customer->Order->find('all')->where(['customer_id' => $id]);
         foreach ($orders as $order) {
             $order->set('total_amount', OrderBehavior::calculateTotalAmount($order));
         }
@@ -79,7 +79,7 @@ class CustomerController extends AppController
             if ($this->Customer->save($customer)) {
                 $this->Flash->success(__('The customer has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $customer->id]);
             }
             $this->Flash->error(__('The customer could not be saved. Please, try again.'));
         }
@@ -117,7 +117,7 @@ class CustomerController extends AppController
             if ($this->Customer->save($customer)) {
                 $this->Flash->success(__('The customer has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $customer->id]);
             }
             $this->Flash->error(__('The customer could not be saved. Please, try again.'));
         }

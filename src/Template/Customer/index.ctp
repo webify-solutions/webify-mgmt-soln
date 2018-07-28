@@ -1,4 +1,4 @@
-<?php
+ <?php
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Customer[]|\Cake\Collection\CollectionInterface $customer
@@ -21,7 +21,7 @@
                 <?php endif; ?>
                 <th scope="col"><?= $this->Paginator->sort('customer_number') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('title') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('first_name', 'Name') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('name') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('group_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('phone') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('active', 'Is Active') ?></th>
@@ -40,10 +40,7 @@
                                 $customer->id
                             ],
                             [
-                                'confirm' => __(
-                                    'Are you sure you want to delete {0} {1}?',
-                                    $customer->first_name, $customer->last_name
-                                )
+                                'confirm' => __('Are you sure you want to delete {0}?', $customer->name)
                             ]
                     ) ?>
                 </td>
@@ -52,7 +49,7 @@
                 <?php endif; ?>
                 <td><?= $this->Html->link(h($customer->customer_number), ['controller' => 'Customer', 'action' => 'view', $customer->id]) ?></td>
                 <td><?= h($customer->title) ?></td>
-                <td><?= h(__('{0} {1}', $customer->first_name, $customer->last_name)) ?></td>
+                <td><?= h($customer->name) ?></td>
                 <td><?= $customer->has('group') ? $this->Html->link($customer->group->name, ['controller' => 'Group', 'action' => 'view', $customer->group->id]) : '' ?></td>
                 <td><?= h($customer->phone) ?></td>
                 <td><?= h($customer->active ? __('Yes') : __('No')) ?></td>

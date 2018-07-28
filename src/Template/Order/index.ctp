@@ -63,7 +63,7 @@
                 <td><?= $this->Html->link(h($order->order_number), ['controller' => 'Order', 'action' => 'view', $order->id]) ?></td>
                 <td><?= $order->has('customer') ?
                         $this->Html->link(
-                            $order->customer->first_name . ' ' . $order->customer->last_name,
+                            $order->customer->name,
                             [
                                 'controller' => 'Customer',
                                 'action' => 'view',

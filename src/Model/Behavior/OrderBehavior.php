@@ -28,9 +28,7 @@ class OrderBehavior extends Behavior
             'name' => $customerQuery->func()->concat([
                 'customer_number' => 'identifier',
                 ': ',
-                'first_name' => 'identifier',
-                ' ',
-                'last_name' => 'identifier'
+                'name' => 'identifier'
             ]),
 
         ]);

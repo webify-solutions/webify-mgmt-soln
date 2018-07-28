@@ -41,12 +41,8 @@
             <td><?= h($customer->title) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('First Name') ?></th>
-            <td><?= h($customer->first_name) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Last Name') ?></th>
-            <td><?= h($customer->last_name) ?></td>
+            <th scope="row"><?= __('Name') ?></th>
+            <td><?= h($customer->name) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Active') ?></th>
@@ -57,12 +53,12 @@
             <td><?= $customer->has('group') ? $this->Html->link($customer->group->name, ['controller' => 'Group', 'action' => 'view', $customer->group->id]) : '' ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Email') ?></th>
-            <td><?= h($customer->email) ?></td>
-        </tr>
-        <tr>
             <th scope="row"><?= __('Phone') ?></th>
             <td><?= h($customer->phone) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Email') ?></th>
+            <td><?= h($customer->email) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Address') ?></th>

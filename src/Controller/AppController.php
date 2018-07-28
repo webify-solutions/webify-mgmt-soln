@@ -84,7 +84,7 @@ class AppController extends Controller
         $organization_id = $this->Auth->user('organization_id');
         if ($organization_id  != null) {
             $organizations =  TableRegistry::getTableLocator()->get('Organization');
-            $organization = $organizations->get($this->Auth->user('organization_id'));
+            $organization = $organizations->get($organization_id);
 
             $activeFeatures = [
                 'Customer',

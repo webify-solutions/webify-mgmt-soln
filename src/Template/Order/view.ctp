@@ -44,16 +44,7 @@
         <?php endif; ?>
         <tr>
             <th scope="row"><?= __('Customer') ?></th>
-            <td><?= $order->has('customer') ?
-                    $this->Html->link(
-                        $order->customer->first_name . ' ' . $order->customer->last_name,
-                        [
-                            'controller' => 'Customer',
-                            'action' => 'view',
-                            $order->customer->id
-                        ]
-                    )
-                    : '' ?></td>
+            <td><?= $this->Html->link($order->customer->name, ['controller' => 'Customer', 'action' => 'view', $order->customer->id]) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Cancelled') ?></th>

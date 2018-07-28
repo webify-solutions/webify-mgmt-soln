@@ -39,7 +39,7 @@ class CustomerTable extends Table
         $this->addBehavior('Customer');
 
         $this->setTable('customer');
-        $this->setDisplayField('title');
+        $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
         $this->belongsTo('Group', [
@@ -79,14 +79,9 @@ class CustomerTable extends Table
             ->allowEmpty('title');
 
         $validator
-            ->scalar('first_name')
-            ->maxLength('first_name', 20)
-            ->allowEmpty('first_name');
-
-        $validator
-            ->scalar('last_name')
-            ->maxLength('last_name', 20)
-            ->allowEmpty('last_name');
+            ->scalar('name')
+            ->maxLength('name', 255)
+            ->notEmpty('name');
 
         $validator
             ->email('email')
