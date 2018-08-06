@@ -2,6 +2,7 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\OrderItem $orderItem
+ * @var \App\Model\Entity\Organization $organization
  */
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
@@ -11,36 +12,26 @@
     </ul>
 </nav>
 <div class="orderItem form large-9 medium-8 columns content">
-    <script>
-        function update_unit_price(selectedObject) {
-            price_list_json_string = '<?php echo $priceEntryJSON ?>';
-            // (price_list_json_string);
-            price_list_json = JSON.parse(price_list_json_string);
-            // alert(JSON.stringify(price_list_json));
-            price_json = price_list_json[selectedObject.value];
-            // alert(JSON.stringify(price_json));
-
-            price_element = document.getElementById('unit-price');
-            key = Object.keys(price_json);
-            price_element.value = price_json[key];
-        }
-
-        function do_not_continue() {
-           document.getElementById("do-continue").value = "false";
-           // alert(document.getElementById("do-continue").value)
-        }
-    </script>
     <?= $this->Form->create($orderItem, ['id' => 'order-item-form']) ?>
     <fieldset>
         <legend><?= __('Add Order Item') ?></legend>
         <?php
-            echo '<input id="do-continue" name="do-continue" type="hidden" value="true">';
+            echo '<input id="do-continue" type="hidden" value="true">';
             if ($organization != null) {
                 echo $this->Form->control('organization_id', ['options' => $organization, 'empty' => true]);
             }
             echo $this->Form->control('order_id', ['options' => $order, 'empty' => true]);
-            echo $this->Form->control('product_id', ['options' => $product, 'empty' => true, 'onchange' => 'update_unit_price(this)']);
-            echo $this->Form->control('unit_price', ['type'=>'text', 'readonly' => 'readonly', 'empty' => true]);
+            echo $this->Form->control('product_id', ['options' => $product, 'empty' => true, 'id' => 'product']);
+            echo $this->Form->control(
+              'unit_price',
+              [
+                'id' => 'unit-price',
+                'type'=>'text',
+                'readonly' => 'readonly',
+                'empty' => true,
+                'data-price-list' =>  $priceEntryJSON
+              ]
+            );
             echo $this->Form->control('unit_quantity');
 //            echo $this->Form->control('price_discount');
 //            echo $this->Form->control('price_discount_unit');
@@ -48,6 +39,8 @@
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit & Add New')) ?>
-    <?= $this->Form->button(__('Submit & Done'), ['onclick' => 'do_not_continue()']) ?>
+    <?= $this->Form->button(__('Submit & Done'), ['id' => 'submit-done']) ?>
     <?= $this->Form->end() ?>
 </div>
+
+<?php $this->Html->script('OrderItem/add.js', ['block' => 'scriptBottom']); ?>

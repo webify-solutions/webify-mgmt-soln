@@ -11,22 +11,6 @@
     </ul>
 </nav>
 <div class="order form large-9 medium-8 columns content">
-    <script>
-        function toggle_period_picker_display(selectedObject){
-            period_picker = document.getElementById("period-picker");
-            type_period = document.getElementById("type_period");
-
-            if (selectedObject.value === 'one-time') {
-                period_picker.classList.add('hidden');
-            } else if (selectedObject.value === 'recurring-payments') {
-                period_picker.classList.remove('hidden');
-                type_period.innerHTML = 'Reminder every'
-            } else {
-                period_picker.classList.remove('hidden');
-                type_period.innerHTML = 'Invoice every'
-            }
-        }
-    </script>
     <?= $this->Form->create($order) ?>
     <fieldset>
         <legend><?= __('Add Order') ?></legend>
@@ -35,46 +19,51 @@
                 echo $this->Form->control('organization_id', ['options' => $organization, 'empty' => true]);
             }
             echo $this->Form->control('customer_id', ['options' => $customer, 'empty' => true]);
-            echo $this->Form->control('type', ['options' => $types, 'empty' => true, 'onchange' => 'toggle_period_picker_display(this)']);
-            echo '<div id="period-picker" class="period-picker hidden">';
-            echo '<span id="type_period" name="type_period"> Reminder every </span>';
+            echo $this->Form->control('type', ['options' => $types, 'empty' => true]);
+            echo '<div class="period-picker hidden">';
+            echo '<span class="type_period"> Reminder every </span>';
             echo $this->Form->control(
-                'type_period',
-                [
-                    'label' => '',
-                    'options' => $typePeriods,
-                    'empty' => true]);
+              'type_period',
+              [
+                'label' => '',
+                'options' => $typePeriods,
+                'empty' => true
+              ]
+            );
             echo '<span> month(s) </span>';
             echo '</div>';
             echo $this->Form->control(
-                'order_date',
-                [
-                    'empty' => false,
-                    'minYear' => date( 'Y') - 40,
-                    'maxYear' => date('Y')
-                ]);
+              'order_date',
+              [
+                'empty' => false,
+                'minYear' => date( 'Y') - 40,
+                'maxYear' => date('Y')
+              ]
+            );
             echo $this->Form->control(
-                'effective_date',
-                [
-                    'empty' => false,
-                    'minYear' => date( 'Y') - 40,
-                    'maxYear' => date('Y')
-                ]);
+              'effective_date',
+              [
+                'empty' => false,
+                'minYear' => date( 'Y') - 40,
+                'maxYear' => date('Y')
+              ]
+            );
             echo $this->Form->control(
-                'delivery_date',
-                [
-                    'empty' => true,
-                    'minYear' => date( 'Y') - 40,
-                    'maxYear' => date('Y')
-                ]);
+              'delivery_date',
+              [
+                'empty' => true,
+                'minYear' => date( 'Y') - 40,
+                'maxYear' => date('Y')
+              ]
+            );
             echo '<div class="hidden">' . $this->Form->control('currency', ['options' => $currencies, 'empty' => false]) . '</div>';
             echo $this->Form->control('order_discount');
             echo $this->Form->control(
-                'order_discount_unit',
-                [
-                    'options' => $orderDiscountUnits,
-                    'empty' => true
-                ]
+              'order_discount_unit',
+              [
+                  'options' => $orderDiscountUnits,
+                  'empty' => true
+              ]
             );
             echo $this->Form->control('notes');
         ?>
@@ -82,3 +71,5 @@
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
 </div>
+
+<?php $this->Html->script('Order/add.js', ['block' => 'scriptBottom']); ?>

@@ -33,6 +33,8 @@ $appName = 'Webify Management';
     <?= $this->Html->css('base.extension.css') ?>
     <?= $this->Html->css('style.css') ?>
 
+    <?= $this->Html->script('jquery.min.js') ?>
+
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
@@ -93,5 +95,6 @@ $appName = 'Webify Management';
     </div>
     <footer>
     </footer>
+    <?= $this->fetch('scriptBottom') ?>
 </body>
 </html>
