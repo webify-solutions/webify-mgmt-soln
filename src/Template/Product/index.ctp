@@ -21,7 +21,7 @@
                 <?php endif; ?>
                 <th scope="col"><?= $this->Paginator->sort('name') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('sku') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('type') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('product_category', ['label' => 'Category']) ?></th>
                 <th scope="col"><?= $this->Paginator->sort('active') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('created_at') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('last_updated') ?></th>
@@ -40,7 +40,7 @@
                 <?php endif; ?>
                 <td><?= $this->Html->link(h($product->name), ['action' => 'view', $product->id]) ?></td>
                 <td><?= h($product->sku) ?></td>
-                <td><?= h($product->type) ?></td>
+                <td><?= $product->has('product_category') ? h($product->product_category->name) : '' ?></td>
                 <td><?= h($product->active ? __('Yes') : __('No')) ?></td>
                 <td><?= h($product->created_at) ?></td>
                 <td><?= h($product->last_updated) ?></td>

@@ -42,8 +42,8 @@
             <td><?= h($product->sku) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Type') ?></th>
-            <td><?= h($product->type) ?></td>
+            <th scope="row"><?= __('Category') ?></th>
+            <td><?= $product->has('product_category') ? h($product->product_category->name) : '' ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Active') ?></th>

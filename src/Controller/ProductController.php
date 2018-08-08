@@ -21,15 +21,16 @@ class ProductController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Organization']
+            'contain' => ['Organization', 'ProductCategory']
         ];
 
         if ($this->loggedUserOrgId != null) {
-            $product = $this->paginate($this->Product->find()->where(['organization_id' => $this->loggedUserOrgId]));
+            $product = $this->paginate($this->Product->find()->where(['Product.organization_id' => $this->loggedUserOrgId]));
         } else {
             $product = $this->paginate($this->Product);
         }
 
+        // debug($product);
         $this->set(['product' => $product, 'loggedUser' => $this->loggedUser]);
     }
 
@@ -43,7 +44,7 @@ class ProductController extends AppController
     public function view($id = null)
     {
         $product = $this->Product->get($id, [
-            'contain' => ['Organization', 'InvoiceItem', 'OrderItem', 'PriceEntry']
+            'contain' => ['Organization', 'ProductCategory', 'InvoiceItem', 'OrderItem', 'PriceEntry']
         ]);
 
         if ($this->loggedUserOrgId != null and $product['organization_id'] != ($this->loggedUserOrgId)) {
@@ -61,13 +62,13 @@ class ProductController extends AppController
     public function add()
     {
         $product = $this->Product->newEntity();
+        if ($this->loggedUserOrgId != null) {
+            $product->set('organization_id', $this->loggedUserOrgId);
+        }
         if ($this->request->is('post')) {
             $product = $this->Product->patchEntity($product, $this->request->getData());
 
-            if ($this->loggedUserOrgId != null) {
-                $product->set('organization_id', $this->loggedUserOrgId);
-            }
-
+            // debug($product);
             if ($this->Product->save($product)) {
                 $this->Flash->success(__('The product has been saved.'));
 
@@ -78,11 +79,19 @@ class ProductController extends AppController
 
         if ($this->loggedUserOrgId == null) {
             $organization = $this->Product->Organization->find('list', ['limit' => 200]);
+            $categories = $this->Product->ProductCategory->find('list', ['limit' => 200]);
         } else {
             $organization = null;
+            $categories = $this->Product->ProductCategory->find('list', ['limit' => 200])
+              ->where(['organization_id' => $this->loggedUserOrgId]);
         }
 
-        $this->set(['product' => $product, 'loggedUser' => $this->loggedUser, 'organization' => $organization]);
+        $this->set([
+          'product' => $product,
+          'loggedUser' => $this->loggedUser,
+          'organization' => $organization,
+          'categories' => $categories
+        ]);
     }
 
     /**
@@ -94,31 +103,40 @@ class ProductController extends AppController
      */
     public function edit($id = null)
     {
-        $product = $this->Product->get($id, [
-            'contain' => []
-        ]);
+      $product = $this->Product->get($id, [
+          'contain' => ['Organization', 'ProductCategory']
+      ]);
 
-        if ($this->loggedUserOrgId != null and $product['organization_id'] != ($this->loggedUserOrgId)) {
-            $this->unauthorizedAccessRedirect();
-        }
+      if ($this->loggedUserOrgId != null and $product['organization_id'] != ($this->loggedUserOrgId)) {
+          $this->unauthorizedAccessRedirect();
+      }
 
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $product = $this->Product->patchEntity($product, $this->request->getData());
-            if ($this->Product->save($product)) {
-                $this->Flash->success(__('The product has been saved.'));
+      if ($this->request->is(['patch', 'post', 'put'])) {
+          $product = $this->Product->patchEntity($product, $this->request->getData());
+          if ($this->Product->save($product)) {
+              $this->Flash->success(__('The product has been saved.'));
 
-                return $this->redirect(['action' => 'view', $product->id]);
-            }
-            $this->Flash->error(__('The product could not be saved. Please, try again.'));
-        }
+              return $this->redirect(['action' => 'view', $product->id]);
+          }
+          $this->Flash->error(__('The product could not be saved. Please, try again.'));
+      }
 
-        if ($this->loggedUserOrgId == null) {
-            $organization = $this->Product->Organization->find('list', ['limit' => 200]);
-        } else {
-            $organization = null;
-        }
+      if ($this->loggedUserOrgId == null) {
+          $organization = $this->Product->Organization->find('list', ['limit' => 200]);
+          $categories = $this->Product->ProductCategory->find('list', ['limit' => 200]);
+      } else {
+          $organization = null;
+          $categories = $this->Product->ProductCategory->find('list', ['limit' => 200])
+            ->where(['organization_id' => $this->loggedUserOrgId]);
+          // debug($categories);
+      }
 
-        $this->set(['product' => $product, 'loggedUser' => $this->loggedUser, 'organization' => $organization]);
+      $this->set([
+        'product' => $product,
+        'loggedUser' => $this->loggedUser,
+        'organization' => $organization,
+        'categories' => $categories
+      ]);
     }
 
     /**

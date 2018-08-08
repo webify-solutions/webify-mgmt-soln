@@ -10,6 +10,7 @@ use Cake\Validation\Validator;
  * Product Model
  *
  * @property \App\Model\Table\OrganizationTable|\Cake\ORM\Association\BelongsTo $Organization
+ * @property \App\Model\Table\ProductCategory|\Cake\ORM\Association\BelongsTo $Category
  * @property \App\Model\Table\InvoiceItemTable|\Cake\ORM\Association\HasMany $InvoiceItem
  * @property \App\Model\Table\OrderItemTable|\Cake\ORM\Association\HasMany $OrderItem
  * @property \App\Model\Table\PriceEntryTable|\Cake\ORM\Association\HasMany $PriceEntry
@@ -40,8 +41,13 @@ class ProductTable extends Table
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
+        $this->addBehavior('Product');
+
         $this->belongsTo('Organization', [
-            'foreignKey' => 'organization_id'
+          'foreignKey' => 'organization_id'
+        ]);
+        $this->belongsTo('ProductCategory', [
+          'foreignKey' => 'category_id'
         ]);
         $this->hasMany('InvoiceItem', [
             'foreignKey' => 'product_id'
@@ -111,7 +117,7 @@ class ProductTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['organization_id'], 'Organization'));
-
+        $rules->add($rules->existsIn(['category_id'], 'ProductCategory'));
         return $rules;
     }
 }
