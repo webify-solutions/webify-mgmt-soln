@@ -96,5 +96,6 @@ $appName = 'Webify Management';
     <footer>
     </footer>
     <?= $this->fetch('scriptBottom') ?>
+    <?= $this->fetch('cssBottom') ?>
 </body>
 </html>
