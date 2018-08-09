@@ -16,7 +16,7 @@
     <fieldset>
         <legend><?= __('Add Order Item') ?></legend>
         <?php
-            echo '<input id="do-continue" type="hidden" value="true">';
+            echo '<input id="do-continue" name="do_continue" type="hidden" value="true">';
             if ($organization != null) {
                 echo $this->Form->control('organization_id', ['options' => $organization, 'empty' => true]);
             }

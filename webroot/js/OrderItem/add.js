@@ -11,7 +11,9 @@ $(document).ready(function() {
     $('#unit-price').val(price_json[product_keys]);
   });
 
-  // $('#submit-done').click(function () {
-  //   ('#do-continue').val = 'false';
-  // });
+  $('#submit-done').click(function () {
+    // alert('Submit and Done');
+    $('#do-continue').val('false');
+    // alert($('#do-continue').val());
+  });
 });

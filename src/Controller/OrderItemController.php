@@ -85,7 +85,7 @@ class OrderItemController extends AppController
             if ($this->OrderItem->save($orderItem)) {
                 $this->Flash->success(__('The order item has been saved.'));
 
-                if($requestData['do-continue'] == "true") {
+                if($requestData['do_continue'] == "true") {
                     return $this->redirect(['action' => 'add', $orderId]);
                 } else {
                     return $this->redirect(['controller' => 'Order', 'action' => 'view', $orderId]);
