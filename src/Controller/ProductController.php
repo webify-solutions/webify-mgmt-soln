@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Model\Behavior\ProductBehavior;
 
 /**
  * Product Controller
@@ -79,18 +80,22 @@ class ProductController extends AppController
 
         if ($this->loggedUserOrgId == null) {
             $organization = $this->Product->Organization->find('list', ['limit' => 200]);
-            $categories = $this->Product->ProductCategory->find('list', ['limit' => 200]);
+            $categories = $this->Product->ProductCategory->find('list');
+            $categoriesCustomFields = $this->Product->ProductCategory->find('all');
         } else {
-            $organization = null;
-            $categories = $this->Product->ProductCategory->find('list', ['limit' => 200])
-              ->where(['organization_id' => $this->loggedUserOrgId]);
+          $organization = null;
+          $categories = $this->Product->ProductCategory->find('list', ['limit' => 200])
+            ->where(['organization_id' => $this->loggedUserOrgId]);
+          $categoriesCustomFields = $this->Product->ProductCategory->find('all')
+            ->where(['organization_id' => $this->loggedUserOrgId]);
         }
 
         $this->set([
           'product' => $product,
           'loggedUser' => $this->loggedUser,
           'organization' => $organization,
-          'categories' => $categories
+          'categories' => $categories,
+          'categoriesCustomFields' => ProductBehavior::getProductCategoriesCustomFieldsJSON($categoriesCustomFields)
         ]);
     }
 
@@ -123,19 +128,22 @@ class ProductController extends AppController
 
       if ($this->loggedUserOrgId == null) {
           $organization = $this->Product->Organization->find('list', ['limit' => 200]);
-          $categories = $this->Product->ProductCategory->find('list', ['limit' => 200]);
+          $categories = $this->Product->ProductCategory->find('list');
+          $categoriesCustomFields = $this->Product->ProductCategory->find('all');
       } else {
-          $organization = null;
-          $categories = $this->Product->ProductCategory->find('list', ['limit' => 200])
-            ->where(['organization_id' => $this->loggedUserOrgId]);
-          // debug($categories);
+        $organization = null;
+        $categories = $this->Product->ProductCategory->find('list', ['limit' => 200])
+          ->where(['organization_id' => $this->loggedUserOrgId]);
+        $categoriesCustomFields = $this->Product->ProductCategory->find('all')
+          ->where(['organization_id' => $this->loggedUserOrgId]);
       }
 
       $this->set([
         'product' => $product,
         'loggedUser' => $this->loggedUser,
         'organization' => $organization,
-        'categories' => $categories
+        'categories' => $categories,
+        'categoriesCustomFields' => ProductBehavior::getProductCategoriesCustomFieldsJSON($categoriesCustomFields)
       ]);
     }
 
