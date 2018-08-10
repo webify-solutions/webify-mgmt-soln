@@ -187,7 +187,7 @@ use Cake\Validation\Validator;
    public function buildRules(RulesChecker $rules)
    {
        $rules->add($rules->existsIn(['organization_id'], 'Organization'));
-       $rules->add($rules->isUnique(['organization_id', 'name']));
+       $rules->add($rules->isUnique(['name', 'organization_id']));
        return $rules;
    }
  }

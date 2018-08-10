@@ -102,8 +102,108 @@ class OrderItemTable extends Table
             ->allowEmpty('price_discount_unit');
 
         $validator
-            ->numeric('total')
-            ->allowEmpty('total');
+          ->numeric('total')
+          ->allowEmpty('total');
+
+        $validator
+            ->scalar('custom_field_1')
+            ->maxLength('custom_field_1', 255)
+            ->allowEmpty('custom_field_1');
+            
+        $validator
+            ->scalar('custom_field_2')
+            ->maxLength('custom_field_2', 255)
+            ->allowEmpty('custom_field_2');
+
+        $validator
+            ->scalar('custom_field_3')
+            ->maxLength('custom_field_3', 255)
+            ->allowEmpty('custom_field_3');
+
+        $validator
+            ->scalar('custom_field_4')
+            ->maxLength('custom_field_4', 255)
+            ->allowEmpty('custom_field_4');
+
+        $validator
+            ->scalar('custom_field_5')
+            ->maxLength('custom_field_5', 255)
+            ->allowEmpty('custom_field_5');
+
+        $validator
+            ->scalar('custom_field_6')
+            ->maxLength('custom_field_6', 255)
+            ->allowEmpty('custom_field_6');
+
+        $validator
+            ->scalar('custom_field_7')
+            ->maxLength('custom_field_7', 255)
+            ->allowEmpty('custom_field_7');
+
+        $validator
+            ->scalar('custom_field_8')
+            ->maxLength('custom_field_8', 255)
+            ->allowEmpty('custom_field_8');
+
+        $validator
+            ->scalar('custom_field_9')
+            ->maxLength('custom_field_9', 255)
+            ->allowEmpty('custom_field_9');
+
+        $validator
+            ->scalar('custom_field_10')
+            ->maxLength('custom_field_10', 255)
+            ->allowEmpty('custom_field_10');
+
+        $validator
+            ->scalar('custom_field_11')
+            ->maxLength('custom_field_11', 255)
+            ->allowEmpty('custom_field_11');
+
+        $validator
+            ->scalar('custom_field_12')
+            ->maxLength('custom_field_12', 255)
+            ->allowEmpty('custom_field_12');
+
+        $validator
+            ->scalar('custom_field_13')
+            ->maxLength('custom_field_13', 255)
+            ->allowEmpty('custom_field_13');
+
+        $validator
+            ->scalar('custom_field_14')
+            ->maxLength('custom_field_14', 255)
+            ->allowEmpty('custom_field_14');
+
+        $validator
+            ->scalar('custom_field_15')
+            ->maxLength('custom_field_15', 255)
+            ->allowEmpty('custom_field_15');
+
+        $validator
+            ->scalar('custom_field_16')
+            ->maxLength('custom_field_16', 255)
+            ->allowEmpty('custom_field_16');
+
+        $validator
+            ->scalar('custom_field_17')
+            ->maxLength('custom_field_17', 255)
+            ->allowEmpty('custom_field_17');
+
+        $validator
+            ->scalar('custom_field_18')
+            ->maxLength('custom_field_18', 255)
+            ->allowEmpty('custom_field_18');
+
+        $validator
+            ->scalar('custom_field_19')
+            ->maxLength('custom_field_19', 255)
+            ->allowEmpty('custom_field_19');
+
+        $validator
+            ->scalar('custom_field_20')
+            ->maxLength('custom_field_20', 255)
+            ->allowEmpty('custom_field_20');
 
         $validator
             ->scalar('notes')

@@ -30,6 +30,52 @@ class OrderItemBehavior extends Behavior
         return $pickList;
     }
 
+    public static function getProductAsPickList($query) {
+        $pickList = [];
+
+        foreach ($query as $product) {
+            $pickList[$product->id] =  $product->name;
+        }
+
+        return $pickList;
+    }
+
+    public static function getProductCustomFieldLabelsAsJSON($query) {
+      $query->select([
+        'ProductCategory.custom_field_1',
+        'ProductCategory.custom_field_2',
+        'ProductCategory.custom_field_3',
+        'ProductCategory.custom_field_4',
+        'ProductCategory.custom_field_5',
+        'ProductCategory.custom_field_6',
+        'ProductCategory.custom_field_7',
+        'ProductCategory.custom_field_8',
+        'ProductCategory.custom_field_9',
+        'ProductCategory.custom_field_10',
+        'ProductCategory.custom_field_11',
+        'ProductCategory.custom_field_12',
+        'ProductCategory.custom_field_13',
+        'ProductCategory.custom_field_14',
+        'ProductCategory.custom_field_15',
+        'ProductCategory.custom_field_16',
+        'ProductCategory.custom_field_17',
+        'ProductCategory.custom_field_18',
+        'ProductCategory.custom_field_19',
+        'ProductCategory.custom_field_20',
+      ]);
+      $query->innerJoinWith('ProductCategory');
+
+      // debug($query);
+      $customFieldLabels = [];
+      foreach ($query as $product) {
+        $category = $product->get('_matchingData')['ProductCategory'];
+        // debug($category);
+        $customFieldLabels[$product->id] = $category;
+      }
+
+      return json_encode($customFieldLabels);
+    }
+
     public static function getProductPriceEntriesAsJSON($query) {
         $fields = [];
 
@@ -63,19 +109,21 @@ class OrderItemBehavior extends Behavior
 
     public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
     {
-        if($entity->get('order_item_number') == null) {
-            $orderItemNumber = uniqid("OI-", false);
-            $entity->set('order_item_number', __($orderItemNumber));
-        }
+      // debug($entity->get('custom_field_1'));
+      if($entity->get('order_item_number') == null) {
+          $orderItemNumber = uniqid("OI-", false);
+          $entity->set('order_item_number', __($orderItemNumber));
+      }
 
-        if($entity->get('active') == null) {
-            $entity->set('active', true);
-        }
+      if($entity->get('active') == null) {
+          $entity->set('active', true);
+      }
 
-        $entity->set('total', $entity->get('unit_price') * $entity->get('unit_quantity'));
+      $entity->set('total', $entity->get('unit_price') * $entity->get('unit_quantity'));
     }
 
     public function afterSaveCommit(Event $event, EntityInterface $entity, ArrayObject $options) {
+      // debug($entity->get('custom_field_1'));
 //        debug($entity->get('order_id'));
         OrderBehavior::updateTotal($entity->get('order_id'), $entity->get('total'), '+');
     }

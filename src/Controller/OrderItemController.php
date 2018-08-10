@@ -75,12 +75,15 @@ class OrderItemController extends AppController
         if ($this->request->is('post')) {
             $requestData = $this->request->getData();
 //            debug($requestData);
+            // debug($requestData['custom_field_1']);
 
             $orderItem = $this->OrderItem->patchEntity($orderItem, $requestData);
 
             if ($this->loggedUserOrgId != null) {
                 $orderItem->set('organization_id', $this->loggedUserOrgId);
             }
+
+            // debug($orderItem->get('custom_field_1'));
 
             if ($this->OrderItem->save($orderItem)) {
                 $this->Flash->success(__('The order item has been saved.'));
@@ -100,34 +103,32 @@ class OrderItemController extends AppController
 
             $orderQuery = $this->OrderItem->Order->find('all', ['limit' => 200])
                 ->where(['organization_id' => $this->loggedUserOrgId]);
-            $orders = OrderItemBehavior::getOrdersAsPickList($orderQuery);
 
-            $product = $this->OrderItem->Product->find('list', ['limit' => 200]);
+            $products = $this->OrderItem->Product->find('all', ['contains' => ['ProductCategory']]);
 
         } else {
             $organization = null;
 
             $orderQuery = $this->OrderItem->Order->find('all', ['limit' => 200])
-                ->where(['organization_id' => $this->loggedUserOrgId]);
-            $orders = OrderItemBehavior::getOrdersAsPickList($orderQuery);
+              ->where(['organization_id' => $this->loggedUserOrgId]);
 
-
-            $product = $this->OrderItem->Product->find('list', ['limit' => 200])
-                ->where(['organization_id' => $this->loggedUserOrgId]);
+            $products = $this->OrderItem->Product->find('all')
+              ->where(['Product.organization_id' => $this->loggedUserOrgId]);
         }
-
-        $productIds = array_keys($product->extract('id')->toArray());
+        // debug($products);
+        $productIds = array_keys($products->extract('id')->toArray());
 
         $priceEntryQuery = $this->OrderItem->Product->PriceEntry->find('all', ['limit' => 200])
-            ->where(['active' => true, "product_id IN " => $productIds]);
-        $priceEntryJSON = OrderItemBehavior::getProductPriceEntriesAsJSON($priceEntryQuery);
+          ->where(['active' => true, "product_id IN " => $productIds]);
 
+        // debug(OrderItemBehavior::getProductCustomFieldLabelsAsJSON($products));
         $this->set([
             'orderItem' => $orderItem,
             'loggedUser' => $this->loggedUser,
-            'order' => $orders,
-            'priceEntryJSON' => $priceEntryJSON,
-            'product' => $product,
+            'order' => OrderItemBehavior::getOrdersAsPickList($orderQuery),
+            'priceEntryJSON' => OrderItemBehavior::getProductPriceEntriesAsJSON($priceEntryQuery),
+            'product' => OrderItemBehavior::getProductAsPickList($products),
+            'productCustomFieldLabels' => OrderItemBehavior::getProductCustomFieldLabelsAsJSON($products),
             'organization' => $organization
         ]);
     }
