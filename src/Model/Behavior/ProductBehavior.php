@@ -67,7 +67,8 @@ class ProductBehavior extends Behavior
       $productCategory = $productCategoryTable->newEntity(
         [
           'name' => $data['category_name'],
-          'organization_id' => $data['organization_id']
+          'organization_id' => $data['organization_id'],
+          'active' => true
           // 'custom_field_1' => 'test'
         ]
       );
