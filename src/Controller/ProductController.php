@@ -51,8 +51,14 @@ class ProductController extends AppController
         if ($this->loggedUserOrgId != null and $product['organization_id'] != ($this->loggedUserOrgId)) {
             $this->unauthorizedAccessRedirect();
         }
+        $products = $this->Product->find('all')
+          ->where(['Product.id' => $id]);
 
-        $this->set(['product' => $product, 'loggedUser' => $this->loggedUser]);
+        $this->set([
+          'product' => $product,
+          'loggedUser' => $this->loggedUser,
+          'productCustomFieldLabels' => ProductBehavior::getProductCustomFieldLabelsAsJSON($products)
+        ]);
     }
 
     /**

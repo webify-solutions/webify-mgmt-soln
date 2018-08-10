@@ -50,7 +50,7 @@
             if($customFieldLabel != null) {
               // echo $customFieldLabel;
               echo '<tr>';
-              echo '  <th scope="row">' . h($customFieldLabel) . '</th>';
+              echo '  <th scope="row">' . h($customFieldLabel) . '*</th>';
               echo '  <td>' . h($orderItem->get('custom_field_' . $i)). '</td>';
               echo '</tr>';
             }

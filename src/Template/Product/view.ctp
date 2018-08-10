@@ -64,6 +64,21 @@
         <?= $this->Text->autoParagraph(h($product->description)); ?>
     </div>
 
+    <div class="row">
+        <h4><?= __('Extra Fields') ?></h4>
+        <?php
+          $customFieldLabels = json_decode($productCustomFieldLabels, true)[$product->id];
+          for ($i = 1; $i <= 20; $i++) {
+            $customFieldLabel = $customFieldLabels['custom_field_' . $i];
+            if($customFieldLabel != null) {
+              // echo $customFieldLabel;
+              echo '<span style="display: block">' . h($customFieldLabel). '</span>';
+            }
+          }
+        ?>
+    </div>
+
+
     <div class="related">
         <h4><?= __('Related Price Entry ({0})', $this->Html->link(__('Add New'), ['controller' => 'PriceEntry', 'action' => 'add', $product->id]))  ?></h4>
         <?php if (!empty($product->price_entry)): ?>
