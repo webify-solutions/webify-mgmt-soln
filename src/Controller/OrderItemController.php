@@ -53,7 +53,15 @@ class OrderItemController extends AppController
             $this->unauthorizedAccessRedirect();
         }
 
-        $this->set(['orderItem' => $orderItem, 'loggedUser' => $this->loggedUser]);
+        $products = $this->OrderItem->Product->find('all')
+          ->where(['Product.id' => $orderItem->product_id]);
+        // debug(OrderItemBehavior::getProductCustomFieldLabelsAsJSON($products));
+
+        $this->set([
+          'orderItem' => $orderItem,
+          'loggedUser' => $this->loggedUser,
+          'productCustomFieldLabels' => OrderItemBehavior::getProductCustomFieldLabelsAsJSON($products),
+        ]);
     }
 
     /**
@@ -101,10 +109,9 @@ class OrderItemController extends AppController
         if ($this->loggedUserOrgId == null) {
             $organization = $this->OrderItem->Organization->find('list', ['limit' => 200]);
 
-            $orderQuery = $this->OrderItem->Order->find('all', ['limit' => 200])
-                ->where(['organization_id' => $this->loggedUserOrgId]);
+            $orderQuery = $this->OrderItem->Order->find('all');
 
-            $products = $this->OrderItem->Product->find('all', ['contains' => ['ProductCategory']]);
+            $products = $this->OrderItem->Product->find('all');
 
         } else {
             $organization = null;

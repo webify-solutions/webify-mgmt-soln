@@ -43,6 +43,19 @@
             <th scope="row"><?= __('Total Price') ?></th>
             <td><?= $this->Number->format($orderItem->total) . ' ' . h($orderItem->order->currency)?></td>
         </tr>
+        <?php
+          $customFieldLabels = json_decode($productCustomFieldLabels, true)[$orderItem->product_id];
+          for ($i = 1; $i <= 20; $i++) {
+            $customFieldLabel = $customFieldLabels['custom_field_' . $i];
+            if($customFieldLabel != null) {
+              // echo $customFieldLabel;
+              echo '<tr>';
+              echo '  <th scope="row">' . h($customFieldLabel) . '</th>';
+              echo '  <td>' . h($orderItem->get('custom_field_' . $i)). '</td>';
+              echo '</tr>';
+            }
+          }
+        ?>
         <tr>
             <th scope="row"><?= __('Created At') ?></th>
             <td><?= h($orderItem->created_at) ?></td>

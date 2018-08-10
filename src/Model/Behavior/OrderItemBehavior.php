@@ -42,6 +42,7 @@ class OrderItemBehavior extends Behavior
 
     public static function getProductCustomFieldLabelsAsJSON($query) {
       $query->select([
+        'id',
         'ProductCategory.custom_field_1',
         'ProductCategory.custom_field_2',
         'ProductCategory.custom_field_3',
