@@ -122,9 +122,11 @@ class OrderItemController extends AppController
             $products = $this->OrderItem->Product->find('all')
               ->where(['Product.organization_id' => $this->loggedUserOrgId]);
         }
-        // debug($products);
-        $productIds = array_keys($products->extract('id')->toArray());
+        // debug($products->toList());
 
+        $productIds = OrderItemBehavior::getProductIds($products);
+
+        // debug($productIds);
         $priceEntryQuery = $this->OrderItem->Product->PriceEntry->find('all', ['limit' => 200])
           ->where(['active' => true, "product_id IN " => $productIds]);
 

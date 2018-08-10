@@ -40,6 +40,16 @@ class OrderItemBehavior extends Behavior
         return $pickList;
     }
 
+    public static function getProductIds($query) {
+      $ids = [];
+
+      foreach ($query as $product) {
+          $ids[] =  $product->id;
+      }
+
+      return $ids;
+    }
+
     public static function getProductCustomFieldLabelsAsJSON($query) {
       $query->select([
         'id',
@@ -90,6 +100,7 @@ class OrderItemBehavior extends Behavior
             ])
         ]);
 
+        // debug($query->toList());
         foreach ($query as $priceEntry) {
             if(key_exists($priceEntry->product_id, $priceEntry)) {
                 $fields[$priceEntry->product_id] =  array_merge(
