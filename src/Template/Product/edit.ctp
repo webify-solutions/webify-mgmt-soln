@@ -62,15 +62,18 @@
           // debug($categoriesCustomFieldsMap[$product->category_id][$key]);
           if ($product->category_id != null and $categoriesCustomFieldsMap[$product->category_id][$key] != null) {
             $firstNull = false;
-            echo '<div id="div-' . $id . '" class="">';
-            echo $this->Form->control($key, ['id' => $id, 'label' => __('Extra Field Name'), 'value' => $categoriesCustomFieldsMap[$product->category_id][$key]]);
+            echo '<div id="div-custom-field-' . $i . '" class="input text">';
+            echo '  <label for="custom-field-' . $i . '">Extra Field Name <a href="#" id="delete-custom-field-' . $i . '">Delete</a></label>';
+            echo '  <input type="text" name="custom_field_' . $i . '" id="custom-field-' . $i . '" value="' . ($categoriesCustomFieldsMap[$product->category_id][$key]) . '"/>';
           } else if (!$firstNull) {
             $firstNull = true;
-            echo '<div id="div-' . $id . '" class="">';
-            echo $this->Form->control($key, ['id' => $id, 'label' => __('Extra Field Name')]);
+            echo '<div id="div-custom-field-' . $i . '" class="input text">';
+            echo '  <label for="custom-field-' . $i . '">Extra Field Name <a href="#" id="delete-custom-field-' . $i . '">Delete</a></label>';
+            echo '  <input type="text" name="custom_field_' . $i . '" id="custom-field-' . $i . '"/>';
           } else {
-            echo '<div id="div-' . $id . '" class="hidden">';
-            echo $this->Form->control($key, ['id' => $id, 'label' => __('Extra Field Name')]);
+            echo '<div id="div-custom-field-' . $i . '" class="input text hidden">';
+            echo '  <label for="custom-field-' . $i . '">Extra Field Name <a href="#" id="delete-custom-field-' . $i . '">Delete</a></label>';
+            echo '  <input type="text" name="custom_field_' . $i . '" id="custom-field-' . $i . '"/>';
           }
           echo '</div>';
         }

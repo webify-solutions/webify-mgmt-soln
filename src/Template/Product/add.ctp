@@ -33,8 +33,9 @@
         echo '</div>';
         echo $this->Form->control('category_name', ['id' => 'category-name', 'data-custom-fields' => $categoriesCustomFields]);
         for ($i = 1; $i <= 20; $i++) {
-          echo '<div id="div-custom-field-' . $i . '" class="hidden">';
-          echo $this->Form->control('custom_field_' . $i, ['id' => 'custom-field-' . $i, 'label' => 'Extra Field Name']);
+          echo '<div id="div-custom-field-' . $i . '" class="input text hidden">';
+          echo '  <label for="custom-field-' . $i . '">Extra Field Name <a href="#" id="delete-custom-field-' . $i . '">Delete</a></label>';
+          echo '  <input type="text" name="custom_field_' . $i . '" id="custom-field-' . $i . '"/>';
           echo '</div>';
         }
       ?>

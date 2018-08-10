@@ -68,7 +68,16 @@ $(document).ready(function(){
         // console.log(next_id);
         $(next_id).removeClass('hidden');
       }
+    });
 
+    $('#delete-custom-field-' + i).click(function() {
+      console.log('delete click');
+      var current_index = parseInt($( this ).attr('id').split('-')[3]);
+      console.log(current_index);
+      var current_id = 'custom-field-' + current_index;
+      console.log(current_id);
+      $('#' + current_id).val(null);
+      $('#div-' + current_id).addClass('hidden');
     });
   }
 

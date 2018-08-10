@@ -30,7 +30,7 @@ $(document).ready(function(){
       }
     }
 
-    console.log($('#category-name').val());
+    // console.log($('#category-name').val());
     // prefill default custom fields
     var category_custom_fields = ($('#category-name').data('custom-fields'))[$('#category-id').val()];
     // console.log(category_custom_fields);
@@ -59,7 +59,7 @@ $(document).ready(function(){
       // console.log('add new custom field');
       // console.log($( this ).attr('id'));
 
-      current_index = parseInt($( this ).attr('id').split('-')[2]);
+      var current_index = parseInt($( this ).attr('id').split('-')[2]);
       // console.log(current_index);
       if (current_index != 20) {
         var next_index = current_index + 1;
@@ -69,6 +69,16 @@ $(document).ready(function(){
         $(next_id).removeClass('hidden');
       }
 
+    });
+
+    $('#delete-custom-field-' + i).click(function() {
+      console.log('delete click');
+      var current_index = parseInt($( this ).attr('id').split('-')[3]);
+      console.log(current_index);
+      var current_id = 'custom-field-' + current_index;
+      console.log(current_id);
+      $('#' + current_id).val(null);
+      $('#div-' + current_id).addClass('hidden');
     });
   }
 
