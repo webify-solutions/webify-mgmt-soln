@@ -22,7 +22,9 @@ class SecurityController extends AppController
         $this->request->allowMethod(['get', 'post']);
         if ($this->request->is('post')) {
             $user = $this->Auth->identify();
-            if ($user) {
+            // debug($user);
+            // debug($user['active']);
+            if ($user && $user['active']) {
                 $this->Auth->setUser($user);
                 return $this->redirect($this->Auth->redirectUrl());
             }
