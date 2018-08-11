@@ -37,13 +37,13 @@
             <td><?= h($customer->customer_number) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Title') ?></th>
-            <td><?= h($customer->title) ?></td>
-        </tr>
-        <tr>
             <th scope="row"><?= __('Name') ?></th>
             <td><?= h($customer->name) ?></td>
         </tr>
+        <!-- <tr>
+            <th scope="row"><?= __('Title') ?></th>
+            <td><?= h($customer->title) ?></td>
+        </tr> -->
         <tr>
             <th scope="row"><?= __('Active') ?></th>
             <td><?= $customer->active ? __('Yes') : __('No'); ?></td>
