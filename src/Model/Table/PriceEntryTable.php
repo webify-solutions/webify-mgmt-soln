@@ -47,9 +47,6 @@ class PriceEntryTable extends Table
         $this->belongsTo('Organization', [
             'foreignKey' => 'organization_id'
         ]);
-        $this->hasMany('OrderItem', [
-            'foreignKey' => 'price_entry_id'
-        ]);
     }
 
     /**

@@ -59,6 +59,5 @@
             <th scope="row"><?= __('Last Updated') ?></th>
             <td><?= h($priceEntry->last_updated) ?></td>
         </tr>
-
     </table>
 </div>

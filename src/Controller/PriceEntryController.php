@@ -45,7 +45,7 @@ class PriceEntryController extends AppController
     public function view($id = null)
     {
         $priceEntry = $this->PriceEntry->get($id, [
-            'contain' => ['Product', 'Organization', 'OrderItem']
+            'contain' => ['Product', 'Organization']
         ]);
 
         if ($this->loggedUserOrgId != null and $priceEntry['organization_id'] != ($this->loggedUserOrgId)) {
