@@ -19,7 +19,7 @@
                 echo $this->Form->control('organization_id', ['options' => $organization, 'empty' => true]);
             }
             echo $this->Form->control('product_id', ['options' => $product]);
-            echo $this->Form->control('price');
+            echo $this->Form->control('price', ['label' => 'Price ' . $loggedUser['organization_default_currency']]);
             echo '<div class="hidden">' . $this->Form->control('currencies', ['options' => $currencies]) . '</div>';
 //            echo $this->Form->control('available_discount');
 //            echo $this->Form->control('available_discount_unit', ['options' => $discountUnits, 'empty' => true]);

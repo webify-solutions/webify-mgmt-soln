@@ -93,7 +93,6 @@
                     <?php endif; ?>
                     <th scope="col"><?= __('Price Number')?></th>
                     <th scope="col"><?= __('Price') ?></th>
-                    <th scope="col"><?= __('Currency') ?></th>
                     <th scope="col"><?= __('Active') ?></th>
                     <th scope="col"><?= __('Created At') ?></th>
                     <th scope="col"><?= __('Last Updated') ?></th>
@@ -108,8 +107,7 @@
                             <td><?= h($priceEntry->organization_id) ?></td>
                         <?php endif; ?>
                         <td><?= $this->Html->link(h($priceEntry->price_entry_number), ['controller' => 'PriceEntry', 'action' => 'view', $priceEntry->id]) ?></td>
-                        <td><?= h($priceEntry->price) ?></td>
-                        <td><?= h($priceEntry->currency) ?></td>
+                        <td><?= h($priceEntry->price) . ' ' . h($priceEntry->currency) ?></td>
                         <td><?= h($priceEntry->active ? __('Yes') : __('No')) ?></td>
                         <td><?= h($priceEntry->created_at) ?></td>
                         <td><?= h($priceEntry->last_updated) ?></td>

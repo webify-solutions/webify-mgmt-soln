@@ -41,11 +41,7 @@
         <?php endif; ?>
         <tr>
             <th scope="row"><?= __('Price') ?></th>
-            <td><?= $this->Number->format($priceEntry->price) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Currency') ?></th>
-            <td><?= h($priceEntry->currency) ?></td>
+            <td><?= $this->Number->format($priceEntry->price) . ' ' . h($priceEntry->currency)?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Active') ?></th>
