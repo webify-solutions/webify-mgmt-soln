@@ -59,24 +59,59 @@
         for ($i = 1; $i <= 20; $i++) {
           $id = 'custom-field-' . $i;
           $key = 'custom_field_' . $i;
+          $key2 = 'custom_field_type_' . $i;
           // debug($categoriesCustomFieldsMap[$product->category_id][$key]);
           if ($product->category_id != null and $categoriesCustomFieldsMap[$product->category_id][$key] != null) {
             $firstNull = false;
-            echo '<div id="div-custom-field-' . $i . '" class="input text">';
-            echo '  <label for="custom-field-' . $i . '">Extra Field Name <a href="#" id="delete-custom-field-' . $i . '">Delete</a></label>';
-            echo '  <input type="text" name="custom_field_' . $i . '" id="custom-field-' . $i . '" value="' . ($categoriesCustomFieldsMap[$product->category_id][$key]) . '"/>';
-          } else if (!$firstNull) {
-            $firstNull = true;
-            echo '<div id="div-custom-field-' . $i . '" class="input text">';
-            echo '  <label for="custom-field-' . $i . '">Extra Field Name <a href="#" id="delete-custom-field-' . $i . '">Delete</a></label>';
-            echo '  <input type="text" name="custom_field_' . $i . '" id="custom-field-' . $i . '"/>';
+            echo '<div id="div-custom-field-' . $i . '">';
+            echo '  <div class="input text custom-field">';
+            echo '    <label for="custom-field-' . $i . '">Extra Field Name <a href="#" id="delete-custom-field-' . $i . '">Delete</a></label>';
+            echo '    <input type="text" name="custom_field_' . $i . '" id="custom-field-' . $i . '" value="' . ($categoriesCustomFieldsMap[$product->category_id][$key]) . '"/>';
+            echo '  </div>';
+            echo '  <div class="input text custom-field">';
+            echo '    <label for="custom-field-type-' . $i . '">Extra Field Type</label>';
+            echo '    <select name="custom_field_type_' . $i . '" id="custom-field-type-' . $i . '">';
+            foreach ($categoriesCustomFieldTypes as $key3 => $value3) {
+              echo '    <option value="' . $key3 . '" ' . ($categoriesCustomFieldsMap[$product->category_id][$key2] == $key3 ? 'selected="selected"' : '') . '>' . $value3 . '</option>';
+            }
+            echo '    </select>';
+            echo '  </div>';
+            echo '</div>';
           } else {
-            echo '<div id="div-custom-field-' . $i . '" class="input text hidden">';
-            echo '  <label for="custom-field-' . $i . '">Extra Field Name <a href="#" id="delete-custom-field-' . $i . '">Delete</a></label>';
-            echo '  <input type="text" name="custom_field_' . $i . '" id="custom-field-' . $i . '"/>';
+            echo '<div id="div-custom-field-' . $i . '"' . ($firstNull ? ' class="hidden"' : '') . '>';
+            echo '  <div class="input text custom-field">';
+            echo '    <label for="custom-field-' . $i . '">Extra Field Name <a href="#" id="delete-custom-field-' . $i . '">Delete</a></label>';
+            echo '    <input type="text" name="custom_field_' . $i . '" id="custom-field-' . $i . '"/>';
+            echo '  </div>';
+            echo '  <div class="input text custom-field">';
+            echo '    <label for="custom-field-type-' . $i . '">Extra Field Type</label>';
+            echo '    <select name="custom_field_type_' . $i . '" id="custom-field-type-' . $i . '">';
+            foreach ($categoriesCustomFieldTypes as $key3 => $value3) {
+              echo '    <option value="' . $key3 . '">' . $value3 . ' </option>';
+            }
+            echo '    </select>';
+            echo '  </div>';
+            echo '</div>';
+            $firstNull = true;
           }
-          echo '</div>';
         }
+
+        // for ($i = 1; $i <= 20; $i++) {
+        //   echo '<div id="div-custom-field-' . $i . '" class="hidden">';
+        //   echo '  <div class="input text">';
+        //   echo '    <label for="custom-field-' . $i . '">Extra Field Name <a href="#" id="delete-custom-field-' . $i . '">Delete</a></label>';
+        //   echo '    <input type="text" name="custom_field_' . $i . '" id="custom-field-' . $i . '"/>';
+        //   echo '  </div>';
+        //   echo '  <div class="input text">';
+        //   echo '    <label for="custom-field-type-' . $i . '">Extra Field Type</label>';
+        //   echo '    <select name="custom_field_type_' . $i . '" id="custom-field-type-' . $i . '">';
+        //   foreach ($categoriesCustomFieldTypes as $key => $value) {
+        //     echo '    <option value="' . $key . '"> ' . $value . '</option>';
+        //   }
+        //   echo '    </select>';
+        //   echo '  </div>';
+        //   echo '</div>';
+        // }
       ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
