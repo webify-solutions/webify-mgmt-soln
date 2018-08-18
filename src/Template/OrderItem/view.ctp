@@ -44,9 +44,9 @@
             <td><?= $this->Number->format($orderItem->total) . ' ' . h($orderItem->order->currency)?></td>
         </tr>
         <?php
-          $customFieldLabels = json_decode($productCustomFieldLabels, true)[$orderItem->product_id];
+          $customFields = json_decode($productCustomFields, true)[$orderItem->product_id];
           for ($i = 1; $i <= 20; $i++) {
-            $customFieldLabel = $customFieldLabels['custom_field_' . $i];
+            $customFieldLabel = $customFields['custom_field_' . $i]['label'];
             if($customFieldLabel != null) {
               // echo $customFieldLabel;
               echo '<tr>';

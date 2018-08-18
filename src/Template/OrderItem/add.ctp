@@ -21,7 +21,7 @@
                 echo $this->Form->control('organization_id', ['options' => $organization, 'empty' => true]);
             }
             echo $this->Form->control('order_id', ['options' => $order, 'empty' => true]);
-            echo $this->Form->control('product_id', ['options' => $product, 'empty' => true, 'id' => 'product', 'data-custom-fields' => $productCustomFieldLabels]);
+            echo $this->Form->control('product_id', ['options' => $product, 'empty' => true, 'id' => 'product', 'data-custom-fields' => $productCustomFields]);
             echo $this->Form->control(
               'unit_price',
               [
@@ -38,6 +38,7 @@
               echo '<div id="div-custom-field-' . $i . '" class="hidden">';
               echo $this->Form->control('custom_field_' . $i, ['id' => 'custom-field-' . $i]);
               echo '</div>';
+
             }
 //            echo $this->Form->control('price_discount');
 //            echo $this->Form->control('price_discount_unit');

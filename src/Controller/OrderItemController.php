@@ -60,7 +60,7 @@ class OrderItemController extends AppController
         $this->set([
           'orderItem' => $orderItem,
           'loggedUser' => $this->loggedUser,
-          'productCustomFieldLabels' => OrderItemBehavior::getProductCustomFieldLabelsAsJSON($products),
+          'productCustomFields' => OrderItemBehavior::getProductCustomFieldsAsJSON($products),
         ]);
     }
 
@@ -137,7 +137,7 @@ class OrderItemController extends AppController
             'order' => OrderItemBehavior::getOrdersAsPickList($orderQuery),
             'priceEntryJSON' => OrderItemBehavior::getProductPriceEntriesAsJSON($priceEntryQuery),
             'product' => OrderItemBehavior::getProductAsPickList($products),
-            'productCustomFieldLabels' => OrderItemBehavior::getProductCustomFieldLabelsAsJSON($products),
+            'productCustomFields' => OrderItemBehavior::getProductCustomFieldsAsJSON($products),
             'organization' => $organization
         ]);
     }
