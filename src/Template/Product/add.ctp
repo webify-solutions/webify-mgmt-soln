@@ -31,10 +31,21 @@
         echo $this->Form->control('category_id', ['id' => 'category-id', 'options' => $categories, 'empty' => true]);
         echo '</div>';
         echo $this->Form->control('category_name', ['id' => 'category-name', 'data-custom-fields' => $categoriesCustomFields]);
+
         for ($i = 1; $i <= 20; $i++) {
-          echo '<div id="div-custom-field-' . $i . '" class="input text hidden">';
-          echo '  <label for="custom-field-' . $i . '">Extra Field Name <a href="#" id="delete-custom-field-' . $i . '">Delete</a></label>';
-          echo '  <input type="text" name="custom_field_' . $i . '" id="custom-field-' . $i . '"/>';
+          echo '<div id="div-custom-field-' . $i . '" class="hidden">';
+          echo '  <div class="input text custom-field">';
+          echo '    <label for="custom-field-' . $i . '">Extra Field Name <a href="#" id="delete-custom-field-' . $i . '">Delete</a></label>';
+          echo '    <input type="text" name="custom_field_' . $i . '" id="custom-field-' . $i . '"/>';
+          echo '  </div>';
+          echo '  <div class="input text custom-field">';
+          echo '    <label for="custom-field-type-' . $i . '">Extra Field Type</label>';
+          echo '    <select name="custom_field_type_' . $i . '" id="custom-field-type-' . $i . '">';
+          foreach ($categoriesCustomFieldTypes as $key => $value) {
+            echo '    <option value="' . $key . '">' . $value . '</option>';
+          }
+          echo '    </select>';
+          echo '  </div>';
           echo '</div>';
         }
       ?>

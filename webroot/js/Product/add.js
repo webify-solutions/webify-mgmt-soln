@@ -26,6 +26,7 @@ $(document).ready(function(){
       if (!($('#div-custom-field-' + i).hasClass('hidden'))) {
         // console.log('clearing custom field ' + i);
         $('#custom-field-' + i).val(null);
+        $('#custom-field-type-' + i).val(null);
         $('#div-custom-field-' + i).addClass('hidden');
       }
     }
@@ -38,10 +39,14 @@ $(document).ready(function(){
     if (typeof category_custom_fields !== 'undefined') {
       for (i = 1; i <= 20; i++) {
         // console.log(i);
-        var custom_field_label = category_custom_fields['custom_field_' + i];
-        // console.log(category_custom_fields['custom_field_' + i]);
+        var key = 'custom_field_' + i;
+        var key2 = 'custom_field_type_' + i;
+        var custom_field_label = category_custom_fields[key];
+        // console.log(custom_field_label);
         if (custom_field_label != null) {
-          $('#custom-field-' + i).val(custom_field_label);
+          // console.log('#' + key.replace(/_/g, '-'));
+          $('#' + key.replace(/_/g, '-')).val(custom_field_label);
+          $('#' + key2.replace(/_/g, '-')).val(category_custom_fields[key2])
           $('#div-custom-field-' + i).removeClass('hidden');
         } else {
           $('#div-custom-field-' + i).removeClass('hidden');
@@ -72,11 +77,11 @@ $(document).ready(function(){
     });
 
     $('#delete-custom-field-' + i).click(function() {
-      console.log('delete click');
+      // console.log('delete click');
       var current_index = parseInt($( this ).attr('id').split('-')[3]);
-      console.log(current_index);
+      // console.log(current_index);
       var current_id = 'custom-field-' + current_index;
-      console.log(current_id);
+      // console.log(current_id);
       $('#' + current_id).val(null);
       $('#div-' + current_id).addClass('hidden');
     });

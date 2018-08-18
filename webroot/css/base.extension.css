@@ -40,6 +40,11 @@
     display: none;
 }
 
+div .custom-field {
+  width: 49%;
+  display: inline-block;
+}
+
 iframe {
     display: none;
 }

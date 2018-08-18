@@ -12,9 +12,4 @@ namespace App\Utils;
 class StringUtils
 {
 
-    public static function format($str = null, $args = []) {
-
-
-        return $str;
-    }
 }

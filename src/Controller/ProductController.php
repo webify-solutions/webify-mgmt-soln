@@ -2,7 +2,10 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+
 use App\Model\Behavior\ProductBehavior;
+
+use App\Utils\PropertyUtils;
 
 /**
  * Product Controller
@@ -51,13 +54,12 @@ class ProductController extends AppController
         if ($this->loggedUserOrgId != null and $product['organization_id'] != ($this->loggedUserOrgId)) {
             $this->unauthorizedAccessRedirect();
         }
-        $products = $this->Product->find('all')
-          ->where(['Product.id' => $id]);
 
         $this->set([
           'product' => $product,
           'loggedUser' => $this->loggedUser,
-          'productCustomFieldLabels' => ProductBehavior::getProductCustomFieldLabelsAsJSON($products)
+          'productCustomFields' => ProductBehavior::getProductCustomFieldsAsJSON($id),
+          'categoriesCustomFieldTypes' => PropertyUtils::$inputTypes
         ]);
     }
 
@@ -92,8 +94,7 @@ class ProductController extends AppController
           $organization = null;
           $categories = $this->Product->ProductCategory->find('list', ['limit' => 200])
             ->where(['organization_id' => $this->loggedUserOrgId]);
-          $categoriesCustomFields = $this->Product->ProductCategory->find('all')
-            ->where(['organization_id' => $this->loggedUserOrgId]);
+
         }
 
         $this->set([
@@ -101,7 +102,8 @@ class ProductController extends AppController
           'loggedUser' => $this->loggedUser,
           'organization' => $organization,
           'categories' => $categories,
-          'categoriesCustomFields' => ProductBehavior::getProductCategoriesCustomFieldsJSON($categoriesCustomFields)
+          'categoriesCustomFields' => ProductBehavior::getProductCategoriesCustomFieldsJSON($this->loggedUserOrgId),
+          'categoriesCustomFieldTypes' => PropertyUtils::$inputTypes
         ]);
     }
 
@@ -149,7 +151,8 @@ class ProductController extends AppController
         'loggedUser' => $this->loggedUser,
         'organization' => $organization,
         'categories' => $categories,
-        'categoriesCustomFields' => ProductBehavior::getProductCategoriesCustomFieldsJSON($categoriesCustomFields)
+        'categoriesCustomFields' => ProductBehavior::getProductCategoriesCustomFieldsJSON($this->loggedUserOrgId),
+        'categoriesCustomFieldTypes' => PropertyUtils::$inputTypes
       ]);
     }
 
