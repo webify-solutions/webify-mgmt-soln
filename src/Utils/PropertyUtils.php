@@ -23,11 +23,11 @@ class PropertyUtils
       'number' => 'Number',
       'file' => 'File Upload',
       // 'checkbox' => 'Check Box',
-      'date' => 'Date',
-      'datetime-local' => 'Date Time',
+      // 'date' => 'Date',
+      // 'datetime-local' => 'Date Time',
       'email' => 'Email',
       'password' => 'Password',
-      'tel' => 'Telephone',
-      'url' => 'URL'
+      // 'tel' => 'Telephone',
+      // 'url' => 'URL'
     ];
 }
