@@ -68,11 +68,12 @@ class GoogleDrive
       ]);
       // debug($fileMetadata);
       $content = file_get_contents($filePath);
+      // debug(mime_content_type($filePath));
       $file = $service->files->create(
         $fileMetadata,
         array(
           'data' => $content,
-          'mimeType' => 'image/jpeg',
+          'mimeType' => mime_content_type($filePath),
           'uploadType' => 'multipart',
           'fields' => 'id, webViewLink'
         )

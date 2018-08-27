@@ -22,7 +22,7 @@ class PropertyUtils
       'text' => 'Text',
       'number' => 'Number',
       'file' => 'File Upload',
-      'checkbox' => 'Check Box',
+      // 'checkbox' => 'Check Box',
       'date' => 'Date',
       'datetime-local' => 'Date Time',
       'email' => 'Email',
