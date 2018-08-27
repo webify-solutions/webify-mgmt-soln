@@ -46,12 +46,18 @@
         <?php
           $customFields = json_decode($productCustomFields, true)[$orderItem->product_id];
           for ($i = 1; $i <= 20; $i++) {
-            $customFieldLabel = $customFields['custom_field_' . $i]['label'];
+            $key = 'custom_field_' . $i;
+            $uploadKey = 'custom_field_upload_link_' . $i;
+            $customFieldLabel = $customFields[$key]['label'];
             if($customFieldLabel != null) {
               // echo $customFieldLabel;
               echo '<tr>';
               echo '  <th scope="row">' . h($customFieldLabel) . '*</th>';
-              echo '  <td>' . h($orderItem->get('custom_field_' . $i)). '</td>';
+              if ($orderItem->get($uploadKey) != null) {
+                echo '  <td><a href="' . $orderItem->get($uploadKey) . '">' . h($orderItem->get($key)). '<a></td>';
+              } else {
+                echo '  <td>' . h($orderItem->get($key)). '</td>';
+              }
               echo '</tr>';
             }
           }

@@ -144,11 +144,15 @@ class OrderItemBehavior extends Behavior
     }
 
     public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options) {
+        // debug('beforeMarshal');
         $data['unit_price'] = explode(' ', $data['unit_price'])[0];
+
+        // debug($data);
     }
 
     public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
     {
+      // debug('beforeSave');
       // debug($entity->get('custom_field_1'));
       if($entity->get('order_item_number') == null) {
           $orderItemNumber = uniqid("OI-", false);
@@ -160,12 +164,16 @@ class OrderItemBehavior extends Behavior
       }
 
       $entity->set('total', $entity->get('unit_price') * $entity->get('unit_quantity'));
+
+      // debug($entity);
     }
 
     public function afterSaveCommit(Event $event, EntityInterface $entity, ArrayObject $options) {
+      // debug('afterSaveCommit');
       // debug($entity->get('custom_field_1'));
 //        debug($entity->get('order_id'));
-        OrderBehavior::updateTotal($entity->get('order_id'), $entity->get('total'), '+');
+      OrderBehavior::updateTotal($entity->get('order_id'), $entity->get('total'), '+');
+      // debug($entity);
     }
 
     public function afterDeleteCommit(Event $event, EntityInterface $entity, ArrayObject $options) {

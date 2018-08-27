@@ -5,6 +5,7 @@ use App\Controller\AppController;
 use App\Model\Behavior\OrderItemBehavior;
 use App\Utils\PropertyUtils;
 use App\Utils\StringUtils;
+use App\GoogleDrive\GoogleDrive;
 
 /**
  * OrderItem Controller
@@ -15,6 +16,14 @@ use App\Utils\StringUtils;
  */
 class OrderItemController extends AppController
 {
+
+  public function initialize()
+  {
+    parent::initialize();
+
+    // Load Files model
+    $this->loadModel('Files');
+  }
 
     /**
      * Index method
@@ -82,28 +91,53 @@ class OrderItemController extends AppController
 
         if ($this->request->is('post')) {
             $requestData = $this->request->getData();
-//            debug($requestData);
-            // debug($requestData['custom_field_1']);
+            for ($i = 1; $i <= 20; $i++) {
+              $key = 'custom_field_' . $i;
+              $uploadKey = 'custom_field_upload_link_' . $i;
+              if (isset($requestData[$uploadKey]) and $requestData[$uploadKey]['tmp_name'] != null) {
+                // debug($requestData[$uploadKey]);
+                // debug($requestData[$uploadKey]);
+                $fileName = $requestData[$uploadKey]['name'];
+                $requestData[$key] = $fileName;
+                // $requestData[$uploadKey] = file_get_contents($requestData[$uploadKey]['tmp_name']);
+                $googleDrive = new GoogleDrive();
+                // debug($googleDriver);
+                // debug($googleDrive->client);
 
-            $orderItem = $this->OrderItem->patchEntity($orderItem, $requestData);
+                $file = $googleDrive->uploadFile($requestData[$uploadKey]['tmp_name'], $fileName);
+                // debug($requestData);
 
-            if ($this->loggedUserOrgId != null) {
-                $orderItem->set('organization_id', $this->loggedUserOrgId);
-            }
-
-            // debug($orderItem->get('custom_field_1'));
-
-            if ($this->OrderItem->save($orderItem)) {
-                $this->Flash->success(__('The order item has been saved.'));
-
-                if($requestData['do_continue'] == "true") {
-                    return $this->redirect(['action' => 'add', $orderId]);
+                if ($file != null) {
+                  $requestData[$key] = $fileName;
+                  $requestData[$uploadKey] = $file->webViewLink;
                 } else {
-                    return $this->redirect(['controller' => 'Order', 'action' => 'view', $orderId]);
+                  $this->Flash->error($fileName . ' could not be saved. Please, try again.');
                 }
-
+                // debug($requestData);
+              }
             }
-            $this->Flash->error(__('The order item could not be saved. Please, try again.'));
+
+          // debug($requestData['custom_field_1']);
+
+          $orderItem = $this->OrderItem->patchEntity($orderItem, $requestData);
+
+          if ($this->loggedUserOrgId != null) {
+              $orderItem->set('organization_id', $this->loggedUserOrgId);
+          }
+
+          // debug($orderItem->get('custom_field_1'));
+
+          if ($this->OrderItem->save($orderItem)) {
+              $this->Flash->success(__('The order item has been saved.'));
+
+              if($requestData['do_continue'] == "true") {
+                  return $this->redirect(['action' => 'add', $orderId]);
+              } else {
+                  return $this->redirect(['controller' => 'Order', 'action' => 'view', $orderId]);
+              }
+
+          }
+          $this->Flash->error(__('The order item could not be saved. Please, try again.'));
         }
 
         if ($this->loggedUserOrgId == null) {

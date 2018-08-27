@@ -12,7 +12,7 @@
     </ul>
 </nav>
 <div class="orderItem form large-9 medium-8 columns content">
-    <?= $this->Form->create($orderItem, ['id' => 'order-item-form']) ?>
+    <?= $this->Form->create($orderItem, ['id' => 'order-item-form', 'type' => 'file']) ?>
     <fieldset>
         <legend><?= __('Add Order Item') ?></legend>
         <?php
