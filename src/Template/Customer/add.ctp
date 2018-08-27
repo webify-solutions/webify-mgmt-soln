@@ -18,7 +18,7 @@
             if ($organization != null) {
                 echo $this->Form->control('organization_id', ['options' => $organization, 'empty' => true]);
             }
-            echo $this->Form->control('name');
+            echo $this->Form->control('name', ['type' => 'email']);
             // echo $this->Form->control('title');
             echo $this->Form->control('phone');
             echo $this->Form->control('active');
