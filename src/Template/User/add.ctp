@@ -21,7 +21,7 @@
             echo $this->Form->control('login_name');
             echo $this->Form->control('password', ['type' => 'password']);
             echo $this->Form->control('name');
-            echo $this->Form->control('email');
+            echo $this->Form->control('email', []);
             echo $this->Form->control('phone');
             echo $this->Form->control('employee_number');
             echo $this->Form->control(

@@ -50,29 +50,49 @@ class OrderItemBehavior extends Behavior
       return $ids;
     }
 
-    public static function getProductCustomFieldLabelsAsJSON($query) {
+    public static function getProductCustomFieldsAsJSON($query) {
       $query->select([
         'id',
         'ProductCategory.custom_field_1',
+        'ProductCategory.custom_field_type_1',
         'ProductCategory.custom_field_2',
+        'ProductCategory.custom_field_type_2',
         'ProductCategory.custom_field_3',
+        'ProductCategory.custom_field_type_3',
         'ProductCategory.custom_field_4',
+        'ProductCategory.custom_field_type_4',
         'ProductCategory.custom_field_5',
+        'ProductCategory.custom_field_type_5',
         'ProductCategory.custom_field_6',
+        'ProductCategory.custom_field_type_6',
         'ProductCategory.custom_field_7',
+        'ProductCategory.custom_field_type_7',
         'ProductCategory.custom_field_8',
+        'ProductCategory.custom_field_type_8',
         'ProductCategory.custom_field_9',
+        'ProductCategory.custom_field_type_9',
         'ProductCategory.custom_field_10',
+        'ProductCategory.custom_field_type_10',
         'ProductCategory.custom_field_11',
+        'ProductCategory.custom_field_type_11',
         'ProductCategory.custom_field_12',
+        'ProductCategory.custom_field_type_12',
         'ProductCategory.custom_field_13',
+        'ProductCategory.custom_field_type_13',
         'ProductCategory.custom_field_14',
+        'ProductCategory.custom_field_type_14',
         'ProductCategory.custom_field_15',
+        'ProductCategory.custom_field_type_15',
         'ProductCategory.custom_field_16',
+        'ProductCategory.custom_field_type_16',
         'ProductCategory.custom_field_17',
+        'ProductCategory.custom_field_type_17',
         'ProductCategory.custom_field_18',
+        'ProductCategory.custom_field_type_18',
         'ProductCategory.custom_field_19',
+        'ProductCategory.custom_field_type_19',
         'ProductCategory.custom_field_20',
+        'ProductCategory.custom_field_type_20'
       ]);
       $query->innerJoinWith('ProductCategory');
 
@@ -80,8 +100,16 @@ class OrderItemBehavior extends Behavior
       $customFieldLabels = [];
       foreach ($query as $product) {
         $category = $product->get('_matchingData')['ProductCategory'];
+        $customFields = [];
+        for ($i = 1; $i <= 20; $i++) {
+          $key = 'custom_field_' . $i;
+          $customFields[$key] = [
+            'label' => $category[$key],
+            'type' => $category['custom_field_type_' . $i]
+          ];
+        }
         // debug($category);
-        $customFieldLabels[$product->id] = $category;
+        $customFieldLabels[$product->id] = $customFields;
       }
 
       return json_encode($customFieldLabels);
@@ -116,11 +144,15 @@ class OrderItemBehavior extends Behavior
     }
 
     public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options) {
+        // debug('beforeMarshal');
         $data['unit_price'] = explode(' ', $data['unit_price'])[0];
+
+        // debug($data);
     }
 
     public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
     {
+      // debug('beforeSave');
       // debug($entity->get('custom_field_1'));
       if($entity->get('order_item_number') == null) {
           $orderItemNumber = uniqid("OI-", false);
@@ -132,12 +164,16 @@ class OrderItemBehavior extends Behavior
       }
 
       $entity->set('total', $entity->get('unit_price') * $entity->get('unit_quantity'));
+
+      // debug($entity);
     }
 
     public function afterSaveCommit(Event $event, EntityInterface $entity, ArrayObject $options) {
+      // debug('afterSaveCommit');
       // debug($entity->get('custom_field_1'));
 //        debug($entity->get('order_id'));
-        OrderBehavior::updateTotal($entity->get('order_id'), $entity->get('total'), '+');
+      OrderBehavior::updateTotal($entity->get('order_id'), $entity->get('total'), '+');
+      // debug($entity);
     }
 
     public function afterDeleteCommit(Event $event, EntityInterface $entity, ArrayObject $options) {

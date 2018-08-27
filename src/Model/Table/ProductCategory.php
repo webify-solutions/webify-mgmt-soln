@@ -66,10 +66,21 @@ use Cake\Validation\Validator;
          ->scalar('custom_field_1')
          ->maxLength('custom_field_1', 255)
          ->allowEmpty('custom_field_1');
+
+     $validator
+         ->scalar('custom_field_type_1')
+         ->maxLength('custom_field_type_1', 45)
+         ->allowEmpty('custom_field_type_1');
+
      $validator
          ->scalar('custom_field_2')
          ->maxLength('custom_field_2', 255)
          ->allowEmpty('custom_field_2');
+
+     $validator
+         ->scalar('custom_field_type_2')
+         ->maxLength('custom_field_type_2', 45)
+         ->allowEmpty('custom_field_type_2');
 
      $validator
          ->scalar('custom_field_3')
@@ -77,9 +88,19 @@ use Cake\Validation\Validator;
          ->allowEmpty('custom_field_3');
 
      $validator
+         ->scalar('custom_field_type_3')
+         ->maxLength('custom_field_type_3', 45)
+         ->allowEmpty('custom_field_type_3');
+
+     $validator
          ->scalar('custom_field_4')
          ->maxLength('custom_field_4', 255)
          ->allowEmpty('custom_field_4');
+
+     $validator
+         ->scalar('custom_field_type_4')
+         ->maxLength('custom_field_type_4', 45)
+         ->allowEmpty('custom_field_type_4');
 
      $validator
          ->scalar('custom_field_5')
@@ -87,9 +108,19 @@ use Cake\Validation\Validator;
          ->allowEmpty('custom_field_5');
 
      $validator
+         ->scalar('custom_field_type_5')
+         ->maxLength('custom_field_type_5', 45)
+         ->allowEmpty('custom_field_type_5');
+
+     $validator
          ->scalar('custom_field_6')
          ->maxLength('custom_field_6', 255)
          ->allowEmpty('custom_field_6');
+
+     $validator
+         ->scalar('custom_field_type_6')
+         ->maxLength('custom_field_type_6', 45)
+         ->allowEmpty('custom_field_type_6');
 
      $validator
          ->scalar('custom_field_7')
@@ -97,9 +128,19 @@ use Cake\Validation\Validator;
          ->allowEmpty('custom_field_7');
 
      $validator
+         ->scalar('custom_field_type_7')
+         ->maxLength('custom_field_type_7', 45)
+         ->allowEmpty('custom_field_type_7');
+
+     $validator
          ->scalar('custom_field_8')
          ->maxLength('custom_field_8', 255)
          ->allowEmpty('custom_field_8');
+
+     $validator
+         ->scalar('custom_field_type_8')
+         ->maxLength('custom_field_type_8', 45)
+         ->allowEmpty('custom_field_type_8');
 
      $validator
          ->scalar('custom_field_9')
@@ -107,9 +148,19 @@ use Cake\Validation\Validator;
          ->allowEmpty('custom_field_9');
 
      $validator
+         ->scalar('custom_field_type_9')
+         ->maxLength('custom_field_type_9', 45)
+         ->allowEmpty('custom_field_type_9');
+
+     $validator
          ->scalar('custom_field_10')
          ->maxLength('custom_field_10', 255)
          ->allowEmpty('custom_field_10');
+
+     $validator
+         ->scalar('custom_field_type_10')
+         ->maxLength('custom_field_type_10', 45)
+         ->allowEmpty('custom_field_type_10');
 
      $validator
          ->scalar('custom_field_11')
@@ -117,9 +168,19 @@ use Cake\Validation\Validator;
          ->allowEmpty('custom_field_11');
 
      $validator
+         ->scalar('custom_field_type_11')
+         ->maxLength('custom_field_type_11', 45)
+         ->allowEmpty('custom_field_type_11');
+
+     $validator
          ->scalar('custom_field_12')
          ->maxLength('custom_field_12', 255)
          ->allowEmpty('custom_field_12');
+
+     $validator
+         ->scalar('custom_field_type_12')
+         ->maxLength('custom_field_type_12', 45)
+         ->allowEmpty('custom_field_type_12');
 
      $validator
          ->scalar('custom_field_13')
@@ -127,9 +188,19 @@ use Cake\Validation\Validator;
          ->allowEmpty('custom_field_13');
 
      $validator
+         ->scalar('custom_field_type_13')
+         ->maxLength('custom_field_type_13', 45)
+         ->allowEmpty('custom_field_type_13');
+
+     $validator
          ->scalar('custom_field_14')
          ->maxLength('custom_field_14', 255)
          ->allowEmpty('custom_field_14');
+
+     $validator
+         ->scalar('custom_field_type_14')
+         ->maxLength('custom_field_type_14', 45)
+         ->allowEmpty('custom_field_type_14');
 
      $validator
          ->scalar('custom_field_15')
@@ -137,9 +208,19 @@ use Cake\Validation\Validator;
          ->allowEmpty('custom_field_15');
 
      $validator
+         ->scalar('custom_field_type_15')
+         ->maxLength('custom_field_type_15', 45)
+         ->allowEmpty('custom_field_type_15');
+
+     $validator
          ->scalar('custom_field_16')
          ->maxLength('custom_field_16', 255)
          ->allowEmpty('custom_field_16');
+
+     $validator
+         ->scalar('custom_field_type_16')
+         ->maxLength('custom_field_type_16', 45)
+         ->allowEmpty('custom_field_type_16');
 
      $validator
          ->scalar('custom_field_17')
@@ -147,9 +228,19 @@ use Cake\Validation\Validator;
          ->allowEmpty('custom_field_17');
 
      $validator
+         ->scalar('custom_field_type_17')
+         ->maxLength('custom_field_type_17', 45)
+         ->allowEmpty('custom_field_type_17');
+
+     $validator
          ->scalar('custom_field_18')
          ->maxLength('custom_field_18', 255)
          ->allowEmpty('custom_field_18');
+
+     $validator
+         ->scalar('custom_field_type_18')
+         ->maxLength('custom_field_type_18', 45)
+         ->allowEmpty('custom_field_type_18');
 
      $validator
          ->scalar('custom_field_19')
@@ -157,9 +248,19 @@ use Cake\Validation\Validator;
          ->allowEmpty('custom_field_19');
 
      $validator
+         ->scalar('custom_field_type_19')
+         ->maxLength('custom_field_type_19', 45)
+         ->allowEmpty('custom_field_type_19');
+
+     $validator
          ->scalar('custom_field_20')
          ->maxLength('custom_field_20', 255)
          ->allowEmpty('custom_field_20');
+
+     $validator
+         ->scalar('custom_field_type_20')
+         ->maxLength('custom_field_type_20', 45)
+         ->allowEmpty('custom_field_type_20');
 
      $validator
          ->boolean('active')

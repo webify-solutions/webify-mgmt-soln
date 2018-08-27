@@ -22,17 +22,36 @@ $(document).ready(function() {
     var product_custom_fields_json = all_custom_fields_json[$( this ).val()]
     // console.log(product_custom_fields_json);
     for(var custom_field_id in product_custom_fields_json) {
-      // console.log(custom_field_id);
-      var custom_field_label = product_custom_fields_json[custom_field_id];
-      if(custom_field_label !== null) {
-        // console.log(custom_field_label);
-        custom_field_id = custom_field_id.replace(/_/g , "-");
+      // console.log('id: ' + custom_field_id);
+      var custom_field = product_custom_fields_json[custom_field_id];
+      if(custom_field['label'] !== null) {
+        // console.log(custom_field['label']);
+        // console.log(custom_field['type']);
+        var custom_field_id = custom_field_id.replace(/_/g , "-");
         // console.log(custom_field_id);
         // console.log($('label[for="' + custom_field_id + '"]').html());
-        $('label[for="' + custom_field_id + '"]').html(custom_field_label);
+        $('label[for="' + custom_field_id + '"]').html(custom_field['label']);
         // console.log($('label[for="' + custom_field_id + '"]').html());
+        if (custom_field['type'] == 'file') {
+          var index =  custom_field_id.match(/(\d)/g);
+          console.log('extracted index: ' + index);
+          $('#' + custom_field_id)
+            .clone()
+            .attr('type', custom_field['type'])
+            .attr('name', 'custom_field_upload_link_' + index)
+            .insertAfter('#' + custom_field_id)
+            .removeAttr("maxlength")
+            .prev().remove();
+        } else if (custom_field['type'] != 'text') {
+          $('#' + custom_field_id)
+            .clone()
+            .attr('type', custom_field['type'])
+            .insertAfter('#' + custom_field_id)
+            .removeAttr("maxlength")
+            .prev().remove();
+        }
 
-        console.log('div-' + custom_field_id);
+        // console.log('div-' + custom_field_id);
         $('#div-' + custom_field_id).removeClass('hidden');
       }
     }

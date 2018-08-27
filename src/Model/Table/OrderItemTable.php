@@ -109,11 +109,19 @@ class OrderItemTable extends Table
             ->scalar('custom_field_1')
             ->maxLength('custom_field_1', 255)
             ->allowEmpty('custom_field_1');
-            
+
+        $validator
+            ->scalar('custom_field_upload_link_1', [])
+            ->allowEmpty('custom_field_upload_link_1');
+
         $validator
             ->scalar('custom_field_2')
             ->maxLength('custom_field_2', 255)
             ->allowEmpty('custom_field_2');
+
+        $validator
+            ->scalar('custom_field_upload_link_2', [])
+            ->allowEmpty('custom_field_upload_link_2');
 
         $validator
             ->scalar('custom_field_3')
@@ -121,9 +129,17 @@ class OrderItemTable extends Table
             ->allowEmpty('custom_field_3');
 
         $validator
+            ->scalar('custom_field_upload_link_3', [])
+            ->allowEmpty('custom_field_upload_link_3');
+
+        $validator
             ->scalar('custom_field_4')
             ->maxLength('custom_field_4', 255)
             ->allowEmpty('custom_field_4');
+
+        $validator
+            ->scalar('custom_field_upload_link_4', [])
+            ->allowEmpty('custom_field_upload_link_4');
 
         $validator
             ->scalar('custom_field_5')
@@ -131,9 +147,17 @@ class OrderItemTable extends Table
             ->allowEmpty('custom_field_5');
 
         $validator
+            ->scalar('custom_field_upload_link_5', [])
+            ->allowEmpty('custom_field_upload_link_5');
+
+        $validator
             ->scalar('custom_field_6')
             ->maxLength('custom_field_6', 255)
             ->allowEmpty('custom_field_6');
+
+        $validator
+            ->scalar('custom_field_upload_link_6', [])
+            ->allowEmpty('custom_field_upload_link_6');
 
         $validator
             ->scalar('custom_field_7')
@@ -141,9 +165,17 @@ class OrderItemTable extends Table
             ->allowEmpty('custom_field_7');
 
         $validator
+            ->scalar('custom_field_upload_link_7', [])
+            ->allowEmpty('custom_field_upload_link_7');
+
+        $validator
             ->scalar('custom_field_8')
             ->maxLength('custom_field_8', 255)
             ->allowEmpty('custom_field_8');
+
+        $validator
+            ->scalar('custom_field_upload_link_8', [])
+            ->allowEmpty('custom_field_upload_link_8');
 
         $validator
             ->scalar('custom_field_9')
@@ -151,9 +183,17 @@ class OrderItemTable extends Table
             ->allowEmpty('custom_field_9');
 
         $validator
+            ->scalar('custom_field_upload_link_9', [])
+            ->allowEmpty('custom_field_upload_link_9');
+
+        $validator
             ->scalar('custom_field_10')
             ->maxLength('custom_field_10', 255)
             ->allowEmpty('custom_field_10');
+
+        $validator
+            ->scalar('custom_field_upload_link_10', [])
+            ->allowEmpty('custom_field_upload_link_10');
 
         $validator
             ->scalar('custom_field_11')
@@ -161,9 +201,17 @@ class OrderItemTable extends Table
             ->allowEmpty('custom_field_11');
 
         $validator
+            ->scalar('custom_field_upload_link_11', [])
+            ->allowEmpty('custom_field_upload_link_11');
+
+        $validator
             ->scalar('custom_field_12')
             ->maxLength('custom_field_12', 255)
             ->allowEmpty('custom_field_12');
+
+        $validator
+            ->scalar('custom_field_upload_link_12', [])
+            ->allowEmpty('custom_field_upload_link_12');
 
         $validator
             ->scalar('custom_field_13')
@@ -171,9 +219,17 @@ class OrderItemTable extends Table
             ->allowEmpty('custom_field_13');
 
         $validator
+            ->scalar('custom_field_upload_link_13', [])
+            ->allowEmpty('custom_field_upload_link_13');
+
+        $validator
             ->scalar('custom_field_14')
             ->maxLength('custom_field_14', 255)
             ->allowEmpty('custom_field_14');
+
+        $validator
+            ->scalar('custom_field_upload_link_14', [])
+            ->allowEmpty('custom_field_upload_link_14');
 
         $validator
             ->scalar('custom_field_15')
@@ -181,9 +237,17 @@ class OrderItemTable extends Table
             ->allowEmpty('custom_field_15');
 
         $validator
+            ->scalar('custom_field_upload_link_15', [])
+            ->allowEmpty('custom_field_upload_link_15');
+
+        $validator
             ->scalar('custom_field_16')
             ->maxLength('custom_field_16', 255)
             ->allowEmpty('custom_field_16');
+
+        $validator
+            ->scalar('custom_field_upload_link_16', [])
+            ->allowEmpty('custom_field_upload_link_16');
 
         $validator
             ->scalar('custom_field_17')
@@ -191,9 +255,17 @@ class OrderItemTable extends Table
             ->allowEmpty('custom_field_17');
 
         $validator
+            ->scalar('custom_field_upload_link_17', [])
+            ->allowEmpty('custom_field_upload_link_17');
+
+        $validator
             ->scalar('custom_field_18')
             ->maxLength('custom_field_18', 255)
             ->allowEmpty('custom_field_18');
+
+        $validator
+            ->scalar('custom_field_upload_link_18', [])
+            ->allowEmpty('custom_field_upload_link_18');
 
         $validator
             ->scalar('custom_field_19')
@@ -201,9 +273,17 @@ class OrderItemTable extends Table
             ->allowEmpty('custom_field_19');
 
         $validator
+            ->scalar('custom_field_upload_link_19', [])
+            ->allowEmpty('custom_field_upload_link_19');
+
+        $validator
             ->scalar('custom_field_20')
             ->maxLength('custom_field_20', 255)
             ->allowEmpty('custom_field_20');
+
+        $validator
+            ->scalar('custom_field_upload_link_20', [])
+            ->allowEmpty('custom_field_upload_link_20');
 
         $validator
             ->scalar('notes')

@@ -15,7 +15,7 @@
         <legend><?= __('Edit Organization') ?></legend>
         <?php
             echo $this->Form->control('name');
-            echo $this->Form->control('email');
+            echo $this->Form->control('email', ['type' => 'email']);
             echo $this->Form->control('phone');
             echo $this->Form->control('fax');
             echo $this->Form->control('logo_url');

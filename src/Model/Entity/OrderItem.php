@@ -17,25 +17,45 @@ use Cake\ORM\Entity;
  * @property string price_discount_unit
  * @property float total
  * @property string custom_field_1
+ * @property string custom_field_upload_link_1
  * @property string custom_field_2
+ * @property string custom_field_upload_link_2
  * @property string custom_field_3
+ * @property string custom_field_upload_link_3
  * @property string custom_field_4
+ * @property string custom_field_upload_link_4
  * @property string custom_field_5
+ * @property string custom_field_upload_link_5
  * @property string custom_field_6
+ * @property string custom_field_upload_link_6
  * @property string custom_field_7
+ * @property string custom_field_upload_link_7
  * @property string custom_field_8
+ * @property string custom_field_upload_link_8
  * @property string custom_field_9
+ * @property string custom_field_upload_link_9
  * @property string custom_field_10
+ * @property string custom_field_upload_link_10
  * @property string custom_field_11
+ * @property string custom_field_upload_link_11
  * @property string custom_field_12
+ * @property string custom_field_upload_link_12
  * @property string custom_field_13
+ * @property string custom_field_upload_link_13
  * @property string custom_field_14
+ * @property string custom_field_upload_link_14
  * @property string custom_field_15
+ * @property string custom_field_upload_link_15
  * @property string custom_field_16
+ * @property string custom_field_upload_link_16
  * @property string custom_field_17
+ * @property string custom_field_upload_link_17
  * @property string custom_field_18
+ * @property string custom_field_upload_link_18
  * @property string custom_field_19
+ * @property string custom_field_upload_link_19
  * @property string custom_field_20
+ * @property string custom_field_upload_link_20
  * @property string notes
  * @property bool active
  * @property \Cake\I18n\FrozenTime created_at
@@ -70,25 +90,45 @@ class OrderItem extends Entity
         'price_discount_unit' => true,
         'total' => true,
         'custom_field_1' => true,
+        'custom_field_upload_link_1' => true,
         'custom_field_2' => true,
+        'custom_field_upload_link_2' => true,
         'custom_field_3' => true,
+        'custom_field_upload_link_3' => true,
         'custom_field_4' => true,
+        'custom_field_upload_link_4' => true,
         'custom_field_5' => true,
+        'custom_field_upload_link_5' => true,
         'custom_field_6' => true,
+        'custom_field_upload_link_6' => true,
         'custom_field_7' => true,
+        'custom_field_upload_link_7' => true,
         'custom_field_8' => true,
+        'custom_field_upload_link_8' => true,
         'custom_field_9' => true,
+        'custom_field_upload_link_9' => true,
         'custom_field_10' => true,
+        'custom_field_upload_link_10' => true,
         'custom_field_11' => true,
+        'custom_field_upload_link_11' => true,
         'custom_field_12' => true,
+        'custom_field_upload_link_12' => true,
         'custom_field_13' => true,
+        'custom_field_upload_link_13' => true,
         'custom_field_14' => true,
+        'custom_field_upload_link_14' => true,
         'custom_field_15' => true,
+        'custom_field_upload_link_15' => true,
         'custom_field_16' => true,
+        'custom_field_upload_link_16' => true,
         'custom_field_17' => true,
+        'custom_field_upload_link_17' => true,
         'custom_field_18' => true,
+        'custom_field_upload_link_18' => true,
         'custom_field_19' => true,
+        'custom_field_upload_link_19' => true,
         'custom_field_20' => true,
+        'custom_field_upload_link_20' => true,
         'notes' => true,
         'active' => true,
         'created_at' => true,

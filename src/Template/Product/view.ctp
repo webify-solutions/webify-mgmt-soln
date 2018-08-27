@@ -67,14 +67,14 @@
     <div class="row">
         <h4><?= __('Extra Fields') ?></h4>
         <?php
-          $productCustomFieldLabels = json_decode($productCustomFieldLabels, true);
-          if(key_exists($product->id, $productCustomFieldLabels)) {
-            $customFieldLabels = $productCustomFieldLabels[$product->id];
+          $productCustomFields = json_decode($productCustomFields, true);
+          if(key_exists($product->id, $productCustomFields)) {
+            $customFields = $productCustomFields[$product->id];
             for ($i = 1; $i <= 20; $i++) {
-              $customFieldLabel = $customFieldLabels['custom_field_' . $i];
+              $customFieldLabel = $customFields['custom_field_' . $i];
               if($customFieldLabel != null) {
                 // echo $customFieldLabel;
-                echo '<span style="display: block">' . h($customFieldLabel). '</span>';
+                echo '<span style="display: block">' . h($customFieldLabel) . ' (' . $categoriesCustomFieldTypes[$customFields['custom_field_type_' . $i]] . ')' . '</span>';
               }
             }
           }
