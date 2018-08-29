@@ -18,12 +18,12 @@
             if ($organization != null) {
                 echo $this->Form->control('organization_id', ['options' => $organization, 'empty' => true]);
             }
-            echo $this->Form->control('name', ['type' => 'email']);
+            echo $this->Form->control('name');
             // echo $this->Form->control('title');
             echo $this->Form->control('phone');
             echo $this->Form->control('active');
             echo $this->Form->control('group_id', ['options' => $group, 'empty' => true]);
-            echo $this->Form->control('email');
+            echo $this->Form->control('email', ['type' => 'email']);
             echo $this->Form->control('address');
             echo $this->Form->control('longitude');
             echo $this->Form->control('latitude');
