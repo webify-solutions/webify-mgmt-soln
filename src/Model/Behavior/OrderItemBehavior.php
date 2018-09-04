@@ -8,11 +8,13 @@
 
 namespace App\Model\Behavior;
 
-
 use Cake\ORM\Behavior;
-use ArrayObject;
+use Cake\ORM\TableRegistry;
+
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
+
+use ArrayObject;
 
 class OrderItemBehavior extends Behavior
 {
@@ -30,117 +32,91 @@ class OrderItemBehavior extends Behavior
         return $pickList;
     }
 
-    public static function getProductAsPickList($query) {
+    public static function getProductAsPickList($productList) {
         $pickList = [];
 
-        foreach ($query as $product) {
-            $pickList[$product->id] =  $product->name;
+        foreach (array_keys($productList) as $productId) {
+            $pickList[$productId] =  $productList[$productId]['product_name'];
         }
 
         return $pickList;
     }
 
-    public static function getProductIds($query) {
-      $ids = [];
-
-      foreach ($query as $product) {
-          $ids[] =  $product->id;
-      }
-
-      return $ids;
-    }
-
-    public static function getProductCustomFieldsAsJSON($query) {
+    public static function getProductCategoryPriceEntryList($organizationId) {
+      $productCategoryPriceEntryTable = TableRegistry::getTableLocator()->get('ProductCategoryPriceEntry');
+      $query = $productCategoryPriceEntryTable->find('all');
       $query->select([
-        'id',
-        'ProductCategory.custom_field_1',
-        'ProductCategory.custom_field_type_1',
-        'ProductCategory.custom_field_2',
-        'ProductCategory.custom_field_type_2',
-        'ProductCategory.custom_field_3',
-        'ProductCategory.custom_field_type_3',
-        'ProductCategory.custom_field_4',
-        'ProductCategory.custom_field_type_4',
-        'ProductCategory.custom_field_5',
-        'ProductCategory.custom_field_type_5',
-        'ProductCategory.custom_field_6',
-        'ProductCategory.custom_field_type_6',
-        'ProductCategory.custom_field_7',
-        'ProductCategory.custom_field_type_7',
-        'ProductCategory.custom_field_8',
-        'ProductCategory.custom_field_type_8',
-        'ProductCategory.custom_field_9',
-        'ProductCategory.custom_field_type_9',
-        'ProductCategory.custom_field_10',
-        'ProductCategory.custom_field_type_10',
-        'ProductCategory.custom_field_11',
-        'ProductCategory.custom_field_type_11',
-        'ProductCategory.custom_field_12',
-        'ProductCategory.custom_field_type_12',
-        'ProductCategory.custom_field_13',
-        'ProductCategory.custom_field_type_13',
-        'ProductCategory.custom_field_14',
-        'ProductCategory.custom_field_type_14',
-        'ProductCategory.custom_field_15',
-        'ProductCategory.custom_field_type_15',
-        'ProductCategory.custom_field_16',
-        'ProductCategory.custom_field_type_16',
-        'ProductCategory.custom_field_17',
-        'ProductCategory.custom_field_type_17',
-        'ProductCategory.custom_field_18',
-        'ProductCategory.custom_field_type_18',
-        'ProductCategory.custom_field_19',
-        'ProductCategory.custom_field_type_19',
-        'ProductCategory.custom_field_20',
-        'ProductCategory.custom_field_type_20'
-      ]);
-      $query->innerJoinWith('ProductCategory');
-
-      // debug($query);
-      $customFieldLabels = [];
-      foreach ($query as $product) {
-        $category = $product->get('_matchingData')['ProductCategory'];
-        $customFields = [];
-        for ($i = 1; $i <= 20; $i++) {
-          $key = 'custom_field_' . $i;
-          $customFields[$key] = [
-            'label' => $category[$key],
-            'type' => $category['custom_field_type_' . $i]
-          ];
-        }
-        // debug($category);
-        $customFieldLabels[$product->id] = $customFields;
-      }
-
-      return json_encode($customFieldLabels);
-    }
-
-    public static function getProductPriceEntriesAsJSON($query) {
-        $fields = [];
-
-        $query->select([
-            'id',
-            'product_id',
-            'name' => $query->func()->concat([
-                'price' => 'identifier',
-                ' ',
-                'currency' => 'identifier'
-            ])
+          'product_id',
+          'product_name',
+          'price_text',
+          'custom_field_label_1',
+          'custom_field_label_type_1',
+          'custom_field_label_2',
+          'custom_field_label_type_2',
+          'custom_field_label_3',
+          'custom_field_label_type_3',
+          'custom_field_label_4',
+          'custom_field_label_type_4',
+          'custom_field_label_5',
+          'custom_field_label_type_5',
+          'custom_field_label_6',
+          'custom_field_label_type_6',
+          'custom_field_label_7',
+          'custom_field_label_type_7',
+          'custom_field_label_8',
+          'custom_field_label_type_8',
+          'custom_field_label_9',
+          'custom_field_label_type_9',
+          'custom_field_label_10',
+          'custom_field_label_type_10',
+          'custom_field_label_11',
+          'custom_field_label_type_11',
+          'custom_field_label_12',
+          'custom_field_label_type_12',
+          'custom_field_label_13',
+          'custom_field_label_type_13',
+          'custom_field_label_14',
+          'custom_field_label_type_14',
+          'custom_field_label_15',
+          'custom_field_label_type_15',
+          'custom_field_label_16',
+          'custom_field_label_type_16',
+          'custom_field_label_17',
+          'custom_field_label_type_17',
+          'custom_field_label_18',
+          'custom_field_label_type_18',
+          'custom_field_label_19',
+          'custom_field_label_type_19',
+          'custom_field_label_20',
+          'custom_field_label_type_20'
         ]);
 
-        // debug($query->toList());
-        foreach ($query as $priceEntry) {
-            if(key_exists($priceEntry->product_id, $priceEntry)) {
-                $fields[$priceEntry->product_id] =  array_merge(
-                    $fields[$priceEntry->product_id],
-                    [$priceEntry->id => $priceEntry->name]
-                );
-            } else {
-                $fields[$priceEntry->product_id] =  [$priceEntry->id => $priceEntry->name];
-            }
+        if ($organizationId != null) {
+          $query->where([
+            'organization_id' => $organizationId
+          ]);
         }
 
-        return json_encode($fields);
+        $productCategoryPriceEntryList = [];
+        foreach ($query as $productCategoryPriceEntry) {
+          $customFields = [];
+          for ($i = 1; $i <= 20; $i++) {
+            $key = 'custom_field_label_' . $i;
+            $customFields['custom_field_' . $i] = [
+              'label' => $productCategoryPriceEntry[$key],
+              'type' => $productCategoryPriceEntry['custom_field_label_type_' . $i]
+            ];
+          }
+          $productCategoryPriceEntryList[$productCategoryPriceEntry->product_id] = [
+            'product_name' => $productCategoryPriceEntry->product_name,
+            'price' => $productCategoryPriceEntry->price_text,
+            'custom_fields' => $customFields
+          ];
+        }
+
+        // debug($productCategoryPriceEntryList);
+
+        return $productCategoryPriceEntryList;
     }
 
     public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options) {
@@ -153,7 +129,7 @@ class OrderItemBehavior extends Behavior
     public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
     {
       // debug('beforeSave');
-      // debug($entity->get('custom_field_1'));
+      // debug($entity->get('custom_field_label_1'));
       if($entity->get('order_item_number') == null) {
           $orderItemNumber = uniqid("OI-", false);
           $entity->set('order_item_number', __($orderItemNumber));
@@ -170,7 +146,7 @@ class OrderItemBehavior extends Behavior
 
     public function afterSaveCommit(Event $event, EntityInterface $entity, ArrayObject $options) {
       // debug('afterSaveCommit');
-      // debug($entity->get('custom_field_1'));
+      // debug($entity->get('custom_field_label_1'));
 //        debug($entity->get('order_id'));
       OrderBehavior::updateTotal($entity->get('order_id'), $entity->get('total'), '+');
       // debug($entity);

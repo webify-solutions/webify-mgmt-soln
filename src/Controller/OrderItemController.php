@@ -66,10 +66,12 @@ class OrderItemController extends AppController
           ->where(['Product.id' => $orderItem->product_id]);
         // debug(OrderItemBehavior::getProductCustomFieldLabelsAsJSON($products));
 
+        // debug(OrderItemBehavior::getProductCategoryPriceEntryListAsJSON($this->loggedUserOrgId));
+
         $this->set([
           'orderItem' => $orderItem,
           'loggedUser' => $this->loggedUser,
-          'productCustomFields' => OrderItemBehavior::getProductCustomFieldsAsJSON($products),
+          'productInfoList' => json_encode(OrderItemBehavior::getProductCategoryPriceEntryList($this->loggedUserOrgId))
         ]);
     }
 
@@ -142,36 +144,23 @@ class OrderItemController extends AppController
 
         if ($this->loggedUserOrgId == null) {
             $organization = $this->OrderItem->Organization->find('list', ['limit' => 200]);
-
             $orderQuery = $this->OrderItem->Order->find('all');
-
-            $products = $this->OrderItem->Product->find('all');
-
         } else {
             $organization = null;
-
             $orderQuery = $this->OrderItem->Order->find('all', ['limit' => 200])
               ->where(['organization_id' => $this->loggedUserOrgId]);
-
-            $products = $this->OrderItem->Product->find('all')
-              ->where(['Product.organization_id' => $this->loggedUserOrgId]);
         }
         // debug($products->toList());
 
-        $productIds = OrderItemBehavior::getProductIds($products);
-
-        // debug($productIds);
-        $priceEntryQuery = $this->OrderItem->Product->PriceEntry->find('all', ['limit' => 200])
-          ->where(['active' => true, "product_id IN " => $productIds]);
+        $productList = OrderItemBehavior::getProductCategoryPriceEntryList($this->loggedUserOrgId);
 
         // debug(OrderItemBehavior::getProductCustomFieldLabelsAsJSON($products));
         $this->set([
             'orderItem' => $orderItem,
             'loggedUser' => $this->loggedUser,
             'order' => OrderItemBehavior::getOrdersAsPickList($orderQuery),
-            'priceEntryJSON' => OrderItemBehavior::getProductPriceEntriesAsJSON($priceEntryQuery),
-            'product' => OrderItemBehavior::getProductAsPickList($products),
-            'productCustomFields' => OrderItemBehavior::getProductCustomFieldsAsJSON($products),
+            'productInfoList' => json_encode($productList),
+            'productPickList' => OrderItemBehavior::getProductAsPickList($productList),
             'organization' => $organization
         ]);
     }
@@ -205,31 +194,25 @@ class OrderItemController extends AppController
 
         if ($this->loggedUserOrgId == null) {
             $organization = $this->OrderItem->Organization->find('list', ['limit' => 200]);
-
-            $orderQuery = $this->OrderItem->Order->find('all', ['limit' => 200])
-                ->where(['organization_id' => $this->loggedUserOrgId]);
-            $orders = OrderItemBehavior::getOrdersAsPickList($orderQuery);
-
-            $product = $this->OrderItem->Product->find('list', ['limit' => 200]);
-
+            // $orderQuery = $this->OrderItem->Order->find('all');
         } else {
             $organization = null;
-
-            $orderQuery = $this->OrderItem->Order->find('all', ['limit' => 200])
-                ->where(['organization_id' => $this->loggedUserOrgId]);
-            $orders = OrderItemBehavior::getOrdersAsPickList($orderQuery);
-
-
-            $product = $this->OrderItem->Product->find('list', ['limit' => 200])
-                ->where(['organization_id' => $this->loggedUserOrgId]);
+            // $orderQuery = $this->OrderItem->Order->find('all', ['limit' => 200])
+            //   ->where(['organization_id' => $this->loggedUserOrgId]);
         }
+        // debug($products->toList());
 
+        $productList = OrderItemBehavior::getProductCategoryPriceEntryListAsJSON($this->loggedUserOrgId);
+        $productIds = array_keys($productList);
+
+        // debug(OrderItemBehavior::getProductCustomFieldLabelsAsJSON($products));
         $this->set([
             'orderItem' => $orderItem,
             'loggedUser' => $this->loggedUser,
-            'order' => $orders,
-            'priceEntry' => null,
-            'product' => $product,
+            // 'order' => OrderItemBehavior::getOrdersAsPickList($orderQuery),
+            'productInfoList' => $productList,
+            'productPickList' => OrderItemBehavior::getProductAsPickList($productList),
+            'productRelatedInfoLIst' => OrderItemBehaviour::getProductRelatedInfoListAsJSON($orderId),
             'organization' => $organization
         ]);
     }
