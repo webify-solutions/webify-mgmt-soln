@@ -42,6 +42,89 @@ class OrderItemBehavior extends Behavior
         return $pickList;
     }
 
+    public static function getProductRelatedInfoListAsJSON($orderId) {
+      $productLatestOrderItemTable = TableRegistry::getTableLocator()->get('ProductLastestOrderItem');
+      $query = $productLatestOrderItemTable->find('all');
+      $query->select([
+        'product_id',
+        'order_item_unit_quantity',
+        'order_item_notes',
+        'custom_field_value_1',
+        'custom_field_upload_link_1',
+        'custom_field_value_2',
+        'custom_field_upload_link_2',
+        'custom_field_value_3',
+        'custom_field_upload_link_3',
+        'custom_field_value_4',
+        'custom_field_upload_link_4',
+        'custom_field_value_5',
+        'custom_field_upload_link_5',
+        'custom_field_value_6',
+        'custom_field_upload_link_6',
+        'custom_field_value_7',
+        'custom_field_upload_link_7',
+        'custom_field_value_8',
+        'custom_field_upload_link_8',
+        'custom_field_value_9',
+        'custom_field_upload_link_9',
+        'custom_field_value_10',
+        'custom_field_upload_link_10',
+        'custom_field_value_11',
+        'custom_field_upload_link_11',
+        'custom_field_value_12',
+        'custom_field_upload_link_12',
+        'custom_field_value_13',
+        'custom_field_upload_link_13',
+        'custom_field_value_14',
+        'custom_field_upload_link_14',
+        'custom_field_value_15',
+        'custom_field_upload_link_15',
+        'custom_field_value_16',
+        'custom_field_upload_link_16',
+        'custom_field_value_17',
+        'custom_field_upload_link_17',
+        'custom_field_value_18',
+        'custom_field_upload_link_18',
+        'custom_field_value_19',
+        'custom_field_upload_link_19',
+        'custom_field_value_20',
+        'custom_field_upload_link_20'
+      ]);
+
+      // subQuery =
+      if($orderId != null) {
+        $query->where([
+          'order_customer_id IN (select o2.customer_id from `order` o2 where o2.id = ' . $orderId . ')'
+        ]);
+      }
+
+      // debug($query);
+
+      $productLatestOrderItemList = [];
+      foreach ($query as $productLatestOrderItem) {
+        if (!key_exists($productLatestOrderItem->product_id, $productLatestOrderItemList)) {
+          $customFields = [];
+          for ($i = 1; $i <= 20; $i++) {
+            $customFields['custom_field_' . $i] = [
+              'value' => $productLatestOrderItem['custom_field_value_' . $i],
+              'upload_link' => $productLatestOrderItem['custom_field_upload_link_' . $i]
+            ];
+          }
+          $productLatestOrderItemList[$productLatestOrderItem->product_id] =
+          array_merge(
+            $customFields,
+            [
+              'order_item_unit_quantity' => $productLatestOrderItem->order_item_unit_quantity,
+              'order_item_notes' => $productLatestOrderItem->order_item_notes
+            ]
+          );
+        }
+      }
+      // debug($productLatestOrderItemList);
+
+      return json_encode($productLatestOrderItemList);
+    }
+
     public static function getProductCategoryPriceEntryList($organizationId) {
       $productCategoryPriceEntryTable = TableRegistry::getTableLocator()->get('ProductCategoryPriceEntry');
       $query = $productCategoryPriceEntryTable->find('all');

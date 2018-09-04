@@ -161,6 +161,7 @@ class OrderItemController extends AppController
             'order' => OrderItemBehavior::getOrdersAsPickList($orderQuery),
             'productInfoList' => json_encode($productList),
             'productPickList' => OrderItemBehavior::getProductAsPickList($productList),
+            'productRelatedInfoList' => OrderItemBehavior::getProductRelatedInfoListAsJSON($orderId),
             'organization' => $organization
         ]);
     }
