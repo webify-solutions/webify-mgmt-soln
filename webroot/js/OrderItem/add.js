@@ -1,14 +1,13 @@
 $(document).ready(function() {
   $('#product').on('change', function() {
-    var price_list_json = $('#unit-price').data('price-list');
-    // console.log(price_list_json);
-    // console.log(JSON.stringify(price_list_json));
-    var price_json = price_list_json[$( this ).val()];
-    // console.log(JSON.stringify(price_json));
+    var product_info_list = $( this ).data('product-info-list');
+    var product_info = product_info_list[$( this ).val()]
+    // console.log(product_info_list);
+    // console.log(product_info);
 
-    var product_keys = Object.keys(price_json);
-    // console.log(price_json[product_keys]);
-    $('#unit-price').val(price_json[product_keys]);
+    var price = product_info['price'];
+    // console.log(price);
+    $('#unit-price').val(price);
 
     /*
      * Clear all custom field values
@@ -18,41 +17,57 @@ $(document).ready(function() {
       $('#custom-field-' + i).val(null);
     }
 
-    var all_custom_fields_json = $( this ).data('custom-fields');
-    var product_custom_fields_json = all_custom_fields_json[$( this ).val()]
-    // console.log(product_custom_fields_json);
-    for(var custom_field_id in product_custom_fields_json) {
+    var product_related_info_list = $( this ).data('product-related-info-list');
+    // console.log(product_related_info_list);
+    var product_related_info = product_related_info_list[$( this ).val()];
+    console.log(product_related_info);
+
+    $('#notes').val(product_related_info['order_item_notes']);
+
+    var product_custom_fields = product_info['custom_fields'];
+    // console.log(product_custom_fields)
+    for(var custom_field_id in product_custom_fields) {
       // console.log('id: ' + custom_field_id);
-      var custom_field = product_custom_fields_json[custom_field_id];
+      var custom_field = product_custom_fields[custom_field_id];
       if(custom_field['label'] !== null) {
         // console.log(custom_field['label']);
         // console.log(custom_field['type']);
-        var custom_field_id = custom_field_id.replace(/_/g , "-");
+        var html_custom_field_id = custom_field_id.replace(/_/g , "-");
         // console.log(custom_field_id);
         // console.log($('label[for="' + custom_field_id + '"]').html());
-        $('label[for="' + custom_field_id + '"]').html(custom_field['label']);
+        $('label[for="' + html_custom_field_id + '"]').html(custom_field['label']);
         // console.log($('label[for="' + custom_field_id + '"]').html());
+        // console.log(product_related_info[custom_field_id]['value']);
         if (custom_field['type'] == 'file') {
           var index =  custom_field_id.match(/(\d)/g);
-          console.log('extracted index: ' + index);
-          $('#' + custom_field_id)
+          // console.log('extracted index: ' + index);
+          $('#' + html_custom_field_id)
             .clone()
             .attr('type', custom_field['type'])
             .attr('name', 'custom_field_upload_link_' + index)
-            .insertAfter('#' + custom_field_id)
+            .insertAfter('#' + html_custom_field_id)
             .removeAttr("maxlength")
             .prev().remove();
+
+            $('label[for="' + html_custom_field_id + '"]').html(
+              custom_field['label'] +
+               ' (<a href="' + product_related_info[custom_field_id]['upload_link'] + '">' +
+               product_related_info[custom_field_id]['value'] + '</a>)'
+            );
         } else if (custom_field['type'] != 'text') {
-          $('#' + custom_field_id)
+          $('#' + html_custom_field_id)
             .clone()
             .attr('type', custom_field['type'])
-            .insertAfter('#' + custom_field_id)
+            .val(product_related_info[custom_field_id]['value'])
+            .insertAfter('#' + html_custom_field_id)
             .removeAttr("maxlength")
             .prev().remove();
+        } else {
+          $('#' + html_custom_field_id).val(product_related_info[custom_field_id]['value']);
         }
 
         // console.log('div-' + custom_field_id);
-        $('#div-' + custom_field_id).removeClass('hidden');
+        $('#div-' + html_custom_field_id).removeClass('hidden');
       }
     }
 

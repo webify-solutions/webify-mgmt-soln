@@ -28,7 +28,17 @@
                 echo $this->Form->control('organization_id', ['options' => $organization, 'empty' => true]);
             }
             echo $this->Form->control('order_id', ['options' => $order, 'empty' => true, 'disabled' => 'disabled']);
-            echo $this->Form->control('product_id', ['options' => $product, 'empty' => true, 'onchange' => 'updatePriceList(this)', 'disabled' => 'disabled']);
+            echo $this->Form->control(
+              'product_id',
+              [
+                'options' => $productPickList,
+                'empty' => true,
+                'id' => 'product',
+                'data-product-info-list' => $productInfoList,
+                'data-product-related-info-list' => $productRelatedInfoList,
+                'disabled' => 'disabled'
+              ]
+            );
             echo $this->Form->control('unit_price', ['type'=>'text', 'readonly' => 'readonly', 'empty' => true]);
             echo $this->Form->control('unit_quantity');
             echo $this->Form->control('notes');

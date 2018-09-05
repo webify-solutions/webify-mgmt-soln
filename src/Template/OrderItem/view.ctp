@@ -2,6 +2,7 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\OrderItem $orderItem
+ * @var \App\Model\Entity\ProductCategoryPriceEntry $productInfoList
  */
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
@@ -44,7 +45,8 @@
             <td><?= $this->Number->format($orderItem->total) . ' ' . h($orderItem->order->currency)?></td>
         </tr>
         <?php
-          $customFields = json_decode($productCustomFields, true)[$orderItem->product_id];
+          // debug($productInfoList);
+          $customFields = json_decode($productInfoList, true)[$orderItem->product_id]['custom_fields'];
           for ($i = 1; $i <= 20; $i++) {
             $key = 'custom_field_' . $i;
             $uploadKey = 'custom_field_upload_link_' . $i;

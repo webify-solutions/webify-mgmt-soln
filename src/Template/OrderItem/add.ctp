@@ -3,6 +3,8 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\OrderItem $orderItem
  * @var \App\Model\Entity\Organization $organization
+ * @var \App\Model\Entity\ProductCategoryPriceEntry $productInfoList
+ * @var \App\Model\Entity\ProductLastestOrderItem $productRelatedInfoList
  */
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
@@ -20,8 +22,17 @@
             if ($organization != null) {
                 echo $this->Form->control('organization_id', ['options' => $organization, 'empty' => true]);
             }
-            echo $this->Form->control('order_id', ['options' => $order, 'empty' => true]);
-            echo $this->Form->control('product_id', ['options' => $product, 'empty' => true, 'id' => 'product', 'data-custom-fields' => $productCustomFields]);
+            echo $this->Form->control('order_id', ['options' => $order, 'empty' => true, 'disabled' => 'disabled']);
+            echo $this->Form->control(
+              'product_id',
+              [
+                'options' => $productPickList,
+                'empty' => true,
+                'id' => 'product',
+                'data-product-info-list' => $productInfoList,
+                'data-product-related-info-list' => $productRelatedInfoList
+              ]
+            );
             echo $this->Form->control(
               'unit_price',
               [
@@ -29,7 +40,6 @@
                 'type'=>'text',
                 'readonly' => 'readonly',
                 'empty' => true,
-                'data-price-list' =>  $priceEntryJSON
               ]
             );
             echo $this->Form->control('unit_quantity');
