@@ -20,9 +20,11 @@ $(document).ready(function() {
     var product_related_info_list = $( this ).data('product-related-info-list');
     // console.log(product_related_info_list);
     var product_related_info = product_related_info_list[$( this ).val()];
-    console.log(product_related_info);
+    // console.log(product_related_info);
 
-    $('#notes').val(product_related_info['order_item_notes']);
+    if (product_related_info_list['order_item_notes'] != null) {
+      $('#notes').val(product_related_info['order_item_notes']);
+    }
 
     var product_custom_fields = product_info['custom_fields'];
     // console.log(product_custom_fields)
@@ -49,21 +51,26 @@ $(document).ready(function() {
             .removeAttr("maxlength")
             .prev().remove();
 
-            $('label[for="' + html_custom_field_id + '"]').html(
-              custom_field['label'] +
-               ' (<a href="' + product_related_info[custom_field_id]['upload_link'] + '">' +
-               product_related_info[custom_field_id]['value'] + '</a>)'
-            );
-        } else if (custom_field['type'] != 'text') {
-          $('#' + html_custom_field_id)
+            if (product_related_info != null && (typeof product_related_info[custom_field_id] !== 'undefined')) {
+              $('label[for="' + html_custom_field_id + '"]').html(
+                custom_field['label'] +
+                 ' (<a href="' + product_related_info[custom_field_id]['upload_link'] + '">' +
+                 product_related_info[custom_field_id]['value'] + '</a>)'
+              );
+            }
+        } else  {
+          if (custom_field['type'] != 'text') {
+            $('#' + html_custom_field_id)
             .clone()
             .attr('type', custom_field['type'])
-            .val(product_related_info[custom_field_id]['value'])
             .insertAfter('#' + html_custom_field_id)
             .removeAttr("maxlength")
             .prev().remove();
-        } else {
-          $('#' + html_custom_field_id).val(product_related_info[custom_field_id]['value']);
+          }
+
+          if (product_related_info != null && (typeof product_related_info[custom_field_id] !== 'undefined')) {
+            $('#' + html_custom_field_id).val(product_related_info[custom_field_id]['value']);
+          }
         }
 
         // console.log('div-' + custom_field_id);
