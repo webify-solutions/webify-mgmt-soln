@@ -14,7 +14,7 @@ class PropertyUtils
     public static $currencies = ['USD' => 'USD', 'LL' => 'LL'];
     public static $discountUnits = ['Percentage' => 'Percentage', 'Amount' => 'Amount'];
 
-    public static $orderTypes = ['one-time' => 'One time payment', 'recurring-payments' => 'Multiple Payments', 'recurring-invoicing' => 'Subscription'];
+    public static $orderTypes = ['recurring-payments' => 'Non Subscription', 'recurring-invoicing' => 'Subscription'];
 
     public static  $roles = ['Admin'=> 'Admin', 'Sales' => 'Sales', 'Cashier' => 'Cashier', 'Technician' => 'Technician'];
 

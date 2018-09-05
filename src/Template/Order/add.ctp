@@ -19,7 +19,7 @@
                 echo $this->Form->control('organization_id', ['options' => $organization, 'empty' => true]);
             }
             echo $this->Form->control('customer_id', ['options' => $customer, 'empty' => true]);
-            echo $this->Form->control('type', ['options' => $types, 'empty' => true]);
+            echo $this->Form->control('type', ['options' => $types]);
             echo '<div class="period-picker hidden">';
             echo '<span class="type_period"> Reminder every </span>';
             echo $this->Form->control(
@@ -40,22 +40,22 @@
                 'maxYear' => date('Y')
               ]
             );
-            echo $this->Form->control(
-              'effective_date',
-              [
-                'empty' => false,
-                'minYear' => date( 'Y') - 40,
-                'maxYear' => date('Y')
-              ]
-            );
-            echo $this->Form->control(
-              'delivery_date',
-              [
-                'empty' => true,
-                'minYear' => date( 'Y') - 40,
-                'maxYear' => date('Y')
-              ]
-            );
+            // echo $this->Form->control(
+            //   'effective_date',
+            //   [
+            //     'empty' => false,
+            //     'minYear' => date( 'Y') - 40,
+            //     'maxYear' => date('Y'),
+            //   ]
+            // );
+            // echo $this->Form->control(
+            //   'delivery_date',
+            //   [
+            //     'empty' => true,
+            //     'minYear' => date( 'Y') - 40,
+            //     'maxYear' => date('Y')
+            //   ]
+            // );
             echo '<div class="hidden">' . $this->Form->control('currency', ['options' => $currencies, 'empty' => false]) . '</div>';
             echo $this->Form->control('order_discount');
             echo $this->Form->control(

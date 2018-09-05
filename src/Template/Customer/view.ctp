@@ -64,14 +64,14 @@
             <th scope="row"><?= __('Address') ?></th>
             <td><?= h($customer->address) ?></td>
         </tr>
-        <tr>
+        <!-- <tr>
             <th scope="row"><?= __('Longitude') ?></th>
             <td><?= $this->Number->format($customer->longitude) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Latitude') ?></th>
             <td><?= $this->Number->format($customer->latitude) ?></td>
-        </tr>
+        </tr> -->
         <tr>
             <th scope="row"><?= __('Created At') ?></th>
             <td><?= h($customer->created_at) ?></td>

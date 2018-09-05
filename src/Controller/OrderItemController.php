@@ -195,25 +195,24 @@ class OrderItemController extends AppController
 
         if ($this->loggedUserOrgId == null) {
             $organization = $this->OrderItem->Organization->find('list', ['limit' => 200]);
-            // $orderQuery = $this->OrderItem->Order->find('all');
+            $orderQuery = $this->OrderItem->Order->find('all');
         } else {
             $organization = null;
-            // $orderQuery = $this->OrderItem->Order->find('all', ['limit' => 200])
-            //   ->where(['organization_id' => $this->loggedUserOrgId]);
+            $orderQuery = $this->OrderItem->Order->find('all', ['limit' => 200])
+              ->where(['organization_id' => $this->loggedUserOrgId]);
         }
         // debug($products->toList());
 
-        $productList = OrderItemBehavior::getProductCategoryPriceEntryListAsJSON($this->loggedUserOrgId);
-        $productIds = array_keys($productList);
+        $productList = OrderItemBehavior::getProductCategoryPriceEntryList($this->loggedUserOrgId);
 
         // debug(OrderItemBehavior::getProductCustomFieldLabelsAsJSON($products));
         $this->set([
             'orderItem' => $orderItem,
             'loggedUser' => $this->loggedUser,
-            // 'order' => OrderItemBehavior::getOrdersAsPickList($orderQuery),
-            'productInfoList' => $productList,
+            'order' => OrderItemBehavior::getOrdersAsPickList($orderQuery),
+            'productInfoList' => json_encode($productList),
             'productPickList' => OrderItemBehavior::getProductAsPickList($productList),
-            'productRelatedInfoLIst' => OrderItemBehaviour::getProductRelatedInfoListAsJSON($orderId),
+            'productRelatedInfoList' => OrderItemBehavior::getProductRelatedInfoListAsJSON($orderItem->order_id),
             'organization' => $organization
         ]);
     }

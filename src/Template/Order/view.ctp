@@ -64,14 +64,14 @@
             <th scope="row"><?= __('Order Date') ?></th>
             <td><?= h($order->order_date) ?></td>
         </tr>
-        <tr>
+        <!-- <tr>
             <th scope="row"><?= __('Effective Date') ?></th>
             <td><?= h($order->effective_date) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Delivery Date') ?></th>
             <td><?= h($order->delivery_date) ?></td>
-        </tr>
+        </tr> -->
         <tr>
             <th scope="row"><?= __('Subtotal Amount') ?></th>
             <td><?= __($this->Number->format($order->subtotal_amount) . ' ' . h($order->currency)) ?></td>

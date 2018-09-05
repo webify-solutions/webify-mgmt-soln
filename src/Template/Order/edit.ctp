@@ -39,13 +39,13 @@
             }
             echo $this->Form->control('customer_id', ['options' => $customer, 'empty' => true, 'disabled' => 'disabled']);
             echo $this->Form->control('type', ['options' => $types, 'empty' => true, 'disabled' => 'disabled']);
-            if ($order->type != 'one-time') {
+            if ($order->type == 'subscription') {
                 echo '<div  class="period-picker">';
-                if ($order->type == 'recurring-payments') {
-                    echo '<span name="type_period"> Reminder every </span>';
-                } else {
+                // if ($order->type == 'recurring-payments') {
+                //     echo '<span name="type_period"> Reminder every </span>';
+                // } else {
                     echo '<span name="type_period"> Invoice every </span>';
-                }
+                // }
 
                 echo $this->Form->control(
                     'type_period',
@@ -63,20 +63,20 @@
                     'minYear' => date( 'Y') - 40,
                     'maxYear' => date('Y')
                 ]);
-            echo $this->Form->control(
-                'effective_date',
-                [
-                    'empty' => false,
-                    'minYear' => date( 'Y') - 40,
-                    'maxYear' => date('Y')
-                ]);
-            echo $this->Form->control(
-                'delivery_date',
-                [
-                    'empty' => true,
-                    'minYear' => date( 'Y') - 40,
-                    'maxYear' => date('Y')
-                ]);
+            // echo $this->Form->control(
+            //     'effective_date',
+            //     [
+            //         'empty' => false,
+            //         'minYear' => date( 'Y') - 40,
+            //         'maxYear' => date('Y')
+            //     ]);
+            // echo $this->Form->control(
+            //     'delivery_date',
+            //     [
+            //         'empty' => true,
+            //         'minYear' => date( 'Y') - 40,
+            //         'maxYear' => date('Y')
+            //     ]);
             echo $this->Form->control('subtotal_amount', ['disabled' => 'disabled']);
             echo '<div class="hidden">' . $this->Form->control('currency', ['options' => $currencies, 'empty' => false]) . '</div>';
             echo $this->Form->control('order_discount');

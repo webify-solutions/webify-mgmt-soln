@@ -9,12 +9,12 @@
 <div class="user view large-9 medium-8 columns content">
     <?= $this->Form->create() ?>
     <fieldset>
-        <legend><?= __('Security') ?></legend>
+        <legend><?= __('Log In') ?></legend>
         <?php
             echo $this->Form->control('login_name');
             echo $this->Form->control('password');
         ?>
     </fieldset>
-    <?= $this->Form->button('Security') ?>
+    <?= $this->Form->button('Log In') ?>
     <?= $this->Form->end() ?>
 </div>
