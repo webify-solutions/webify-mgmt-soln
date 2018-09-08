@@ -22,8 +22,6 @@ class CustomerController extends AppController
      */
     public function index()
     {
-
-
         $customerQuery = $this->Customer->find()
           ->select([
             'Organization.id',
