@@ -22,7 +22,6 @@
                 <th scope="col"><?= $this->Paginator->sort('order_number') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('customer_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('order_date') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('active', 'Cancelled') ?></th>
                 <th scope="col" class="left-justified"><?= $this->Paginator->sort('subtotal_amount') ?></th>
                 <th scope="col" class="left-justified"><?= $this->Paginator->sort('order_discount') ?></th>
                 <th scope="col" class="left-justified"><?= $this->Paginator->sort('total_amount') ?></th>
@@ -73,7 +72,6 @@
                         : ''
                 ?></td>
                 <td><?= h($order->order_date) ?></td>
-                <td><?= h($order->active ? 'No' : 'Yes') ?></td>
                 <td class="left-justified"><?= __($this->Number->format($order->subtotal_amount) . ' ' . h($order->currency)) ?></td>
                 <td class="left-justified"><?= __($this->Number->format($order->order_discount) . '' . ($order->order_discount_unit == 'Percentage' ? '%' : ' ' . h($order->currency))) ?></td>
                 <td class="left-justified"><?= __($this->Number->format($order->total_amount) . ' ' . h($order->currency)) ?></td>
