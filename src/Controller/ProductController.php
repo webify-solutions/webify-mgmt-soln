@@ -24,18 +24,34 @@ class ProductController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Organization', 'ProductCategory']
-        ];
+        $productQuery = $this->Product->find()
+          ->select([
+            'Organization.id',
+            'Organization.name',
+            'Product.id',
+            'sku',
+            'Product.name',
+            'Product.active',
+            'Product.created_at',
+            'Product.last_updated',
+            'ProductCategory.id',
+            'ProductCategory.name'
+          ])
+          ->contain([
+            'Organization',
+            'ProductCategory'
+          ])
+          ->order([
+            'Product.name' => 'ASC'
+          ]);
 
         if ($this->loggedUserOrgId != null) {
-            $product = $this->paginate($this->Product->find()->where(['Product.organization_id' => $this->loggedUserOrgId]));
-        } else {
-            $product = $this->paginate($this->Product);
+          $productQuery->where([
+            'Product.organization_id' => $this->loggedUserOrgId
+          ]);
         }
 
-        // debug($product);
-        $this->set(['product' => $product, 'loggedUser' => $this->loggedUser]);
+        $this->set(['product' => $productQuery, 'loggedUser' => $this->loggedUser]);
     }
 
     /**

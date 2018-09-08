@@ -48,7 +48,6 @@
                 <?php endif; ?>
                 <td><?= $this->Html->link(h($customer->customer_number), ['controller' => 'Customer', 'action' => 'view', $customer->id]) ?></td>
                 <td><?= h($customer->name) ?></td>
-                <!-- <td><?= h($customer->title) ?></td> -->
                 <td><?= $customer->has('group') ? $this->Html->link($customer->group->name, ['controller' => 'Group', 'action' => 'view', $customer->group->id]) : '' ?></td>
                 <td><?= h($customer->phone) ?></td>
                 <td><?= h($customer->active ? __('Yes') : __('No')) ?></td>
