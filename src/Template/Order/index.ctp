@@ -33,17 +33,19 @@
             <tr>
                 <td class="actions">
                     <?= $this->Html->link(__('Edit'), ['controller' => 'Order', 'action' => 'edit', $order->id]) ?>
-                    <?= $this->Form->postLink(
-                        __('Cancel'),
-                        [
-                            'controller' => 'Order',
-                            'action' => 'cancel',
-                            $order->id
-                        ],
-                        [
-                            'confirm' => __('Are you sure you want to cancel {0}?', $order->order_number)
-                        ]
-                    ) ?>
+                    <?php if ($order->active) : ?>
+                      <?= $this->Form->postLink(
+                          __('Cancel'),
+                          [
+                              'controller' => 'Order',
+                              'action' => 'cancel',
+                              $order->id
+                          ],
+                          [
+                              'confirm' => __('Are you sure you want to cancel {0}?', $order->order_number)
+                          ]
+                      ) ?>
+                    <?php endif; ?>
                     <?= $this->Form->postLink(
                         __('Del'),
                         [

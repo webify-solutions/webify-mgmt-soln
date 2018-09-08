@@ -10,17 +10,21 @@
         <li><?= $this->Html->link(__('Orders'), ['controller' => 'Order', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Order'), ['controller' => 'Order', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('Edit Order'), ['controller' => 'Order', 'action' => 'edit', $order->id]) ?> </li>
-        <li><?= $this->Form->postLink(
-                __('Cancel Order'),
+        <?php if ($order->active) : ?>
+          <li>
+            <?= $this->Form->postLink(
+                __('Cancel'),
                 [
-                    'contoller' => 'Order',
+                    'controller' => 'Order',
                     'action' => 'cancel',
                     $order->id
                 ],
                 [
                     'confirm' => __('Are you sure you want to cancel {0}?', $order->order_number)
                 ]
-            ) ?></li>
+            ) ?>
+          </li>
+        <?php endif; ?>
         <li><?= $this->Form->postLink(
                 __('Delete Order'),
                 ['action' => 'delete', $order->id],

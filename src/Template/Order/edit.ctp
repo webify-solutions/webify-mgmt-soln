@@ -9,7 +9,9 @@
         <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Html->link(__('Orders'), ['controller' => 'Order', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Order'), ['controller' => 'Order', 'action' => 'add']) ?></li>
-        <li><?= $this->Form->postLink(
+        <?php if ($order->active) : ?>
+          <li>
+            <?= $this->Form->postLink(
                 __('Cancel'),
                 [
                     'controller' => 'Order',
@@ -19,7 +21,9 @@
                 [
                     'confirm' => __('Are you sure you want to cancel {0}?', $order->order_number)
                 ]
-            ) ?></li>
+            ) ?>
+          </li>
+        <?php endif; ?>
         <li><?= $this->Form->postLink(
                 __('Delete'),
                 ['action' => 'delete', $order->id],
