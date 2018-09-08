@@ -12,19 +12,18 @@
 </nav>
 <div class="customer index large-9 medium-8 columns content">
     <h3><?= __('Customers') ?></h3>
-    <table cellpadding="0" cellspacing="0">
+    <table id='customer_table' cellpadding="0" cellspacing="0" class='display'>
         <thead>
             <tr>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
                 <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
-                    <th scope="col"><?= $this->Paginator->sort('organization_id') ?></th>
+                    <th scope="col"><?= __('Organization') ?></th>
                 <?php endif; ?>
-                <th scope="col"><?= $this->Paginator->sort('customer_number') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('name') ?></th>
-                <!-- <th scope="col"><?= $this->Paginator->sort('title') ?></th> -->
-                <th scope="col"><?= $this->Paginator->sort('group_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('phone') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('active', 'Is Active') ?></th>
+                <th scope="col"><?= __('Customer Number') ?></th>
+                <th scope="col"><?= __('Name') ?></th>
+                <th scope="col"><?= __('Group') ?></th>
+                <th scope="col"><?= __('Phone') ?></th>
+                <th scope="col"><?= __('Is Active') ?></th>
             </tr>
         </thead>
         <tbody>
@@ -57,14 +56,8 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
-    </div>
+
+    <?php $this->Html->script('Customer/index.js', ['block' => 'scriptBottom']); ?>
+    <?php $this->Html->script('datatables.min.js', ['block' => 'scriptBottom']) ?>
+    <?php $this->Html->css('datatables.min.css', ['block' => 'cssBottom']) ?>
 </div>

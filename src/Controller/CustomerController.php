@@ -22,18 +22,35 @@ class CustomerController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Group', 'Organization']
-        ];
+
+
+        $customerQuery = $this->Customer->find()
+          ->select([
+            'Organization.id',
+            'Organization.name',
+            'Customer.id',
+            'customer_number',
+            'Customer.name',
+            'phone',
+            'Customer.active',
+            'Group.id',
+            'Group.name'
+          ])
+          ->contain([
+            'Organization',
+            'Group'
+          ])
+          ->order([
+            'Customer.name' => 'ASC'
+          ]);
 
         if ($this->loggedUserOrgId != null) {
-            $customer = $this->paginate($this->Customer->find()->where(['Customer.organization_id' => $this->loggedUserOrgId]));
-        } else {
-            $customer = $this->paginate($this->Customer);
+          $customerQuery->where([
+            'Customer.organization_id' => $this->loggedUserOrgId
+          ]);
         }
 
-
-        $this->set(['customer' => $customer, 'loggedUser' => $this->loggedUser]);
+        $this->set(['customer' => $customerQuery, 'loggedUser' => $this->loggedUser]);
     }
 
     /**
