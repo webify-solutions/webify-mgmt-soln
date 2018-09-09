@@ -45,6 +45,17 @@ div .custom-field {
   display: inline-block;
 }
 
+.dataTables_wrapper .dataTables_length select {
+  width: 36%;
+  margin: 0;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+  margin: 0 0 0 0.5em;
+  display: inline;
+  width: 75%
+}
+
 iframe {
     display: none;
 }

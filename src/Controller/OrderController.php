@@ -21,22 +21,39 @@ class OrderController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Customer', 'Organization']
-        ];
+        $orderQuery = $this->Order->find()
+          ->select([
+            'Organization.id',
+            'Organization.name',
+            'Order.id',
+            'order_number',
+            'order_date',
+            'subtotal_amount',
+            'order_discount',
+            'Order.active',
+            'Customer.id',
+            'Customer.name',
+            'Customer.customer_number'
+          ])
+          ->contain([
+            'Organization',
+            'Customer'
+          ])
+          ->order([
+            'order_date' => 'ASC'
+          ]);
 
         if ($this->loggedUserOrgId != null) {
-            $orders = $this->paginate($this->Order->find()->where(['Order.organization_id' => $this->loggedUserOrgId]));
-        } else {
-            $orders = $this->paginate($this->Order);
+          $orderQuery->where([
+            'Order.organization_id' => $this->loggedUserOrgId
+          ]);
         }
 
-        foreach ($orders as $order ) {
+        foreach ($orderQuery as $order ) {
             $order->set('total_amount', OrderBehavior::calculateTotalAmount($order));
         }
 
-
-        $this->set(['order' => $orders, 'loggedUser' => $this->loggedUser]);
+        $this->set(['order' => $orderQuery, 'loggedUser' => $this->loggedUser]);
     }
 
     /**

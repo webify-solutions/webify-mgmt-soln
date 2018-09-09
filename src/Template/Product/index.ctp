@@ -12,20 +12,19 @@
 </nav>
 <div class="product index large-9 medium-8 columns content">
     <h3><?= __('Products') ?></h3>
-    <table cellpadding="0" cellspacing="0">
+    <table id="product_table" cellpadding="0" cellspacing="0" class="display">
         <thead>
             <tr>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
                 <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
-                    <th scope="col"><?= $this->Paginator->sort('organization_id') ?></th>
+                    <th scope="col"><?= __('Organization') ?></th>
                 <?php endif; ?>
-                <th scope="col"><?= $this->Paginator->sort('name') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('sku') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('product_category', ['label' => 'Category']) ?></th>
-                <th scope="col"><?= $this->Paginator->sort('active') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('created_at') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('last_updated') ?></th>
-
+                <th scope="col"><?= __('Name') ?></th>
+                <th scope="col"><?= __('SKU') ?></th>
+                <th scope="col"><?= __('Category') ?></th>
+                <th scope="col"><?= __('Is Active') ?></th>
+                <th scope="col"><?= __('Create At') ?></th>
+                <th scope="col"><?= __('Last Updated') ?></th>
             </tr>
         </thead>
         <tbody>
@@ -48,14 +47,8 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
-    </div>
+
+    <?php $this->Html->script('Product/index.js', ['block' => 'scriptBottom']); ?>
+    <?php $this->Html->script('datatables.min.js', ['block' => 'scriptBottom']) ?>
+    <?php $this->Html->css('datatables.min.css', ['block' => 'cssBottom']) ?>
 </div>

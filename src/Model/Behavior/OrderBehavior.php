@@ -77,7 +77,7 @@ class OrderBehavior extends Behavior
         }
 
 //        debug($discount);
-        return$entity->get('subtotal_amount') - $discount;
+        return $entity->get('subtotal_amount') - $discount;
     }
 
     public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
