@@ -20,17 +20,29 @@ class GroupController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Organization']
-        ];
+      $groupQuery = $this->Group->find()
+        ->select([
+          'Organization.id',
+          'Organization.name',
+          'Group.id',
+          'Group.name',
+          'Group.created_at',
+          'Group.last_updated'
+        ])
+        ->contain([
+          'Organization'
+        ])
+        ->order([
+          'Group.name' => 'ASC'
+        ]);
 
-        if ($this->loggedUserOrgId != null) {
-            $group = $this->paginate($this->Group->find()->where(['organization_id' => $this->loggedUserOrgId]));
-        } else {
-            $group = $this->paginate($this->Group);
-        }
+      if ($this->loggedUserOrgId != null) {
+        $groupQuery->where([
+          'Group.organization_id' => $this->loggedUserOrgId
+        ]);
+      }
 
-        $this->set(['group'=> $group, 'loggedUser' => $this->loggedUser]);
+      $this->set(['group' => $groupQuery, 'loggedUser' => $this->loggedUser]);
     }
 
     /**
