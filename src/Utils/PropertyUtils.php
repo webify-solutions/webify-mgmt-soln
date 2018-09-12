@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mohammed.waked
- * Date: 2018-07-22
- * Time: 5:01 PM
- */
 
 namespace App\Utils;
-
 
 class PropertyUtils
 {
