@@ -102,7 +102,7 @@
         <?= $this->Text->autoParagraph(h($order->notes)); ?>
     </div>
     <div class="related">
-        <h4><?= 'Related Order Item (' . $this->Html->link(__('Add New'), ['controller' => 'OrderItem', 'action' => 'add', $order->id]) . ')' ?></h4>
+        <h4><?= 'Related Order Item ' . $this->Html->link(__('Add New'), ['controller' => 'OrderItem', 'action' => 'add', $order->id], array( 'class' => 'button success')) ?></h4>
         <?php if (!empty($orderItems)): ?>
             <table cellpadding="0" cellspacing="0">
                 <tr>

@@ -83,7 +83,7 @@
     </table>
     <?php if(in_array('Order', $loggedUser['active_features'], true)) : ?>
         <div class="related">
-            <h4><?= 'Related Order (' . $this->Html->link('Add New', ['controller' => 'Order', 'action' => 'add', $customer->id]) . ')' ?></h4>
+            <h4><?= 'Related Order ' . $this->Html->link('Add New', ['controller' => 'Order', 'action' => 'add', $customer->id], array( 'class' => 'button success')) ?></h4>
             <?php if (!empty($orders)): ?>
             <table cellpadding="0" cellspacing="0">
                 <thead>

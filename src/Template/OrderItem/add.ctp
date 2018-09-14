@@ -55,7 +55,7 @@
             echo $this->Form->control('notes');
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit & Add New')) ?>
+    <?= $this->Form->button(__('Submit & Add New')) ?>&nbsp;&nbsp;
     <?= $this->Form->button(__('Submit & Done'), ['id' => 'submit-done']) ?>
     <?= $this->Form->end() ?>
 </div>
