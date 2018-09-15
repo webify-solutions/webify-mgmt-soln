@@ -1554,7 +1554,7 @@ select {
      text-align: center;
      text-decoration: none;
      display: inline-block;
-     padding: 1rem 2rem 1.0625rem 2rem;
+     padding: 15px;
      font-size: 1rem;
      background-color: #008CBA;
      border-color: #007095;
