@@ -30,6 +30,7 @@ class OrderController extends AppController
             'order_date',
             'subtotal_amount',
             'order_discount',
+            'order_discount_unit',
             'Order.active',
             'Customer.id',
             'Customer.name',
