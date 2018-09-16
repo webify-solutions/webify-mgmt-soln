@@ -15,6 +15,6 @@
             echo $this->Form->control('password');
         ?>
     </fieldset>
-    <?= $this->Form->button('Log In') ?>
+    <?= $this->Form->button('Log In', array( 'class' => 'button success')) ?>
     <?= $this->Form->end() ?>
 </div>

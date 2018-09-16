@@ -23,7 +23,7 @@
                 <th scope="col"><?= __('Name') ?></th>
                 <th scope="col"><?= __('Group') ?></th>
                 <th scope="col"><?= __('Phone') ?></th>
-                <th scope="col"><?= __('Is Active') ?></th>
+                <!--<th scope="col"><?= __('Is Active') ?></th>-->
             </tr>
         </thead>
         <tbody>
@@ -50,7 +50,7 @@
                 <td><?= h($customer->name) ?></td>
                 <td><?= $customer->has('group') ? $this->Html->link($customer->group->name, ['controller' => 'Group', 'action' => 'view', $customer->group->id]) : '' ?></td>
                 <td><?= h($customer->phone) ?></td>
-                <td><?= h($customer->active ? __('Yes') : __('No')) ?></td>
+                <!--<td><?= h($customer->active ? __('Yes') : __('No')) ?></td>-->
             </tr>
             <?php endforeach; ?>
         </tbody>

@@ -30,6 +30,7 @@ class OrderController extends AppController
             'order_date',
             'subtotal_amount',
             'order_discount',
+            'order_discount_unit',
             'Order.active',
             'Customer.id',
             'Customer.name',
@@ -94,20 +95,22 @@ class OrderController extends AppController
      */
     public function add($customerId = null)
     {
+
         $order = $this->Order->newEntity();
 
-        $order->set('currency', $this->loggedUser['organization_default_currency']);
+        if ($this->loggedUserOrgId != null) {
+            $order->set('organization_id', $this->loggedUserOrgId);
+            $order->set('currency', $this->loggedUser['organization_default_currency']);
+        }
+        $order->set('customer_id', $customerId);
 
-        if ($this->request->is('post'))
+        if ($this->request->is('post') || $this->request->getQuery('auto') == 1)
         {
+            debug('auto create');
             if(($this->request->getData('order_discount') == null and $this->request->getData('order_discount_unit') == null)
                 or ($this->request->getData('order_discount') != null and $this->request->getData('order_discount_unit') != null))
             {
                 $order = $this->Order->patchEntity($order, $this->request->getData());
-
-                if ($this->loggedUserOrgId != null) {
-                    $order->set('organization_id', $this->loggedUserOrgId);
-                }
 
                 if ($this->Order->save($order)) {
                     $this->Flash->success(__('The order has been saved.'));
@@ -120,9 +123,6 @@ class OrderController extends AppController
                 $this->Flash->error(__('Order Discount and Order Discount Unit must be both present'));
             }
         }
-
-        $order->set('currency', $this->loggedUser['organization_currency_used']);
-        $order->set('customer_id', $customerId);
 
         if ($this->loggedUserOrgId == null) {
             $organization = $this->Order->Organization->find('list', ['limit' => 200]);

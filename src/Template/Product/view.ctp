@@ -83,7 +83,7 @@
 
 
     <div class="related">
-        <h4><?= __('Related Price Entry ({0})', $this->Html->link(__('Add New'), ['controller' => 'PriceEntry', 'action' => 'add', $product->id]))  ?></h4>
+        <h4><?= __('Related Price Entry {0}', $this->Html->link(__('Add New'), ['controller' => 'PriceEntry', 'action' => 'add', $product->id], array( 'class' => 'button success')) ) ?></h4>
         <?php if (!empty($product->price_entry)): ?>
             <table cellpadding="0" cellspacing="0">
                 <tr>
