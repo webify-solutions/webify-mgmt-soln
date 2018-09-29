@@ -19,12 +19,12 @@
                 <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
                     <th scope="col"><?= __('Organization') ?></th>
                 <?php endif; ?>
+                <th scope="col"><?= __('Issue Number') ?></th>
                 <th scope="col"><?= __('Product') ?></th>
                 <th scope="col"><?= __('Customer') ?></th>
                 <th scope="col"><?= __('Technician') ?></th>
                 <th scope="col"><?= __('Status') ?></th>
                 <th scope="col"><?= __('Description') ?></th>
-                <th scope="col"><?= __('Created At') ?></th>
                 <th scope="col"><?= __('Last Updated') ?></th>
             </tr>
         </thead>
@@ -49,7 +49,6 @@
                 <td><?= $issue->has('product') ? $this->Html->link($issue->product->name, ['controller' => 'Product', 'action' => 'view', $issue->product->id]) : '' ?></td>
                 <td><?= h($issue->status) ?></td>
                 <td><?= h($issue->description) ?></td>
-                <td><?= h($issue->created_at) ?></td>
                 <td><?= h($issue->last_updated) ?></td>
             </tr>
           <?php endforeach; ?>

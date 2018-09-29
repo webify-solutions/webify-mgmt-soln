@@ -20,12 +20,39 @@ class IssuesController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Organization', 'Customer', 'User', 'Product']
-        ];
-        $issues = $this->paginate($this->Issues);
+      $issuesQuery = $this->Issues->find()
+        ->select([
+          'Organization.id',
+          'Organization.name',
+          'Customer.id',
+          'Customer.name',
+          'User.id',
+          'User.name',
+          'Product.id',
+          'Product.name',
+          'Issues.id',
+          'issue_number',
+          'status',
+          'description',
+          'Issues.last_updated'
+        ])
+        ->contain([
+          'Organization',
+          'Product',
+          'Customer',
+          'User'
+        ])
+        ->order([
+          'Issues.last_updated' => 'DESC'
+        ]);
 
-        $this->set(['issues' => $issues, 'loggedUser' => $this->loggedUser]);
+      if ($this->loggedUserOrgId != null) {
+        $issuesQuery->where([
+          'Issues.organization_id' => $this->loggedUserOrgId
+        ]);
+      }
+
+        $this->set(['issues' => $issuesQuery, 'loggedUser' => $this->loggedUser]);
     }
 
     /**
