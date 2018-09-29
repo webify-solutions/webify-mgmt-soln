@@ -81,13 +81,15 @@ class IssuesController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add($customerId = null)
     {
         $issue = $this->Issues->newEntity();
 
         if ($this->loggedUserOrgId != null) {
           $issue->set('organization_id', $this->loggedUserOrgId);
         }
+
+        $issue->set('customer_id', $customerId);
 
         if ($this->request->is('post')) {
             $issue = $this->Issues->patchEntity($issue, $this->request->getData());
