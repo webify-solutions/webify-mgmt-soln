@@ -73,7 +73,7 @@ class IssuesController extends AppController
             'contain' => ['Organization', 'Customer', 'User', 'Product']
         ]);
 
-        $this->set('issue', $issue);
+        $this->set(['issue' => $issue, 'loggedUser' => $this->loggedUser]);
     }
 
     /**
@@ -96,7 +96,7 @@ class IssuesController extends AppController
             if ($this->Issues->save($issue)) {
                 $this->Flash->success(__('The issue has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $issue->id]);
             }
             $this->Flash->error(__('The issue could not be saved. Please, try again.'));
         }
