@@ -27,8 +27,8 @@ class IssuesTableTest extends TestCase
         'app.issues',
         'app.organization',
         'app.customer',
-        'app.user',
-        'app.product'
+        'app.product',
+        'app.user'
     ];
 
     /**

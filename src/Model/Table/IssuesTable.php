@@ -11,8 +11,8 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\OrganizationTable|\Cake\ORM\Association\BelongsTo $Organization
  * @property \App\Model\Table\CustomerTable|\Cake\ORM\Association\BelongsTo $Customer
- * @property \App\Model\Table\UserTable|\Cake\ORM\Association\BelongsTo $User
  * @property \App\Model\Table\ProductTable|\Cake\ORM\Association\BelongsTo $Product
+ * @property \App\Model\Table\UserTable|\Cake\ORM\Association\BelongsTo $User
  *
  * @method \App\Model\Entity\Issue get($primaryKey, $options = [])
  * @method \App\Model\Entity\Issue newEntity($data = null, array $options = [])
@@ -36,21 +36,26 @@ class IssuesTable extends Table
     {
         parent::initialize($config);
 
+        $this->addBehavior('Issues');
+
         $this->setTable('issues');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
         $this->belongsTo('Organization', [
-            'foreignKey' => 'organization_id'
+            'foreignKey' => 'organization_id',
+            'joinType' => 'INNER'
         ]);
         $this->belongsTo('Customer', [
-            'foreignKey' => 'customer_id'
+            'foreignKey' => 'customer_id',
+            'joinType' => 'INNER'
+        ]);
+        $this->belongsTo('Product', [
+            'foreignKey' => 'product_id',
+            'joinType' => 'INNER'
         ]);
         $this->belongsTo('User', [
             'foreignKey' => 'technician_id'
-        ]);
-        $this->belongsTo('Product', [
-            'foreignKey' => 'product_id'
         ]);
     }
 
@@ -67,15 +72,26 @@ class IssuesTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
+            ->integer('customer_id')
+            ->requirePresence('customer_id', 'create')
+            ->notEmpty('customer_id');
+
+        $validator
+            ->integer('product_id')
+            ->requirePresence('product_id', 'create')
+            ->notEmpty('product_id');
+
+        $validator
             ->scalar('issue_number')
             ->maxLength('issue_number', 255)
-            ->requirePresence('issue_number', 'create')
+            ->requirePresence('issue_number', 'update')
             ->notEmpty('issue_number');
 
         $validator
             ->scalar('status')
             ->maxLength('status', 45)
-            ->allowEmpty('status');
+            ->requirePresence('status', 'create')
+            ->notEmpty('status');
 
         $validator
             ->scalar('type')
@@ -92,11 +108,13 @@ class IssuesTable extends Table
 
         $validator
             ->dateTime('created_at')
-            ->allowEmpty('created_at');
+            ->requirePresence('created_at', 'update')
+            ->notEmpty('created_at');
 
         $validator
             ->dateTime('last_updated')
-            ->allowEmpty('last_updated');
+            ->requirePresence('last_updated', 'update')
+            ->notEmpty('last_updated');
 
         return $validator;
     }
@@ -112,8 +130,8 @@ class IssuesTable extends Table
     {
         $rules->add($rules->existsIn(['organization_id'], 'Organization'));
         $rules->add($rules->existsIn(['customer_id'], 'Customer'));
-        $rules->add($rules->existsIn(['technician_id'], 'User'));
         $rules->add($rules->existsIn(['product_id'], 'Product'));
+        $rules->add($rules->existsIn(['technician_id'], 'User'));
 
         return $rules;
     }

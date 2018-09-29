@@ -34,7 +34,7 @@
         </tr>
         <tr>
             <th scope="row"><?= __('User') ?></th>
-            <td><?= $issue->has('user') ? $this->Html->link($issue->user->id, ['controller' => 'User', 'action' => 'view', $issue->user->id]) : '' ?></td>
+            <td><?= $issue->has('user') ? $this->Html->link($issue->user->name, ['controller' => 'User', 'action' => 'view', $issue->user->id]) : '' ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Product') ?></th>

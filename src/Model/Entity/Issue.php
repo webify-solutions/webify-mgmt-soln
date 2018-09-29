@@ -9,8 +9,8 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property int $organization_id
  * @property int $customer_id
- * @property int $technician_id
  * @property int $product_id
+ * @property int $technician_id
  * @property string $issue_number
  * @property string $status
  * @property string $type
@@ -21,8 +21,8 @@ use Cake\ORM\Entity;
  *
  * @property \App\Model\Entity\Organization $organization
  * @property \App\Model\Entity\Customer $customer
- * @property \App\Model\Entity\User $user
  * @property \App\Model\Entity\Product $product
+ * @property \App\Model\Entity\User $user
  */
 class Issue extends Entity
 {
@@ -39,8 +39,8 @@ class Issue extends Entity
     protected $_accessible = [
         'organization_id' => true,
         'customer_id' => true,
-        'technician_id' => true,
         'product_id' => true,
+        'technician_id' => true,
         'issue_number' => true,
         'status' => true,
         'type' => true,
@@ -50,7 +50,7 @@ class Issue extends Entity
         'last_updated' => true,
         'organization' => true,
         'customer' => true,
-        'user' => true,
-        'product' => true
+        'product' => true,
+        'user' => true
     ];
 }

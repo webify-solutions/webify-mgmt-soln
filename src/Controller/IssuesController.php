@@ -3,6 +3,11 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 
+use App\Model\Behavior\CustomerBehavior;
+use App\Model\Behavior\UserBehavior;
+
+use App\Utils\PropertyUtils;
+
 /**
  * Issues Controller
  *
@@ -79,8 +84,15 @@ class IssuesController extends AppController
     public function add()
     {
         $issue = $this->Issues->newEntity();
+
+        if ($this->loggedUserOrgId != null) {
+          $issue->set('organization_id', $this->loggedUserOrgId);
+        }
+
         if ($this->request->is('post')) {
             $issue = $this->Issues->patchEntity($issue, $this->request->getData());
+
+            // debug($issue);
             if ($this->Issues->save($issue)) {
                 $this->Flash->success(__('The issue has been saved.'));
 
@@ -88,11 +100,24 @@ class IssuesController extends AppController
             }
             $this->Flash->error(__('The issue could not be saved. Please, try again.'));
         }
-        $organization = $this->Issues->Organization->find('list', ['limit' => 200]);
-        $customer = $this->Issues->Customer->find('list', ['limit' => 200]);
-        $user = $this->Issues->User->find('list', ['limit' => 200]);
-        $product = $this->Issues->Product->find('list', ['limit' => 200]);
-        $this->set(compact('issue', 'organization', 'customer', 'user', 'product'));
+
+        if ($this->loggedUserOrgId == null) {
+            $organization = $this->Issues->Organization->find('list', ['limit' => 200]);
+            $product = $this->Issues->Product->find('list', ['limit' => 200]);
+        } else {
+            $organization = null;
+            $product = $this->Issues->Product->find('list', ['limit' => 200])->where(['Product.organization_id' => $this->loggedUserOrgId]);
+        }
+
+        $this->set([
+            'issue' => $issue,
+            'loggedUser' => $this->loggedUser,
+            'statusPickList' => PropertyUtils::$issueStatusPickList,
+            'organization' => $organization,
+            'customers' => CustomerBehavior::getCustomersAsPickList($this->loggedUserOrgId),
+            'users' => UserBehavior::getUsersAsPickList($this->loggedUserOrgId),
+            'product' => $product
+        ]);
     }
 
     /**

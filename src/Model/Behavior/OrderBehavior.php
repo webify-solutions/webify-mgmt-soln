@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: mohammed.waked
- * Date: 2018-07-21
- * Time: 3:26 PM
+ * Author: Mohammed Waked
  */
 
 namespace App\Model\Behavior;
@@ -18,26 +15,6 @@ use Cake\Event\Event;
 
 class OrderBehavior extends Behavior
 {
-
-    public static function getCustomersAsPickList($customerQuery)
-    {
-        $customerPickList = [];
-
-        $customerQuery->select([
-            'id',
-            'name' => $customerQuery->func()->concat([
-                'customer_number' => 'identifier',
-                ': ',
-                'name' => 'identifier'
-            ]),
-
-        ]);
-        foreach ($customerQuery as $customer) {
-            $customerPickList[$customer->id] =  $customer->name;
-        }
-        return $customerPickList;
-    }
-
     /**
      *
      * Update Total with new order item amount

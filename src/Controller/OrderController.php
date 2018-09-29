@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Model\Behavior\OrderBehavior;
+use App\Model\Behavior\CustomerBehavior;
 use App\Utils\PropertyUtils;
 
 /**
@@ -126,22 +127,15 @@ class OrderController extends AppController
 
         if ($this->loggedUserOrgId == null) {
             $organization = $this->Order->Organization->find('list', ['limit' => 200]);
-
-            $customerQuery = $this->Order->Customer->find('all', ['limit' => 200]);
-            $customers = OrderBehavior::getCustomersAsPickList($customerQuery);
-
         } else {
             $organization = null;
-
-            $customerQuery = $this->Order->Customer->find('')->where(['Customer.organization_id' => $this->loggedUserOrgId]);
-            $customers = OrderBehavior::getCustomersAsPickList($customerQuery);
         }
 
         $this->set([
             'order' => $order,
             'loggedUser' => $this->loggedUser,
             'organization' => $organization,
-            'customer' => $customers,
+            'customer' => CustomerBehavior::getCustomersAsPickList($this->loggedUserOrgId),
             'types' => PropertyUtils::$orderTypes,
             'typePeriods' => range(0, 84),
             'orderDiscountUnits' => PropertyUtils::$discountUnits,
@@ -186,13 +180,13 @@ class OrderController extends AppController
             $organization = $this->Order->Organization->find('list', ['limit' => 200]);
 
             $customerQuery = $this->Order->Customer->find('all', ['limit' => 200]);
-            $customers = OrderBehavior::getCustomersAsPickList($customerQuery);
+            $customers = CustomerBehavior::getCustomersAsPickList($customerQuery);
 
         } else {
             $organization = null;
 
             $customerQuery = $this->Order->Customer->find('')->where(['Customer.organization_id' => $this->loggedUserOrgId]);
-            $customers = OrderBehavior::getCustomersAsPickList($customerQuery);
+            $customers = CustomerBehavior::getCustomersAsPickList($customerQuery);
         }
 
         $this->set([
