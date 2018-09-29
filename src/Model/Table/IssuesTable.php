@@ -7,21 +7,23 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * SupportCase Model
+ * Issues Model
  *
- * @property \App\Model\Table\CustomerTable|\Cake\ORM\Association\BelongsTo $Customer
  * @property \App\Model\Table\OrganizationTable|\Cake\ORM\Association\BelongsTo $Organization
+ * @property \App\Model\Table\CustomerTable|\Cake\ORM\Association\BelongsTo $Customer
+ * @property \App\Model\Table\UserTable|\Cake\ORM\Association\BelongsTo $User
+ * @property \App\Model\Table\ProductTable|\Cake\ORM\Association\BelongsTo $Product
  *
- * @method \App\Model\Entity\SupportCase get($primaryKey, $options = [])
- * @method \App\Model\Entity\SupportCase newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\SupportCase[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\SupportCase|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\SupportCase|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\SupportCase patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\SupportCase[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\SupportCase findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Issue get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Issue newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Issue[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Issue|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Issue|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Issue patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Issue[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Issue findOrCreate($search, callable $callback = null, $options = [])
  */
-class SupportCaseTable extends Table
+class IssuesTable extends Table
 {
 
     /**
@@ -34,15 +36,21 @@ class SupportCaseTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('support_case');
+        $this->setTable('issues');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
+        $this->belongsTo('Organization', [
+            'foreignKey' => 'organization_id'
+        ]);
         $this->belongsTo('Customer', [
             'foreignKey' => 'customer_id'
         ]);
-        $this->belongsTo('Organization', [
-            'foreignKey' => 'organization_id'
+        $this->belongsTo('User', [
+            'foreignKey' => 'technician_id'
+        ]);
+        $this->belongsTo('Product', [
+            'foreignKey' => 'product_id'
         ]);
     }
 
@@ -59,28 +67,9 @@ class SupportCaseTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->scalar('customer_number')
-            ->maxLength('customer_number', 255)
-            ->allowEmpty('customer_number');
-
-        $validator
-            ->scalar('first_name')
-            ->maxLength('first_name', 20)
-            ->allowEmpty('first_name');
-
-        $validator
-            ->scalar('last_name')
-            ->maxLength('last_name', 20)
-            ->allowEmpty('last_name');
-
-        $validator
-            ->email('email')
-            ->allowEmpty('email');
-
-        $validator
-            ->scalar('phone')
-            ->maxLength('phone', 20)
-            ->allowEmpty('phone');
+            ->scalar('status')
+            ->maxLength('status', 45)
+            ->allowEmpty('status');
 
         $validator
             ->scalar('type')
@@ -115,9 +104,10 @@ class SupportCaseTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['email']));
-        $rules->add($rules->existsIn(['customer_id'], 'Customer'));
         $rules->add($rules->existsIn(['organization_id'], 'Organization'));
+        $rules->add($rules->existsIn(['customer_id'], 'Customer'));
+        $rules->add($rules->existsIn(['technician_id'], 'User'));
+        $rules->add($rules->existsIn(['product_id'], 'Product'));
 
         return $rules;
     }

@@ -1,22 +1,22 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\SupportCaseTable;
+use App\Model\Table\IssuesTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\SupportCaseTable Test Case
+ * App\Model\Table\IssuesTable Test Case
  */
-class SupportCaseTableTest extends TestCase
+class IssuesTableTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\SupportCaseTable
+     * @var \App\Model\Table\IssuesTable
      */
-    public $SupportCase;
+    public $Issues;
 
     /**
      * Fixtures
@@ -24,9 +24,11 @@ class SupportCaseTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.support_case',
+        'app.issues',
+        'app.organization',
         'app.customer',
-        'app.organization'
+        'app.user',
+        'app.product'
     ];
 
     /**
@@ -37,8 +39,8 @@ class SupportCaseTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('SupportCase') ? [] : ['className' => SupportCaseTable::class];
-        $this->SupportCase = TableRegistry::getTableLocator()->get('SupportCase', $config);
+        $config = TableRegistry::getTableLocator()->exists('Issues') ? [] : ['className' => IssuesTable::class];
+        $this->Issues = TableRegistry::getTableLocator()->get('Issues', $config);
     }
 
     /**
@@ -48,7 +50,7 @@ class SupportCaseTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->SupportCase);
+        unset($this->Issues);
 
         parent::tearDown();
     }
