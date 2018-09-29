@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: mohammed.waked
- * Date: 2018-07-25
- * Time: 11:35 AM
+ * Author: Mohammed Waked
  */
 
 namespace App\Model\Behavior;

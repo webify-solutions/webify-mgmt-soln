@@ -23,4 +23,6 @@ class PropertyUtils
       // 'tel' => 'Telephone',
       // 'url' => 'URL'
     ];
+
+    public static $issueStatusPickList = ['Draft' => 'Draft', 'Assigned' => 'Assigned', 'Completed' => 'Completed', 'Rejected' => 'Reject', 'Approved' => 'Approved'];
 }

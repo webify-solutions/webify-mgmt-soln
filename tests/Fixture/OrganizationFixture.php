@@ -33,7 +33,7 @@ class OrganizationFixture extends TestFixture
         'active_product_feature' => ['type' => 'boolean', 'length' => null, 'null' => false, 'default' => '0', 'comment' => '', 'precision' => null],
         'active_order_feature' => ['type' => 'boolean', 'length' => null, 'null' => false, 'default' => '0', 'comment' => '', 'precision' => null],
         'active_invoicing_feature' => ['type' => 'boolean', 'length' => null, 'null' => false, 'default' => '0', 'comment' => '', 'precision' => null],
-        'active_case_feature' => ['type' => 'boolean', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
+        'active_issues_feature' => ['type' => 'boolean', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'created_at' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => 'CURRENT_TIMESTAMP', 'comment' => '', 'precision' => null],
         'last_updated' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         '_constraints' => [
@@ -64,7 +64,7 @@ class OrganizationFixture extends TestFixture
                 'active_product_feature' => 1,
                 'active_order_feature' => 1,
                 'active_invoicing_feature' => 1,
-                'active_case_feature' => 1,
+                'active_issues_feature' => 1,
                 'created_at' => '2018-07-15 10:49:00',
                 'last_updated' => '2018-07-15 10:49:00'
             ],

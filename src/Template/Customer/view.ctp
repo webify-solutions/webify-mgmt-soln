@@ -90,7 +90,7 @@
                 'action' => 'add',
                 $customer->id,
                 '?' => ['auto' => 1]
-              ], 
+              ],
               array(
                 'class' => 'button success'
               )
@@ -130,10 +130,10 @@
             <?php endif; ?>
         </div>
     <?php endif; ?>
-    <?php if(in_array('SupportCase', $loggedUser['active_features'], true)) : ?>
+    <?php if(in_array('Issues', [], true)) : ?>
         <div class="related">
-            <h4><?= __('Related Support Case') ?></h4>
-            <?php if (!empty($customer->support_case)): ?>
+            <h4><?= __('Related Issues') ?></h4>
+            <?php if (!empty($customer->issues)): ?>
             <table cellpadding="0" cellspacing="0">
                 <tr>
                     <th scope="col"><?= __('Id') ?></th>
@@ -150,25 +150,25 @@
                     <th scope="col"><?= __('Last Updated') ?></th>
                     <th scope="col" class="actions"><?= __('Actions') ?></th>
                 </tr>
-                <?php foreach ($customer->support_case as $supportCase): ?>
+                <?php foreach ($customer->issues as $Issue): ?>
                 <tr>
-                    <td><?= h($supportCase->id) ?></td>
-                    <td><?= h($supportCase->customer_id) ?></td>
-                    <td><?= h($supportCase->organization_id) ?></td>
-                    <td><?= h($supportCase->customer_number) ?></td>
-                    <td><?= h($supportCase->first_name) ?></td>
-                    <td><?= h($supportCase->last_name) ?></td>
-                    <td><?= h($supportCase->email) ?></td>
-                    <td><?= h($supportCase->phone) ?></td>
-                    <td><?= h($supportCase->type) ?></td>
-                    <td><?= h($supportCase->subject) ?></td>
-                    <td><?= h($supportCase->description) ?></td>
-                    <td><?= h($supportCase->created_at) ?></td>
-                    <td><?= h($supportCase->last_updated) ?></td>
+                    <td><?= h($Issue->id) ?></td>
+                    <td><?= h($Issue->customer_id) ?></td>
+                    <td><?= h($Issue->organization_id) ?></td>
+                    <td><?= h($Issue->customer_number) ?></td>
+                    <td><?= h($Issue->first_name) ?></td>
+                    <td><?= h($Issue->last_name) ?></td>
+                    <td><?= h($Issue->email) ?></td>
+                    <td><?= h($Issue->phone) ?></td>
+                    <td><?= h($Issue->type) ?></td>
+                    <td><?= h($Issue->subject) ?></td>
+                    <td><?= h($Issue->description) ?></td>
+                    <td><?= h($Issue->created_at) ?></td>
+                    <td><?= h($Issue->last_updated) ?></td>
                     <td class="actions">
-                        <?= $this->Html->link(__('View'), ['controller' => 'SupportCase', 'action' => 'view', $supportCase->id]) ?>
-                        <?= $this->Html->link(__('Edit'), ['controller' => 'SupportCase', 'action' => 'edit', $supportCase->id]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['controller' => 'SupportCase', 'action' => 'delete', $supportCase->id], ['confirm' => __('Are you sure you want to delete # {0}?', $supportCase->id)]) ?>
+                        <?= $this->Html->link(__('View'), ['controller' => 'Issues', 'action' => 'view', $Issue->id]) ?>
+                        <?= $this->Html->link(__('Edit'), ['controller' => 'Issues', 'action' => 'edit', $Issue->id]) ?>
+                        <?= $this->Form->postLink(__('Delete'), ['controller' => 'Issues', 'action' => 'delete', $Issue->id], ['confirm' => __('Are you sure you want to delete # {0}?', $Issue->id)]) ?>
                     </td>
                 </tr>
                 <?php endforeach; ?>

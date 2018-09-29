@@ -17,7 +17,7 @@ use Cake\ORM\Entity;
  * @property bool $active_product_feature
  * @property bool $active_order_feature
  * @property bool $active_invoicing_feature
- * @property bool $active_case_feature
+ * @property bool $active_issues_feature
  * @property \Cake\I18n\FrozenTime $created_at
  * @property \Cake\I18n\FrozenTime $last_updated
  *
@@ -30,7 +30,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Payment[] $payment
  * @property \App\Model\Entity\PriceEntry[] $price_entry
  * @property \App\Model\Entity\Product[] $product
- * @property \App\Model\Entity\SupportCase[] $support_case
+ * @property \App\Model\Entity\Issues[] $issues
  * @property \App\Model\Entity\User[] $user
  * @property \App\Model\Entity\UserGroup[] $user_group
  */
@@ -58,7 +58,7 @@ class Organization extends Entity
         'active_product_feature' => true,
         'active_order_feature' => true,
         'active_invoicing_feature' => true,
-        'active_case_feature' => true,
+        'active_issues_feature' => true,
         'created_at' => true,
         'last_updated' => true,
         'customer' => true,
@@ -70,7 +70,7 @@ class Organization extends Entity
         'payment' => true,
         'price_entry' => true,
         'product' => true,
-        'support_case' => true,
+        'issues' => true,
         'user' => true,
         'user_group' => true
     ];

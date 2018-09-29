@@ -20,7 +20,7 @@ class CustomerControllerTest extends IntegrationTestCase
         'app.group',
         'app.organization',
         'app.order',
-        'app.support_case'
+        'app.issues'
     ];
 
     /**

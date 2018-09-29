@@ -18,7 +18,7 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\PaymentTable|\Cake\ORM\Association\HasMany $Payment
  * @property \App\Model\Table\PriceEntryTable|\Cake\ORM\Association\HasMany $PriceEntry
  * @property \App\Model\Table\ProductTable|\Cake\ORM\Association\HasMany $Product
- * @property \App\Model\Table\SupportCaseTable|\Cake\ORM\Association\HasMany $SupportCase
+ * @property \App\Model\Table\IssuesTable|\Cake\ORM\Association\HasMany $Issues
  * @property \App\Model\Table\UserTable|\Cake\ORM\Association\HasMany $User
  * @property \App\Model\Table\UserGroupTable|\Cake\ORM\Association\HasMany $UserGroup
  *
@@ -75,7 +75,7 @@ class OrganizationTable extends Table
         $this->hasMany('Product', [
             'foreignKey' => 'organization_id'
         ]);
-        $this->hasMany('SupportCase', [
+        $this->hasMany('Issues', [
             'foreignKey' => 'organization_id'
         ]);
         $this->hasMany('User', [
@@ -153,8 +153,8 @@ class OrganizationTable extends Table
             ->notEmpty('active_invoicing_feature');
 
         $validator
-            ->boolean('active_case_feature')
-            ->allowEmpty('active_case_feature');
+            ->boolean('active_issues_feature')
+            ->allowEmpty('active_issues_feature');
 
         $validator
             ->dateTime('created_at')

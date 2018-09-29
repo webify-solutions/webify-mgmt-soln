@@ -38,7 +38,7 @@ class OrganizationController extends AppController
     public function view($id = null)
     {
         $organization = $this->Organization->get($id, [
-            'contain' => ['Customer', 'Group', 'Invoice', 'InvoiceItem', 'Order', 'OrderItem', 'Payment', 'PriceEntry', 'Product', 'SupportCase', 'User', 'UserGroup']
+            'contain' => ['Customer', 'Group', 'Invoice', 'InvoiceItem', 'Order', 'OrderItem', 'Payment', 'PriceEntry', 'Product', 'Issues', 'User', 'UserGroup']
         ]);
         $loggedUser = $this->loggedUser;
 

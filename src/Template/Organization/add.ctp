@@ -29,7 +29,7 @@
             echo $this->Form->control('active_product_feature', ['label'=> 'Products']);
             echo $this->Form->control('active_order_feature', ['label'=> 'Orders']);
             echo $this->Form->control('active_invoicing_feature', ['label'=> 'Invoicing']);
-            echo $this->Form->control('active_case_feature', ['label'=> 'Support Cases']);
+            echo $this->Form->control('active_issues_feature', ['label'=> 'Issues']);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

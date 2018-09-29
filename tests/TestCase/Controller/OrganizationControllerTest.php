@@ -26,7 +26,7 @@ class OrganizationControllerTest extends IntegrationTestCase
         'app.payment',
         'app.price_entry',
         'app.product',
-        'app.support_case',
+        'app.issues',
         'app.user',
         'app.user_group'
     ];
