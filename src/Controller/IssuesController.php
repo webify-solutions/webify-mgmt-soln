@@ -25,7 +25,7 @@ class IssuesController extends AppController
         ];
         $issues = $this->paginate($this->Issues);
 
-        $this->set(compact('issues'));
+        $this->set(['issues' => $issues, 'loggedUser' => $this->loggedUser]);
     }
 
     /**
@@ -114,5 +114,16 @@ class IssuesController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    /**
+     * Is authorized method
+     *
+     * @param $user
+     * @return bool
+     */
+    public function isAuthorized($user)
+    {
+        return $this->isUserAuthorizedFor($user, $this->getName());
     }
 }

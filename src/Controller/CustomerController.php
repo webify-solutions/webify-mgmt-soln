@@ -61,7 +61,7 @@ class CustomerController extends AppController
     public function view($id = null)
     {
         $customer = $this->Customer->get($id, [
-            'contain' => ['Group', 'Organization', 'SupportCase']
+            'contain' => ['Group', 'Organization', 'Issues']
         ]);
 
         if ($this->loggedUserOrgId != null and $customer['organization_id'] != ($this->loggedUserOrgId)) {

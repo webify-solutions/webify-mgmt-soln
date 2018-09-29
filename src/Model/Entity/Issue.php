@@ -11,6 +11,7 @@ use Cake\ORM\Entity;
  * @property int $customer_id
  * @property int $technician_id
  * @property int $product_id
+ * @property string $issue_number
  * @property string $status
  * @property string $type
  * @property string $subject
@@ -40,6 +41,7 @@ class Issue extends Entity
         'customer_id' => true,
         'technician_id' => true,
         'product_id' => true,
+        'issue_number' => true,
         'status' => true,
         'type' => true,
         'subject' => true,

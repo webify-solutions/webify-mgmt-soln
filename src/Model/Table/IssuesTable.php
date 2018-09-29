@@ -67,6 +67,12 @@ class IssuesTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
+            ->scalar('issue_number')
+            ->maxLength('issue_number', 255)
+            ->requirePresence('issue_number', 'create')
+            ->notEmpty('issue_number');
+
+        $validator
             ->scalar('status')
             ->maxLength('status', 45)
             ->allowEmpty('status');
