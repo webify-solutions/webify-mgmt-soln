@@ -112,8 +112,8 @@ class AppController extends Controller
                     $activeFeatures[] = 'Payment';
                 }
 
-                if ($organization['active_case_feature'] == 1) {
-                    $activeFeatures[] = 'SupportCase';
+                if ($organization['active_issues_feature'] == 1) {
+                    $activeFeatures[] = 'Issues';
                 }
             }
 
@@ -145,7 +145,7 @@ class AppController extends Controller
                     'OrderItem',
                     'Invoice',
                     'InvoiceItem',
-                    'SupportCase',
+                    'Issues',
                     'Payment',
                     'Organization',
                     'User'

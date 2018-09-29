@@ -23,7 +23,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Group $group
  * @property \App\Model\Entity\Organization $organization
  * @property \App\Model\Entity\Order[] $order
- * @property \App\Model\Entity\SupportCase[] $support_case
+ * @property \App\Model\Entity\Issues[] $issues
  */
 class Customer extends Entity
 {
@@ -54,6 +54,6 @@ class Customer extends Entity
         'group' => true,
         'organization' => true,
         'order' => true,
-        'support_case' => true
+        'issues' => true
     ];
 }

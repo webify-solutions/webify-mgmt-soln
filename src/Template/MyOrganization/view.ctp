@@ -59,7 +59,7 @@
         </tr>
         <tr>
             <th scope="row"><?= __('Is Case Feature Active') ?></th>
-            <td><?= $organization->active_case_feature ? __('Yes') : __('No'); ?></td>
+            <td><?= $organization->active_issues_feature ? __('Yes') : __('No'); ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Created At') ?></th>

@@ -23,7 +23,7 @@
                 <th scope="col"><?= $this->Paginator->sort('active_product_feature','Is Product Feature Active') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('active_order_feature','Is Order Feature Active') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('active_invoicing_feature','Is Invoicing Feature Active') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('active_case_feature','Is Support Case Feature Active') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('active_issues_feature','Is Issues Feature Active') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('created_at') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('last_updated') ?></th>
             </tr>
@@ -44,7 +44,7 @@
                 <td><?= h($organization->active_product_feature ? __('Yes') : __('No')) ?></td>
                 <td><?= h($organization->active_order_feature ? __('Yes') : __('No')) ?></td>
                 <td><?= h($organization->active_invoicing_feature ? __('Yes') : __('No')) ?></td>
-                <td><?= h($organization->active_case_feature ? __('Yes') : __('No')) ?></td>
+                <td><?= h($organization->active_issues_feature ? __('Yes') : __('No')) ?></td>
                 <td><?= h($organization->created_at) ?></td>
                 <td><?= h($organization->last_updated) ?></td>
             </tr>

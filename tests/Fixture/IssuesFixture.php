@@ -22,6 +22,7 @@ class IssuesFixture extends TestFixture
         'customer_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'technician_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'product_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'issue_number' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'status' => ['type' => 'string', 'length' => 45, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'type' => ['type' => 'string', 'length' => null, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'subject' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
@@ -62,12 +63,13 @@ class IssuesFixture extends TestFixture
                 'customer_id' => 1,
                 'technician_id' => 1,
                 'product_id' => 1,
+                'issue_number' => 'Lorem ipsum dolor sit amet',
                 'status' => 'Lorem ipsum dolor sit amet',
                 'type' => 'Lorem ipsum dolor sit amet',
                 'subject' => 'Lorem ipsum dolor sit amet',
                 'description' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
-                'created_at' => '2018-09-29 05:48:32',
-                'last_updated' => '2018-09-29 05:48:32'
+                'created_at' => '2018-09-29 07:15:20',
+                'last_updated' => '2018-09-29 07:15:20'
             ],
         ];
         parent::init();

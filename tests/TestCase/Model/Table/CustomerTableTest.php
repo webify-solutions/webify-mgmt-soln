@@ -28,7 +28,7 @@ class CustomerTableTest extends TestCase
         'app.group',
         'app.organization',
         'app.order',
-        'app.support_case'
+        'app.issues'
     ];
 
     /**

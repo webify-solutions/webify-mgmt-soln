@@ -12,7 +12,7 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\GroupTable|\Cake\ORM\Association\BelongsTo $Group
  * @property \App\Model\Table\OrganizationTable|\Cake\ORM\Association\BelongsTo $Organization
  * @property \App\Model\Table\OrderTable|\Cake\ORM\Association\HasMany $Order
- * @property \App\Model\Table\SupportCaseTable|\Cake\ORM\Association\HasMany $SupportCase
+ * @property \App\Model\Table\IssuesTable|\Cake\ORM\Association\HasMany $Issues
  *
  * @method \App\Model\Entity\Customer get($primaryKey, $options = [])
  * @method \App\Model\Entity\Customer newEntity($data = null, array $options = [])
@@ -49,7 +49,7 @@ class CustomerTable extends Table
         $this->hasMany('Order', [
             'foreignKey' => 'customer_id'
         ]);
-        $this->hasMany('SupportCase', [
+        $this->hasMany('Issues', [
             'foreignKey' => 'customer_id'
         ]);
     }

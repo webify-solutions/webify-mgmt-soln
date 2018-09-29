@@ -68,8 +68,8 @@ $appName = 'Management System';
                     <?php if(in_array('Payment', $loggedUser['active_features'], true)) : ?>
                         <li><?= $this->Html->link(__('Payments'), ['controller' => 'Payment', 'action' => 'index']) ?></li>
                     <?php endif; ?>
-                    <?php if(in_array('SupportCase', $loggedUser['active_features'], true)) : ?>
-                        <li><?= $this->Html->link(__('Support Case'), ['controller' => 'SupportCase', 'action' => 'index']) ?></li>
+                    <?php if(in_array('Issues', $loggedUser['active_features'], true)) : ?>
+                        <li><?= $this->Html->link(__('Issues'), ['controller' => 'Issues', 'action' => 'index']) ?></li>
                     <?php endif; ?>
                     <?php if(in_array('User', $loggedUser['active_features'], true)) : ?>
                         <li><?= $this->Html->link(__('Users'), ['controller' => 'User', 'action' => 'index'])?></li>
