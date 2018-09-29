@@ -90,7 +90,7 @@
                 'action' => 'add',
                 $customer->id,
                 '?' => ['auto' => 1]
-              ], 
+              ],
               array(
                 'class' => 'button success'
               )
@@ -130,7 +130,7 @@
             <?php endif; ?>
         </div>
     <?php endif; ?>
-    <?php if(in_array('Issues', $loggedUser['active_features'], true)) : ?>
+    <?php if(in_array('Issues', [], true)) : ?>
         <div class="related">
             <h4><?= __('Related Issues') ?></h4>
             <?php if (!empty($customer->issues)): ?>

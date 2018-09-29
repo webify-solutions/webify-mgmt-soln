@@ -84,7 +84,6 @@ class IssuesTable extends Table
         $validator
             ->scalar('issue_number')
             ->maxLength('issue_number', 255)
-            ->requirePresence('issue_number', 'update')
             ->notEmpty('issue_number');
 
         $validator
@@ -108,12 +107,10 @@ class IssuesTable extends Table
 
         $validator
             ->dateTime('created_at')
-            ->requirePresence('created_at', 'update')
             ->notEmpty('created_at');
 
         $validator
             ->dateTime('last_updated')
-            ->requirePresence('last_updated', 'update')
             ->notEmpty('last_updated');
 
         return $validator;

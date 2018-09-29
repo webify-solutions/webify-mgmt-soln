@@ -137,15 +137,28 @@ class IssuesController extends AppController
             if ($this->Issues->save($issue)) {
                 $this->Flash->success(__('The issue has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $issue->id]);
             }
             $this->Flash->error(__('The issue could not be saved. Please, try again.'));
         }
-        $organization = $this->Issues->Organization->find('list', ['limit' => 200]);
-        $customer = $this->Issues->Customer->find('list', ['limit' => 200]);
-        $user = $this->Issues->User->find('list', ['limit' => 200]);
-        $product = $this->Issues->Product->find('list', ['limit' => 200]);
-        $this->set(compact('issue', 'organization', 'customer', 'user', 'product'));
+
+        if ($this->loggedUserOrgId == null) {
+            $organization = $this->Issues->Organization->find('list', ['limit' => 200]);
+            $product = $this->Issues->Product->find('list', ['limit' => 200]);
+        } else {
+            $organization = null;
+            $product = $this->Issues->Product->find('list', ['limit' => 200])->where(['Product.organization_id' => $this->loggedUserOrgId]);
+        }
+
+        $this->set([
+            'issue' => $issue,
+            'loggedUser' => $this->loggedUser,
+            'statusPickList' => PropertyUtils::$issueStatusPickList,
+            'organization' => $organization,
+            'customers' => CustomerBehavior::getCustomersAsPickList($this->loggedUserOrgId),
+            'users' => UserBehavior::getUsersAsPickList($this->loggedUserOrgId),
+            'product' => $product
+        ]);
     }
 
     /**
