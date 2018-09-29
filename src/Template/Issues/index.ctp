@@ -40,16 +40,16 @@
                     ['confirm' => __('Are you sure you want to delete {0}?', $issue->issue_number)]
                   ) ?>
               </td>
-                <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
-                  <td><?= $issue->has('organization') ? $this->Html->link($issue->organization->name, ['controller' => 'Organization', 'action' => 'view', $issue->organization->id]) : '' ?></td>
-                <?php endif; ?>
-                <td><?= $this->Html->link(h($issue->issue_number), ['action' => 'view', $issue->id]) ?></td>
-                <td><?= $issue->has('product') ? $this->Html->link($issue->product->name, ['controller' => 'Product', 'action' => 'view', $issue->product->id]) : '' ?></td>
-                <td><?= $issue->has('customer') ? $this->Html->link($issue->customer->name, ['controller' => 'Customer', 'action' => 'view', $issue->customer->id]) : '' ?></td>
-                <td><?= $issue->has('user') ? $this->Html->link($issue->user->name, ['controller' => 'User', 'action' => 'view', $issue->user->id]) : '' ?></td>
-                <td><?= h($issue->status) ?></td>
-                <td><?= h($issue->description) ?></td>
-                <td><?= h($issue->last_updated) ?></td>
+              <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
+                <td><?= $issue->has('organization') ? $this->Html->link($issue->organization->name, ['controller' => 'Organization', 'action' => 'view', $issue->organization->id]) : '' ?></td>
+              <?php endif; ?>
+              <td><?= $this->Html->link(h($issue->issue_number), ['action' => 'view', $issue->id]) ?></td>
+              <td><?= $issue->has('product') ? $this->Html->link($issue->product->name, ['controller' => 'Product', 'action' => 'view', $issue->product->id]) : '' ?></td>
+              <td><?= $issue->has('customer') ? $this->Html->link($issue->customer->name, ['controller' => 'Customer', 'action' => 'view', $issue->customer->id]) : '' ?></td>
+              <td><?= $issue->has('user') ? $this->Html->link($issue->user->name, ['controller' => 'User', 'action' => 'view', $issue->user->id]) : '' ?></td>
+              <td><?= h($issue->status) ?></td>
+              <td><?= h($issue->description) ?></td>
+              <td><?= h($issue->last_updated) ?></td>
             </tr>
           <?php endforeach; ?>
         </tbody>

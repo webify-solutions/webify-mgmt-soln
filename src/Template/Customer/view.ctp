@@ -130,50 +130,49 @@
             <?php endif; ?>
         </div>
     <?php endif; ?>
-    <?php if(in_array('Issues', [], true)) : ?>
-        <div class="related">
-            <h4><?= __('Related Issues') ?></h4>
-            <?php if (!empty($customer->issues)): ?>
-            <table cellpadding="0" cellspacing="0">
-                <tr>
-                    <th scope="col"><?= __('Id') ?></th>
-                    <th scope="col"><?= __('Customer Id') ?></th>
-                    <th scope="col"><?= __('Organization Id') ?></th>
-                    <th scope="col"><?= __('Customer Number') ?></th>
-                    <th scope="col"><?= __('First Name') ?></th>
-                    <th scope="col"><?= __('Last Name') ?></th>
-                    <th scope="col"><?= __('Email') ?></th>
-                    <th scope="col"><?= __('Type') ?></th>
-                    <th scope="col"><?= __('Subject') ?></th>
-                    <th scope="col"><?= __('Description') ?></th>
-                    <th scope="col"><?= __('Created At') ?></th>
-                    <th scope="col"><?= __('Last Updated') ?></th>
-                    <th scope="col" class="actions"><?= __('Actions') ?></th>
-                </tr>
-                <?php foreach ($customer->issues as $Issue): ?>
-                <tr>
-                    <td><?= h($Issue->id) ?></td>
-                    <td><?= h($Issue->customer_id) ?></td>
-                    <td><?= h($Issue->organization_id) ?></td>
-                    <td><?= h($Issue->customer_number) ?></td>
-                    <td><?= h($Issue->first_name) ?></td>
-                    <td><?= h($Issue->last_name) ?></td>
-                    <td><?= h($Issue->email) ?></td>
-                    <td><?= h($Issue->phone) ?></td>
-                    <td><?= h($Issue->type) ?></td>
-                    <td><?= h($Issue->subject) ?></td>
-                    <td><?= h($Issue->description) ?></td>
-                    <td><?= h($Issue->created_at) ?></td>
-                    <td><?= h($Issue->last_updated) ?></td>
-                    <td class="actions">
-                        <?= $this->Html->link(__('View'), ['controller' => 'Issues', 'action' => 'view', $Issue->id]) ?>
-                        <?= $this->Html->link(__('Edit'), ['controller' => 'Issues', 'action' => 'edit', $Issue->id]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['controller' => 'Issues', 'action' => 'delete', $Issue->id], ['confirm' => __('Are you sure you want to delete # {0}?', $Issue->id)]) ?>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            </table>
-            <?php endif; ?>
-        </div>
-    <?php endif; ?>
+  <?php if(in_array('Issues', $loggedUser['active_features'], true)) : ?>
+    <div class="related">
+      <h4><?= 'Related Issues ' . $this->Html->link(
+        'Add New',
+        [
+          'controller' => 'Issues',
+          'action' => 'add',
+          $customer->id
+        ],
+        array(
+          'class' => 'button success'
+        )
+      ) ?></h4>
+      <?php if (!empty($issues)): ?>
+        <table cellpadding="0" cellspacing="0">
+          <tr>
+              <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
+                  <th scope="col"><?= __('Organization') ?></th>
+              <?php endif; ?>
+              <th scope="col"><?= __('Issue Number') ?></th>
+              <th scope="col"><?= __('Product') ?></th>
+              <th scope="col"><?= __('Customer') ?></th>
+              <th scope="col"><?= __('Technician') ?></th>
+              <th scope="col"><?= __('Status') ?></th>
+              <th scope="col"><?= __('Description') ?></th>
+              <th scope="col"><?= __('Last Updated') ?></th>
+          </tr>
+          <?php foreach ($issues as $issue): ?>
+            <tr>
+              <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
+                <td><?= $issue->has('organization') ? $this->Html->link($issue->organization->name, ['controller' => 'Organization', 'action' => 'view', $issue->organization->id]) : '' ?></td>
+              <?php endif; ?>
+              <td><?= $this->Html->link(h($issue->issue_number), ['controller' => 'Issues', 'action' => 'view', $issue->id]) ?></td>
+              <td><?= $issue->has('product') ? $this->Html->link($issue->product->name, ['controller' => 'Product', 'action' => 'view', $issue->product->id]) : '' ?></td>
+              <td><?= $issue->has('customer') ? $this->Html->link($issue->customer->name, ['controller' => 'Customer', 'action' => 'view', $issue->customer->id]) : '' ?></td>
+              <td><?= $issue->has('user') ? $this->Html->link($issue->user->name, ['controller' => 'User', 'action' => 'view', $issue->user->id]) : '' ?></td>
+              <td><?= h($issue->status) ?></td>
+              <td><?= h($issue->description) ?></td>
+              <td><?= h($issue->last_updated) ?></td>
+            </tr>
+          <?php endforeach; ?>
+      </table>
+      <?php endif; ?>
+    </div>
+  <?php endif; ?>
 </div>
