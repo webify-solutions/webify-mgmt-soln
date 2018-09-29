@@ -61,7 +61,7 @@ class CustomerController extends AppController
     public function view($id = null)
     {
         $customer = $this->Customer->get($id, [
-            'contain' => ['Group', 'Organization', 'Issues']
+            'contain' => ['Group', 'Organization']
         ]);
 
         if ($this->loggedUserOrgId != null and $customer['organization_id'] != ($this->loggedUserOrgId)) {
@@ -73,7 +73,35 @@ class CustomerController extends AppController
             $order->set('total_amount', OrderBehavior::calculateTotalAmount($order));
         }
 
-        $this->set(['customer' => $customer, 'loggedUser' => $this->loggedUser, 'orders' => $orders]);
+        $issues = $this->Customer->Issues->find('all')
+          ->select([
+            'Organization.id',
+            'Organization.name',
+            'Customer.id',
+            'Customer.name',
+            'User.id',
+            'User.name',
+            'Product.id',
+            'Product.name',
+            'Issues.id',
+            'issue_number',
+            'status',
+            'description',
+            'Issues.last_updated'
+          ])
+          ->contain([
+            'Organization',
+            'Product',
+            'Customer',
+            'User'
+          ])
+          ->where(['customer_id' => $id]);
+        $this->set([
+          'customer' => $customer,
+          'loggedUser' => $this->loggedUser,
+          'orders' => $orders,
+          'issues' => $issues
+        ]);
     }
 
     /**

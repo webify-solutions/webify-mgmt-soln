@@ -24,5 +24,5 @@ class PropertyUtils
       // 'url' => 'URL'
     ];
 
-    public static $issueStatusPickList = ['Draft' => 'Draft', 'Assigned' => 'Assigned', 'Completed' => 'Completed', 'Rejected' => 'Reject', 'Approved' => 'Approved'];
+    public static $issueStatusPickList = ['Draft' => 'Draft', 'Assigned' => 'Assigned', 'Completed' => 'Completed', 'Rejected' => 'Rejected', 'Approved' => 'Approved'];
 }
