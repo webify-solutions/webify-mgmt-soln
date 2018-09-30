@@ -82,7 +82,7 @@
         </tbody>
     </table>
 
-    <?php $this->Html->script('order/index.js', ['block' => 'scriptBottom']); ?>
+    <?php $this->Html->script('Order/index.js', ['block' => 'scriptBottom']); ?>
     <?php $this->Html->script('datatables.min.js', ['block' => 'scriptBottom']) ?>
     <?php $this->Html->css('datatables.min.css', ['block' => 'cssBottom']) ?>
 </div>
