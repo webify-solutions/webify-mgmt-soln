@@ -40,6 +40,10 @@
             <th scope="row"><?= __('Name') ?></th>
             <td><?= h($customer->name) ?></td>
         </tr>
+        <tr>
+            <th scope="row"><?= __('Login Name') ?></th>
+            <td><?= h($customer->login_name) ?></td>
+        </tr>
         <!-- <tr>
             <th scope="row"><?= __('Title') ?></th>
             <td><?= h($customer->title) ?></td>

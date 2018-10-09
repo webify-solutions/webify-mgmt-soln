@@ -9,6 +9,9 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property int $group_id
  * @property int $organization_id
+ * @property int $org_cust_num
+ * @property string $customer_number
+ * @property string $login_name
  * @property string $title
  * @property string $name
  * @property string $email
@@ -23,7 +26,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Group $group
  * @property \App\Model\Entity\Organization $organization
  * @property \App\Model\Entity\Order[] $order
- * @property \App\Model\Entity\Issues[] $issues
+ * @property \App\Model\Entity\Issue[] $issues
  */
 class Customer extends Entity
 {
@@ -40,7 +43,9 @@ class Customer extends Entity
     protected $_accessible = [
         'group_id' => true,
         'organization_id' => true,
+        'org_cust_num' => true,
         'customer_number' => true,
+        'login_name' => true,
         'title' => true,
         'name' => true,
         'email' => true,
