@@ -28,6 +28,7 @@ class CustomerController extends AppController
             'Organization.name',
             'Customer.id',
             'customer_number',
+            'login_name',
             'Customer.name',
             'phone',
             'Customer.active',
@@ -124,6 +125,7 @@ class CustomerController extends AppController
 
                 return $this->redirect(['action' => 'view', $customer->id]);
             }
+            debug($customer);
             $this->Flash->error(__('The customer could not be saved. Please, try again.'));
         }
 

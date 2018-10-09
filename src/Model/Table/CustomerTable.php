@@ -1,18 +1,18 @@
 <?php
 namespace App\Model\Table;
 
+use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-
 
 /**
  * Customer Model
  *
  * @property \App\Model\Table\GroupTable|\Cake\ORM\Association\BelongsTo $Group
  * @property \App\Model\Table\OrganizationTable|\Cake\ORM\Association\BelongsTo $Organization
- * @property \App\Model\Table\OrderTable|\Cake\ORM\Association\HasMany $Order
  * @property \App\Model\Table\IssuesTable|\Cake\ORM\Association\HasMany $Issues
+ * @property \App\Model\Table\OrderTable|\Cake\ORM\Association\HasMany $Order
  *
  * @method \App\Model\Entity\Customer get($primaryKey, $options = [])
  * @method \App\Model\Entity\Customer newEntity($data = null, array $options = [])
@@ -36,6 +36,8 @@ class CustomerTable extends Table
     {
         parent::initialize($config);
 
+        $this->addBehavior('Customer');
+
         $this->setTable('customer');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
@@ -46,10 +48,10 @@ class CustomerTable extends Table
         $this->belongsTo('Organization', [
             'foreignKey' => 'organization_id'
         ]);
-        $this->hasMany('Order', [
+        $this->hasMany('Issues', [
             'foreignKey' => 'customer_id'
         ]);
-        $this->hasMany('Issues', [
+        $this->hasMany('Order', [
             'foreignKey' => 'customer_id'
         ]);
     }
@@ -72,6 +74,11 @@ class CustomerTable extends Table
             ->allowEmpty('customer_number');
 
         $validator
+            ->scalar('login_name')
+            ->maxLength('login_name', 255)
+            ->allowEmpty('login_name');
+
+        $validator
             ->scalar('title')
             ->maxLength('title', 20)
             ->allowEmpty('title');
@@ -79,6 +86,7 @@ class CustomerTable extends Table
         $validator
             ->scalar('name')
             ->maxLength('name', 255)
+            ->requirePresence('name', 'create')
             ->notEmpty('name');
 
         $validator
@@ -133,5 +141,4 @@ class CustomerTable extends Table
 
         return $rules;
     }
-
 }

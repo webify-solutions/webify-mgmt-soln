@@ -20,6 +20,7 @@
                     <th scope="col"><?= __('Organization') ?></th>
                 <?php endif; ?>
                 <th scope="col"><?= __('Customer Number') ?></th>
+                <th scope="col"><?= __('Login Name') ?></th>
                 <th scope="col"><?= __('Name') ?></th>
                 <th scope="col"><?= __('Group') ?></th>
                 <th scope="col"><?= __('Phone') ?></th>
@@ -47,6 +48,7 @@
                     <td><?= $customer->has('organization') ? $this->Html->link($customer->organization->name, ['controller' => 'Organization', 'action' => 'view', $customer->organization->id]) : '' ?></td>
                 <?php endif; ?>
                 <td><?= $this->Html->link(h($customer->customer_number), ['controller' => 'Customer', 'action' => 'view', $customer->id]) ?></td>
+                <td><?= h($customer->login_name) ?></td>
                 <td><?= h($customer->name) ?></td>
                 <td><?= $customer->has('group') ? $this->Html->link($customer->group->name, ['controller' => 'Group', 'action' => 'view', $customer->group->id]) : '' ?></td>
                 <td><?= h($customer->phone) ?></td>

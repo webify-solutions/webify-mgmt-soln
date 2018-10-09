@@ -9,7 +9,7 @@ class PropertyUtils
 
     public static $orderTypes = ['recurring-payments' => 'Non Subscription', 'recurring-invoicing' => 'Subscription'];
 
-    public static  $roles = ['Admin'=> 'Admin', 'Sales' => 'Sales', 'Cashier' => 'Cashier', 'Technician' => 'Technician'];
+    public static  $roles = ['Admin'=> 'Admin', 'Sales' => 'Sales', 'Cashier' => 'Cashier', 'Technician' => 'Technician', 'Customer' => 'Customer'];
 
     public static $inputTypes = [
       'text' => 'Text',
@@ -24,5 +24,5 @@ class PropertyUtils
       // 'url' => 'URL'
     ];
 
-    public static $issueStatusPickList = ['Draft' => 'Draft', 'Assigned' => 'Assigned', 'Completed' => 'Completed', 'Rejected' => 'Rejected', 'Approved' => 'Approved'];
+    public static $issueStatusPickList = ['Draft' => 'Draft', 'Assigned' => 'Assigned', 'PendingCustomerApproval' => 'Pending Customer Approval', 'Cancelled' => 'Cancelled', 'Closed' => 'Closed'];
 }
