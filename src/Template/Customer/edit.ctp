@@ -37,10 +37,57 @@
             echo $this->Form->control('group_id', ['options' => $group, 'empty' => true]);
             echo $this->Form->control('email', ['type' => 'email']);
             echo $this->Form->control('address');
-            // echo $this->Form->control('longitude');
-            // echo $this->Form->control('latitude');
+            echo '<div style="display:none">';
+				echo $this->Form->control('latitude', ['id' => 'latitude']);
+				echo $this->Form->control('longitude', ['id' => 'longitude']);
+			echo '</div>';
         ?>
     </fieldset>
+	<div id="map" style="width:400px !important; height:300px !important;"></div>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
 </div>
+
+ <script>
+ var latElem=document.getElementById('latitude');
+ var lngElem=document.getElementById('longitude');
+ var latVal=parseInt(latElem.value);
+ var lngVal=parseInt(lngElem.value) ;
+   if(latElem.value=='' || latElem.value=='undefined' || latElem.value=="" || latElem.value=='undefined'){
+	   latVal= 33.762905;
+	   lngVal=35.884231;
+   }
+      function initMap() {
+        var myLatlng = {lat: latVal, lng:  lngVal};
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 13,
+          center: myLatlng
+        });
+
+        var marker = new google.maps.Marker({
+          position: myLatlng,
+          map: map,
+		  draggable:true,
+          title: 'Click to zoom'
+        });
+
+        map.addListener('center_changed', function() {
+          // 3 seconds after the center of the map has changed, pan back to the
+          // marker.
+          window.setTimeout(function() {
+            map.panTo(marker.getPosition());
+          }, 3000);
+        });
+
+        marker.addListener('dragend', function() { 
+          console.log(marker.getPosition().lat());
+          console.log(marker.getPosition().lng());
+		  latElem.value=marker.getPosition().lat();
+		  lngElem.value=marker.getPosition().lng();
+        });
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzJekCUDHhMNYKBCcIzV-4CGYZeualhvg&callback=initMap">
+    </script>

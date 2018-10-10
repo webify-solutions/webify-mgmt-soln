@@ -36,7 +36,7 @@ class IssuesController extends AppController
           'Product.id',
           'Product.name',
           'Issues.id',
-          'issue_number',
+          'subject',
           'status',
           'description',
           'Issues.last_updated'

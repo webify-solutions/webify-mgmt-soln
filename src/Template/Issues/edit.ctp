@@ -12,7 +12,7 @@
     <li><?= $this->Form->postLink(
       __('Delete'),
       ['action' => 'delete', $issue->id],
-      ['confirm' => __('Are you sure you want to delete {0}?', $issue->issue_number)]
+      ['confirm' => __('Are you sure you want to delete {0}?', $issue->subject)]
     ) ?></li>
     </ul>
 </nav>
@@ -24,6 +24,7 @@
       if ($organization != null) {
         echo $this->Form->control('organization_id', ['options' => $organization, 'empty' => true, 'disabled' => 'disabled']);
       }
+      echo $this->Form->control('subject', ['label' => 'Title']);
       echo $this->Form->control('customer_id', ['options' => $customers, 'empty' => true, 'disabled' => 'disabled']);
       echo $this->Form->control('product_id', ['options' => $product, 'empty' => true, 'disabled' => 'disabled']);
       echo $this->Form->control('technician_id', ['options' => $users, 'empty' => true]);

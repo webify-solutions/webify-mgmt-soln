@@ -13,7 +13,7 @@
         <li><?= $this->Form->postLink(
           __('Delete'),
           ['action' => 'delete', $issue->id],
-          ['confirm' => __('Are you sure you want to delete {0}?', $issue->issue_number)]
+          ['confirm' => __('Are you sure you want to delete {0}?', $issue->subject)]
         ) ?></li>
     </ul>
 </nav>
@@ -21,8 +21,8 @@
     <h3><?= __('Issue') ?></h3>
     <table class="vertical-table">
       <tr>
-          <th scope="row"><?= __('Issue Number') ?></th>
-          <td><?= h($issue->issue_number) ?></td>
+          <th scope="row"><?= __('Title') ?></th>
+          <td><?= h($issue->subject) ?></td>
       </tr>
       <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
         <tr>

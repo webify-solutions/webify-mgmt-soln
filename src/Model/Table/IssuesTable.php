@@ -82,9 +82,10 @@ class IssuesTable extends Table
             ->notEmpty('product_id');
 
         $validator
-            ->scalar('issue_number')
-            ->maxLength('issue_number', 255)
-            ->notEmpty('issue_number');
+            ->scalar('subject')
+            ->maxLength('subject', 255)
+            ->requirePresence('subject', 'create')
+            ->notEmpty('subject');
 
         $validator
             ->scalar('status')
@@ -95,11 +96,6 @@ class IssuesTable extends Table
         $validator
             ->scalar('type')
             ->allowEmpty('type');
-
-        $validator
-            ->scalar('subject')
-            ->maxLength('subject', 255)
-            ->allowEmpty('subject');
 
         $validator
             ->scalar('description')
