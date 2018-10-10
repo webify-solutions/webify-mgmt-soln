@@ -25,7 +25,7 @@
             echo $this->Form->control('group_id', ['options' => $group, 'empty' => true]);
             echo $this->Form->control('email', ['type' => 'email']);
             echo $this->Form->control('address');
-			echo '<div style="displaynone">';
+			echo '<div style="display:none">';
 				echo $this->Form->control('latitude', ['id' => 'latitude']);
 				echo $this->Form->control('longitude', ['id' => 'longitude']);
 			echo '</div>';
