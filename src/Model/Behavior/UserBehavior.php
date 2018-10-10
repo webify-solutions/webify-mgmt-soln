@@ -11,27 +11,36 @@ use Cake\ORM\TableRegistry;
 
 class UserBehavior extends Behavior {
 
-  public static function getUsersAsPickList($organizationId)
+  public static function getUsersAsPickList($organizationId, $role = null)
   {
-      $usersPickList = [];
+    $usersPickList = [];
 
-      $usersTable = TableRegistry::getTableLocator()->get('User');
-      $usersQuery = $usersTable->find('all');
-      $usersQuery->select([
-          'id',
-          'name' => $usersQuery->func()->concat([
-              'login_name' => 'identifier',
-              ': ',
-              'name' => 'identifier'
-          ])
-      ]);
-      if ($organizationId != null) {
-        $usersQuery->where(['organization_id'=>$organizationId]);
-      }
+    $usersTable = TableRegistry::getTableLocator()->get('User');
+    $usersQuery = $usersTable->find('all');
+    $usersQuery->select([
+        'id',
+        'name' => $usersQuery->func()->concat([
+            'login_name' => 'identifier',
+            ': ',
+            'name' => 'identifier'
+        ])
+    ]);
+    $where = [];
+    if ($organizationId !== null) {
+      $where['organization_id']  = $organizationId;
+    }
 
-      foreach ($usersQuery as $user) {
-          $usersPickList[$user->id] =  $user->name;
-      }
-      return $usersPickList;
+    if ($role !== null) {
+      $where['role'] = $role;
+    }
+
+    if ($where !== []) {
+      $usersQuery->where($where);
+    }
+
+    foreach ($usersQuery as $user) {
+        $usersPickList[$user->id] =  $user->name;
+    }
+    return $usersPickList;
   }
 }

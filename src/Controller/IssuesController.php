@@ -117,7 +117,7 @@ class IssuesController extends AppController
             'statusPickList' => PropertyUtils::$issueStatusPickList,
             'organization' => $organization,
             'customers' => CustomerBehavior::getCustomersAsPickList($this->loggedUserOrgId),
-            'users' => UserBehavior::getUsersAsPickList($this->loggedUserOrgId),
+            'users' => UserBehavior::getUsersAsPickList($this->loggedUserOrgId, 'Technician'),
             'product' => $product
         ]);
     }
@@ -158,7 +158,7 @@ class IssuesController extends AppController
             'statusPickList' => PropertyUtils::$issueStatusPickList,
             'organization' => $organization,
             'customers' => CustomerBehavior::getCustomersAsPickList($this->loggedUserOrgId),
-            'users' => UserBehavior::getUsersAsPickList($this->loggedUserOrgId),
+            'users' => UserBehavior::getUsersAsPickList($this->loggedUserOrgId, 'Technician'),
             'product' => $product
         ]);
     }
