@@ -19,7 +19,7 @@
                 <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
                     <th scope="col"><?= __('Organization') ?></th>
                 <?php endif; ?>
-                <th scope="col"><?= __('Issue Number') ?></th>
+                <th scope="col"><?= __('Title') ?></th>
                 <th scope="col"><?= __('Product') ?></th>
                 <th scope="col"><?= __('Customer') ?></th>
                 <th scope="col"><?= __('Technician') ?></th>
@@ -37,13 +37,13 @@
                   <?= $this->Form->postLink(
                     __('Delete'),
                     ['action' => 'delete', $issue->id],
-                    ['confirm' => __('Are you sure you want to delete {0}?', $issue->issue_number)]
+                    ['confirm' => __('Are you sure you want to delete {0}?', $issue->subject)]
                   ) ?>
               </td>
               <?php if(in_array('Organization', $loggedUser['active_features'], true)) : ?>
                 <td><?= $issue->has('organization') ? $this->Html->link($issue->organization->name, ['controller' => 'Organization', 'action' => 'view', $issue->organization->id]) : '' ?></td>
               <?php endif; ?>
-              <td><?= $this->Html->link(h($issue->issue_number), ['action' => 'view', $issue->id]) ?></td>
+              <td><?= $this->Html->link(h($issue->subject), ['action' => 'view', $issue->id]) ?></td>
               <td><?= $issue->has('product') ? $this->Html->link($issue->product->name, ['controller' => 'Product', 'action' => 'view', $issue->product->id]) : '' ?></td>
               <td><?= $issue->has('customer') ? $this->Html->link($issue->customer->name, ['controller' => 'Customer', 'action' => 'view', $issue->customer->id]) : '' ?></td>
               <td><?= $issue->has('user') ? $this->Html->link($issue->user->name, ['controller' => 'User', 'action' => 'view', $issue->user->id]) : '' ?></td>
