@@ -108,6 +108,11 @@ mb_internal_encoding(Configure::read('App.encoding'));
 ini_set('intl.default_locale', Configure::read('App.defaultLocale'));
 
 /*
+ * Set the default floating precision.
+ */
+ini_set('precision', 16);
+
+/*
  * Register application error and exception handlers.
  */
 $isCli = PHP_SAPI === 'cli';

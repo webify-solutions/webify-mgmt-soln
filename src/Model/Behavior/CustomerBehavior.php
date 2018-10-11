@@ -41,7 +41,7 @@ class CustomerBehavior extends Behavior
   }
 
   public function afterSaveCommit(Event $event, EntityInterface $entity, ArrayObject $options) {
-    debug('createUserCustomer');
+    // debug('createUserCustomer');
     // debug($entity);
     /*
      * Required to retrieve customer since customer_number is created
@@ -60,7 +60,7 @@ class CustomerBehavior extends Behavior
     $user->set('role', 'Customer');
     $user->set('phone', $customer->get('phone'));
     $user->set('email', $customer->get('email'));
-    debug($user);
+    // debug($user);
 
     if (!$userTable->save($user)) {
       debug ('Failed to create user');
