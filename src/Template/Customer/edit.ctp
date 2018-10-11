@@ -50,16 +50,18 @@
 
  <script>
  var latElem=document.getElementById('latitude');
+ console.log(latElem);
  var lngElem=document.getElementById('longitude');
- var latVal=parseInt(latElem.value);
- var lngVal=parseInt(lngElem.value) ;
+ var latVal=parseFloat(latElem.value);
+ console.log(latVal);
+ var lngVal=parseFloat(lngElem.value) ;
    if(latElem.value=='' || latElem.value=='undefined' || latElem.value=="" || latElem.value=='undefined'){
-	   latVal= 33.762905;
+	   latVal=33.762905;
 	   lngVal=35.884231;
    }
       function initMap() {
         var myLatlng = {lat: latVal, lng:  lngVal};
-
+        console.log(myLatlng)
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 13,
           center: myLatlng
@@ -80,7 +82,7 @@
           }, 3000);
         });
 
-        marker.addListener('dragend', function() { 
+        marker.addListener('dragend', function() {
           console.log(marker.getPosition().lat());
           console.log(marker.getPosition().lng());
 		  latElem.value=marker.getPosition().lat();
