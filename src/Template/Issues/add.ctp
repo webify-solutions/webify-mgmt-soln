@@ -19,8 +19,13 @@
             echo $this->Form->control('organization_id', ['options' => $organization, 'empty' => true]);
           }
           echo $this->Form->control('subject', ['label' => 'Title']);
-          echo $this->Form->control('customer_id', ['options' => $customers, 'empty' => true]);
-          echo $this->Form->control('product_id', ['options' => $product, 'empty' => true]);
+          echo $this->Form->control('customer_id', [
+            'options' => $customers,
+            'empty' => true,
+            'data-customers-product-list' => $products,
+            'id' => 'customers'
+          ]);
+          echo $this->Form->control('product_id', ['options' => [], 'empty' => true, 'id' => 'products']);
           echo $this->Form->control('technician_id', ['options' => $users, 'empty' => true]);
           echo $this->Form->control('status', ['options' => $statusPickList]);
           echo $this->Form->control('description');
@@ -29,3 +34,5 @@
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
 </div>
+
+<?php $this->Html->script('Issues/add.js', ['block' => 'scriptBottom']); ?>

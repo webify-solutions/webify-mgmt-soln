@@ -15,7 +15,8 @@ use Cake\Event\Event;
 
 class ProductBehavior extends Behavior
 {
-  public static function getProductCustomFieldsAsJSON($productId) {
+  public static function getProductCustomFieldsAsJSON($productId)
+  {
     $productTable = TableRegistry::getTableLocator()->get('Product');
     $query = $productTable->find('all');
     $query->select([
@@ -75,7 +76,8 @@ class ProductBehavior extends Behavior
     return json_encode($customFieldLabels);
   }
 
-  public static function getProductCategoriesCustomFieldsJSON($organizationId) {
+  public static function getProductCategoriesCustomFieldsJSON($organizationId)
+  {
     $productCategoryTable = TableRegistry::getTableLocator()->get('ProductCategory');
     $query = $productCategoryTable->find('all');
     if ($organizationId != null) {
@@ -136,6 +138,38 @@ class ProductBehavior extends Behavior
     return json_encode($customFields);
   }
 
+  public static function getProductByCustomerAsJSON($organizationId) {
+    $productTable = TableRegistry::getTableLocator()->get('Product');
+    $query = $productTable->find('all')
+      ->select(['Product.id', 'Product.name', 'Order.customer_id'])
+      ->matching('OrderItem')
+      ->matching('OrderItem.Order')
+      ->group(['Product.id', 'Product.name', 'Order.customer_id']);
+
+    if ($organizationId != null) {
+      $query->where(['organization_id' => $organizationId]);
+    }
+
+    // debug($query);
+    $results = [];
+    foreach ($query as $result) {
+      // debug($result);
+      $orderId = $result->get('_matchingData')['Order']['customer_id'];
+      // debug($orderId);
+      $product = ['id' => $result->get('id'), 'name' => $result->get('name')];
+      // debug($product);
+      if (isset($results[$orderId])) {
+        // debug('In array ' . $orderId);
+        array_push($results[$orderId], $product);
+      } else {
+        // debug('Not in array ' . $orderId);
+        $results[$orderId] = [$product];
+      }
+    }
+    // debug($results);
+
+    return json_encode($results);
+  }
   public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
   {
     // debug($entity);

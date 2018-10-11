@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Controller\AppController;
 
 use App\Model\Behavior\CustomerBehavior;
+use App\Model\Behavior\ProductBehavior;
 use App\Model\Behavior\UserBehavior;
 
 use App\Utils\PropertyUtils;
@@ -105,10 +106,8 @@ class IssuesController extends AppController
 
         if ($this->loggedUserOrgId == null) {
             $organization = $this->Issues->Organization->find('list', ['limit' => 200]);
-            $product = $this->Issues->Product->find('list', ['limit' => 200]);
         } else {
             $organization = null;
-            $product = $this->Issues->Product->find('list', ['limit' => 200])->where(['Product.organization_id' => $this->loggedUserOrgId]);
         }
 
         $this->set([
@@ -118,7 +117,7 @@ class IssuesController extends AppController
             'organization' => $organization,
             'customers' => CustomerBehavior::getCustomersAsPickList($this->loggedUserOrgId),
             'users' => UserBehavior::getUsersAsPickList($this->loggedUserOrgId, 'Technician'),
-            'product' => $product
+            'products' => ProductBehavior::getProductByCustomerAsJSON($organization)
         ]);
     }
 
