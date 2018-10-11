@@ -161,12 +161,21 @@ class CustomerController extends AppController
             'contain' => []
         ]);
 
+        // debug($customer);
         if ($this->loggedUserOrgId != null and $customer['organization_id'] != ($this->loggedUserOrgId)) {
             $this->unauthorizedAccessRedirect();
         }
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             $customer = $this->Customer->patchEntity($customer, $this->request->getData());
+
+            /*
+             * Hack: workaround https://github.com/cakephp/cakephp/issues/10233
+             * Issue will be fixed in phpCake 4.x
+             */
+            $customer->set('latitude', $this->request->getData()['latitude']);
+            $customer->set('longitude', $this->request->getData()['longitude']);
+
             if ($this->Customer->save($customer)) {
                 $this->Flash->success(__('The customer has been saved.'));
 
