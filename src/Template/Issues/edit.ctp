@@ -27,7 +27,7 @@
       echo $this->Form->control('subject', ['label' => 'Title']);
       echo $this->Form->control('customer_id', ['options' => $customers, 'empty' => true, 'disabled' => 'disabled']);
       echo $this->Form->control('product_id', ['options' => $product, 'empty' => true, 'disabled' => 'disabled']);
-      echo $this->Form->control('technician_id', ['options' => $users, 'empty' => true]);
+      echo $this->Form->control('technician_id', ['options' => $users, 'empty' => true, 'id' => 'technician']);
       echo $this->Form->control('status', ['options' => $statusPickList]);
       echo $this->Form->control('description');
     ?>
@@ -35,3 +35,5 @@
   <?= $this->Form->button(__('Submit')) ?>
   <?= $this->Form->end() ?>
 </div>
+
+<?php $this->Html->script('Issues/add.js', ['block' => 'scriptBottom']); ?>
