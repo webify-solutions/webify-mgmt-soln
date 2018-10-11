@@ -114,19 +114,27 @@ class CustomerController extends AppController
     {
         $customer = $this->Customer->newEntity();
         if ($this->request->is('post')) {
-            $customer = $this->Customer->patchEntity($customer, $this->request->getData());
+          // debug($this->request->getData()['latitude']);
+          $customer = $this->Customer->patchEntity($customer, $this->request->getData());
+          // debug($customer);
+          if ($this->loggedUserOrgId != null) {
+              $customer->set('organization_id', $this->loggedUserOrgId);
+          }
 
-            if ($this->loggedUserOrgId != null) {
-                $customer->set('organization_id', $this->loggedUserOrgId);
-            }
+          /*
+           * Hack: workaround https://github.com/cakephp/cakephp/issues/10233
+           * Issue will be fixed in phpCake 4.x
+           */
+          $customer->set('latitude', $this->request->getData()['latitude']);
+          $customer->set('longitude', $this->request->getData()['longitude']);
+          // debug($customer->get('latitude'));
 
-            if ($this->Customer->save($customer)) {
-                $this->Flash->success(__('The customer has been saved.'));
-
-                return $this->redirect(['action' => 'view', $customer->id]);
-            }
-            debug($customer);
-            $this->Flash->error(__('The customer could not be saved. Please, try again.'));
+          if ($this->Customer->save($customer)) {
+              $this->Flash->success(__('The customer has been saved.'));
+              return $this->redirect(['action' => 'view', $customer->id]);
+          }
+          // debug($customer->get('latitude'));
+          $this->Flash->error(__('The customer could not be saved. Please, try again.'));
         }
 
         if ($this->loggedUserOrgId == null) {
