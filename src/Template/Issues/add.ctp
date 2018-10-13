@@ -26,7 +26,7 @@
             'id' => 'customers'
           ]);
           echo $this->Form->control('product_id', ['options' => [], 'empty' => true, 'id' => 'products']);
-          echo $this->Form->control('technician_id', ['options' => $users, 'empty' => true]);
+          echo $this->Form->control('technician_id', ['options' => $users, 'empty' => true, 'id' => 'technician']);
           echo $this->Form->control('status', ['options' => $statusPickList]);
           echo $this->Form->control('description');
         ?>
