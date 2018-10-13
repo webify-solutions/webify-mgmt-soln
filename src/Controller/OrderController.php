@@ -179,14 +179,14 @@ class OrderController extends AppController
         if ($this->loggedUserOrgId == null) {
             $organization = $this->Order->Organization->find('list', ['limit' => 200]);
 
-            $customerQuery = $this->Order->Customer->find('all', ['limit' => 200]);
-            $customers = CustomerBehavior::getCustomersAsPickList($customerQuery);
+            //$customerQuery = $this->Order->Customer->find('all', ['limit' => 200]);
+            $customers = CustomerBehavior::getCustomersAsPickList(null);
 
         } else {
             $organization = null;
 
-            $customerQuery = $this->Order->Customer->find('')->where(['Customer.organization_id' => $this->loggedUserOrgId]);
-            $customers = CustomerBehavior::getCustomersAsPickList($customerQuery);
+            //$customerQuery = $this->Order->Customer->find('')->where(['Customer.organization_id' => $this->loggedUserOrgId]);
+            $customers = CustomerBehavior::getCustomersAsPickList($this->loggedUserOrgId);
         }
 
         $this->set([
