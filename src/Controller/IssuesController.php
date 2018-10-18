@@ -108,6 +108,13 @@ class IssuesController extends AppController
                   UserBehavior::getDeviceToken($issue->technician_id),
                   ['id' => $issue['id']]
                 );
+
+                $results = $notification->send(
+                  'New Issue Assigned',
+                  'Your issue ' . $issue['subject'] . ' has been assigned',
+                  UserBehavior::getCustomerDeviceToken($issue->customer_id),
+                  ['id' => $issue['id']]
+                );
               }
 
               $this->Flash->success(__('The issue has been saved.'));
@@ -160,6 +167,13 @@ class IssuesController extends AppController
             'New Issue Assigned',
             'A new issue ' . $issue['subject'] . ' has been assigned to you',
             UserBehavior::getDeviceToken($issue->technician_id),
+            ['id' => $issue['id']]
+          );
+
+          $results = $notification->send(
+            'New Issue Assigned',
+            'Your issue ' . $issue['subject'] . ' has been assigned',
+            UserBehavior::getCustomerDeviceToken($issue->customer_id),
             ['id' => $issue['id']]
           );
         }

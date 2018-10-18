@@ -53,4 +53,20 @@ class UserBehavior extends Behavior {
 
     return $user->device_token;
   }
+
+  public function getCustomerDeviceToken($customerId) {
+    $usersTable = TableRegistry::getTableLocator()->get('User');
+    $user = $usersTable->find()
+      ->select('device_token')
+      ->join([
+        'table' => 'customer',
+        'alias' => 'Customer',
+        'type' => 'LEFT',
+        'conditions' => 'Customer.login_name = User.login_name',
+      ])
+      ->where(['Customer.id' => $customerId])
+      ->first();
+
+    return $user->device_token;
+  }
 }
