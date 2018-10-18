@@ -230,6 +230,19 @@ return [
     ],
 
     /**
+     * Connection information used by the API consumer to connect
+     * the API
+     */
+    'APIs' => [
+      'mobile' => [
+        'protocol' => 'https',
+        'host' => 'demo-webify-mgmt-soln-api-stag.herokuapp.com',
+        'version' => 'api/v1',
+        'token' => 'webapp'
+      ]
+    ],
+
+    /**
      * Connection information used by the ORM to connect
      * to your application's datastores.
      *

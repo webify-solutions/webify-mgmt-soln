@@ -9,6 +9,8 @@ use App\Model\Behavior\UserBehavior;
 
 use App\Utils\PropertyUtils;
 
+use App\Notification\MobileNotification;
+
 /**
  * Issues Controller
  *
@@ -97,9 +99,20 @@ class IssuesController extends AppController
 
             // debug($issue);
             if ($this->Issues->save($issue)) {
-                $this->Flash->success(__('The issue has been saved.'));
+              if ($issue->status === 'Assigned' && $issue->technician_id !== null) {
 
-                return $this->redirect(['action' => 'view', $issue->id]);
+                $notification = new MobileNotification();
+                $notification->send(
+                  'New Issue Assigned',
+                  'A new issue ' . $issue['subject'] . ' has been assigned to you',
+                  UserBehavior::getDeviceToken($issue->technician_id),
+                  ['id' => $issue['id']]
+                );
+              }
+
+              $this->Flash->success(__('The issue has been saved.'));
+
+              return $this->redirect(['action' => 'view', $issue->id]);
             }
             $this->Flash->error(__('The issue could not be saved. Please, try again.'));
         }
@@ -121,46 +134,60 @@ class IssuesController extends AppController
         ]);
     }
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Issue id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
-     */
-    public function edit($id = null)
-    {
-        $issue = $this->Issues->get($id, [
-            'contain' => []
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $issue = $this->Issues->patchEntity($issue, $this->request->getData());
-            if ($this->Issues->save($issue)) {
-                $this->Flash->success(__('The issue has been saved.'));
+  /**
+   * Edit method
+   *
+   * @param string|null $id Issue id.
+   * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+   * @throws \Cake\Network\Exception\NotFoundException When record not found.
+   */
+  public function edit($id = null)
+  {
+    $issue = $this->Issues->get($id, [
+        'contain' => []
+    ]);
+    if ($this->request->is(['patch', 'post', 'put'])) {
+      $oldStatus = $issue->status;
+      $oldTechnicianId = $issue->technician_id;
+      $issue = $this->Issues->patchEntity($issue, $this->request->getData());
 
-                return $this->redirect(['action' => 'view', $issue->id]);
-            }
-            $this->Flash->error(__('The issue could not be saved. Please, try again.'));
+      if ($this->Issues->save($issue)) {
+        if (($oldTechnicianId !== $issue->technician_id || $oldStatus !== $issue->status)
+              && $issue->status === 'Assigned' && $issue->technician_id !== null) {
+
+          $notification = new MobileNotification();
+          $notification->send(
+            'New Issue Assigned',
+            'A new issue ' . $issue['subject'] . ' has been assigned to you',
+            UserBehavior::getDeviceToken($issue->technician_id),
+            ['id' => $issue['id']]
+          );
         }
 
-        if ($this->loggedUserOrgId == null) {
-            $organization = $this->Issues->Organization->find('list', ['limit' => 200]);
-            $product = $this->Issues->Product->find('list', ['limit' => 200]);
-        } else {
-            $organization = null;
-            $product = $this->Issues->Product->find('list', ['limit' => 200])->where(['Product.organization_id' => $this->loggedUserOrgId]);
-        }
-
-        $this->set([
-            'issue' => $issue,
-            'loggedUser' => $this->loggedUser,
-            'statusPickList' => PropertyUtils::$issueStatusPickList,
-            'organization' => $organization,
-            'customers' => CustomerBehavior::getCustomersAsPickList($this->loggedUserOrgId),
-            'users' => UserBehavior::getUsersAsPickList($this->loggedUserOrgId, 'Technician'),
-            'product' => $product
-        ]);
+        $this->Flash->success(__('The issue has been saved.'));
+        return $this->redirect(['action' => 'view', $issue->id]);
+      }
+      $this->Flash->error(__('The issue could not be saved. Please, try again.'));
     }
+
+    if ($this->loggedUserOrgId == null) {
+      $organization = $this->Issues->Organization->find('list', ['limit' => 200]);
+      $product = $this->Issues->Product->find('list', ['limit' => 200]);
+    } else {
+      $organization = null;
+      $product = $this->Issues->Product->find('list', ['limit' => 200])->where(['Product.organization_id' => $this->loggedUserOrgId]);
+    }
+
+    $this->set([
+      'issue' => $issue,
+      'loggedUser' => $this->loggedUser,
+      'statusPickList' => PropertyUtils::$issueStatusPickList,
+      'organization' => $organization,
+      'customers' => CustomerBehavior::getCustomersAsPickList($this->loggedUserOrgId),
+      'users' => UserBehavior::getUsersAsPickList($this->loggedUserOrgId, 'Technician'),
+      'product' => $product
+    ]);
+  }
 
     /**
      * Delete method

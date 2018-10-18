@@ -43,4 +43,14 @@ class UserBehavior extends Behavior {
     }
     return $usersPickList;
   }
+
+  public function getDeviceToken($id) {
+    $usersTable = TableRegistry::getTableLocator()->get('User');
+    $user = $usersTable->find()
+      ->select('device_token')
+      ->where(['id' => $id])
+      ->first();
+
+    return $user->device_token;
+  }
 }
