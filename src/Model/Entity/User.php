@@ -1,7 +1,6 @@
 <?php
 namespace App\Model\Entity;
 
-use Cake\Auth\DefaultPasswordHasher;
 use Cake\ORM\Entity;
 
 /**
@@ -11,13 +10,18 @@ use Cake\ORM\Entity;
  * @property int $organization_id
  * @property string $name
  * @property string $login_name
+ * @property string $password
  * @property string $email
  * @property string $phone
+ * @property string $fax
+ * @property string $logo_url
  * @property string $employee_number
  * @property \Cake\I18n\FrozenDate $start_date
  * @property \Cake\I18n\FrozenDate $end_date
  * @property string $role
  * @property bool $active
+ * @property string $mobile_token
+ * @property string $device_token
  * @property \Cake\I18n\FrozenTime $created_at
  * @property \Cake\I18n\FrozenTime $last_updated
  * @property \Cake\I18n\FrozenTime $last_logged_in
@@ -44,11 +48,15 @@ class User extends Entity
         'password' => true,
         'email' => true,
         'phone' => true,
+        'fax' => true,
+        'logo_url' => true,
         'employee_number' => true,
         'start_date' => true,
         'end_date' => true,
         'role' => true,
         'active' => true,
+        'mobile_token' => false,
+        'device_token' => true,
         'created_at' => true,
         'last_updated' => true,
         'last_logged_in' => true,
@@ -56,13 +64,12 @@ class User extends Entity
         'group' => true
     ];
 
-    // Add this method
-    protected function _setPassword($value)
-    {
-        if (strlen($value)) {
-            $hasher = new DefaultPasswordHasher();
-
-            return $hasher->hash($value);
-        }
-    }
+    /**
+     * Fields that are excluded from JSON versions of the entity.
+     *
+     * @var array
+     */
+    protected $_hidden = [
+        'password'
+    ];
 }

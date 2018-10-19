@@ -63,16 +63,20 @@ class UserTable extends Table
         $validator
             ->scalar('name')
             ->maxLength('name', 255)
-            ->allowEmpty('name');
+            ->requirePresence('name', 'create')
+            ->notEmpty('name');
 
         $validator
             ->scalar('login_name')
             ->maxLength('login_name', 255)
-            ->notEmpty('login_name');
+            ->requirePresence('login_name', 'create')
+            ->notEmpty('login_name')
+            ->add('login_name', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
             ->scalar('password')
             ->maxLength('password', 255)
+            ->requirePresence('password', 'create')
             ->notEmpty('password');
 
         $validator
@@ -83,6 +87,16 @@ class UserTable extends Table
             ->scalar('phone')
             ->maxLength('phone', 20)
             ->allowEmpty('phone');
+
+        $validator
+            ->scalar('fax')
+            ->maxLength('fax', 20)
+            ->allowEmpty('fax');
+
+        $validator
+            ->scalar('logo_url')
+            ->maxLength('logo_url', 255)
+            ->allowEmpty('logo_url');
 
         $validator
             ->scalar('employee_number')
@@ -99,7 +113,9 @@ class UserTable extends Table
 
         $validator
             ->scalar('role')
-            ->allowEmpty('role');
+            ->maxLength('role', 255)
+            ->requirePresence('role', 'create')
+            ->notEmpty('role');
 
         $validator
             ->boolean('active')
@@ -130,6 +146,7 @@ class UserTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
+        $rules->add($rules->isUnique(['email']));
         $rules->add($rules->isUnique(['login_name']));
         $rules->add($rules->existsIn(['organization_id'], 'Organization'));
 
